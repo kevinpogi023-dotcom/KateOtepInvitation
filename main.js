@@ -1,4 +1,11 @@
+// ============================================
+// CONFIGURATION - UPDATE THIS URL ONLY
+// ============================================
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzQvnt9bhnDNAAXyn-Qw6V9udBZE041QVPp0LFuikkC_fFQZ42RlE5__ydA293RwL46/exec';
+
+// ============================================
 // Burger Menu Toggle
+// ============================================
 function toggleMenu() {
     const burger = document.querySelector('.burger-menu');
     const mobileMenu = document.querySelector('.mobile-menu');
@@ -191,8 +198,7 @@ if (rsvpForm) {
             verificationMessage.classList.remove('verified', 'not-found', 'partial');
             
             try {
-                // Replace with your actual Web App URL
-                const response = await fetch('https://script.google.com/macros/s/AKfycbzQvnt9bhnDNAAXyn-Qw6V9udBZE041QVPp0LFuikkC_fFQZ42RlE5__ydA293RwL46/exec', {
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -275,14 +281,20 @@ if (rsvpForm) {
                 }
             } catch (error) {
                 console.error('Verification error:', error);
-                verificationMessage.style.display = 'none';
+                verificationMessage.className = 'verification-message not-found';
+                verificationMessage.innerHTML = `
+                    <div class="verification-icon">✗</div>
+                    <div class="verification-content">
+                        <strong>Connection Error</strong>
+                        <p>Unable to connect to the server. Please check your internet connection and try again.</p>
+                    </div>
+                `;
+                verificationMessage.style.display = 'flex';
                 
                 // Reset button
                 verifyBtn.classList.remove('loading', 'verified');
                 verifyBtn.textContent = 'Verify';
                 verifyBtn.disabled = false;
-                
-                alert('There was an error verifying your names. Please try again.');
             }
         });
     }
@@ -322,8 +334,7 @@ if (rsvpForm) {
         }
         
         try {
-            // Replace with your actual Web App URL - SAME URL AS VERIFY
-            await fetch('https://script.google.com/macros/s/AKfycbz8-phnbQeVSbU6DBwy8kZdunexQuEg2vuSnQOxQDjzd7vo0Mm-pClT0btf6Dn4ltld/exec', {
+            await fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: { 'Content-Type': 'application/json' },
