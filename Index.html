@@ -135,57 +135,60 @@
 
 <!-- RSVP Section -->
 <section id="rsvp" class="section-dark">
-    <div class="container">
-        <div class="rsvp-content">
-            <div class="rsvp-text">
-                <h3>RSVP</h3>
-                <p>Let us know if you're able to make it or not by <strong>July 5, 2025</strong>.</p>
-                <p>Please ensure you fill in the information for <strong>ALL</strong> guests in your party and have them specified.</p>
-            </div>
-            <div class="rsvp-form">
-                <form id="rsvpForm">
-                    <div class="form-group">
-                        <label for="guestNames">Name(s) <span class="required">(required)</span></label>
-                        <p class="form-helper">Please specify all the guests in your party separated by commas (e.g., "John Doe, Jane Doe"). Kindly check the number of seats reserved in your invitation.</p>
-                        <div class="input-with-button">
-                            <input type="text" id="guestNames" name="guestNames" placeholder="e.g., John Doe, Jane Doe" required>
-                            <button type="button" id="verifyBtn" class="verify-btn">Verify</button>
+        <div class="container">
+            <div class="rsvp-content">
+                <div class="rsvp-text">
+                    <h3>RSVP</h3>
+                    <p>Let us know if you're able to make it or not by <strong>July 5, 2025</strong>.</p>
+                    <p>Please ensure you fill in the information for <strong>ALL</strong> guests in your party and have them specified.</p>
+                </div>
+                <div class="rsvp-form">
+                    <form id="rsvpForm">
+                        <div class="form-group">
+                            <label for="guestNames">Name(s) <span class="required">(required)</span></label>
+                            <p class="form-helper">Please specify all the guests in your party separated by commas (e.g., "John Doe, Jane Doe"). Kindly check the number of seats reserved in your invitation.</p>
+                            <div class="input-with-button">
+                                <input type="text" id="guestNames" name="guestNames" placeholder="e.g., John Doe, Jane Doe" required>
+                                <button type="button" id="verifyBtn" class="verify-btn">Verify</button>
+                            </div>
+                            <!-- Verification message will appear here -->
                         </div>
-                        <!-- Verification message will appear here -->
-                    </div>
 
-                    <div class="form-group">
-                        <label for="email">Email <span class="required">(required)</span></label>
-                        <p class="form-helper">(One per party is great!)</p>
-                        <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
-                    </div>
+                        <!-- Hidden until verification -->
+                        <div id="additionalFields" class="form-fields-hidden">
+                            <div class="form-group">
+                                <label for="email">Email <span class="required">(required)</span></label>
+                                <p class="form-helper">(One per party is great!)</p>
+                                <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
+                            </div>
 
-                    <div class="form-group">
-                        <label>Will you come celebrate with us?</label>
-                        <div class="radio-group">
-                            <label class="radio-label">
-                                <input type="radio" name="attendance" value="yes" required>
-                                <span>Yes! Can't wait!</span>
-                            </label>
-                            <label class="radio-label">
-                                <input type="radio" name="attendance" value="no" required>
-                                <span>Sorry, can't make it!</span>
-                            </label>
+                            <div class="form-group">
+                                <label>Will you come celebrate with us?</label>
+                                <div class="radio-group">
+                                    <label class="radio-label">
+                                        <input type="radio" name="attendance" value="yes" required>
+                                        <span>Yes! Can't wait!</span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="attendance" value="no" required>
+                                        <span>Sorry, can't make it!</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="dietaryRestrictions">Anything else?</label>
+                                <p class="form-helper">Include any dietary restrictions your party may have as well!</p>
+                                <textarea id="dietaryRestrictions" name="dietaryRestrictions" rows="5" placeholder="e.g., Vegetarian, No shellfish, Gluten-free"></textarea>
+                            </div>
+
+                            <button type="submit" class="submit-btn">RSVP</button>
                         </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="dietaryRestrictions">Anything else?</label>
-                        <p class="form-helper">Include any dietary restrictions your party may have as well!</p>
-                        <textarea id="dietaryRestrictions" name="dietaryRestrictions" rows="5" placeholder="e.g., Vegetarian, No shellfish, Gluten-free"></textarea>
-                    </div>
-
-                    <button type="submit" class="submit-btn">RSVP</button>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <!-- Footer with FAQs -->
     <footer class="section-dark">

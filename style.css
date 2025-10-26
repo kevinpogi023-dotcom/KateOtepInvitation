@@ -676,6 +676,147 @@ section {
             color: #666;
         }
 
+        /* Input with Verify Button */
+        .input-with-button {
+            display: flex;
+            gap: 0.8rem;
+            align-items: stretch;
+        }
+
+        .input-with-button input {
+            flex: 1;
+        }
+
+        .verify-btn {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 0 2rem;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+            text-transform: uppercase;
+            white-space: nowrap;
+            min-width: 100px;
+        }
+
+        .verify-btn:hover:not(:disabled) {
+            background: #8b7355;
+            transform: translateY(-2px);
+        }
+
+        .verify-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .verify-btn.loading {
+            background: #666;
+            position: relative;
+        }
+
+        .verify-btn.verified {
+            background: #4CAF50;
+        }
+
+        /* Verification Message Styles */
+        .verification-message {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 4px;
+            display: none;
+            align-items: flex-start;
+            gap: 1rem;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .verification-message.verified {
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .verification-message.not-found {
+            background: rgba(244, 67, 54, 0.1);
+            border: 1px solid rgba(244, 67, 54, 0.3);
+        }
+
+        .verification-message.partial {
+            background: rgba(255, 152, 0, 0.1);
+            border: 1px solid rgba(255, 152, 0, 0.3);
+        }
+
+        .verification-icon {
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        .verification-content {
+            flex: 1;
+        }
+
+        .verification-content strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .verification-content p {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin: 0.3rem 0;
+            color: #ddd;
+        }
+
+        .verified-names {
+            color: #4CAF50 !important;
+        }
+
+        .not-found-names {
+            color: #f44336 !important;
+        }
+
+        .seats-info {
+            font-weight: 500;
+            color: var(--accent) !important;
+        }
+
+        .helper-text {
+            font-style: italic;
+            color: #aaa !important;
+        }
+
+        .verification-loading {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* Hidden Form Fields (shown after verification) */
+        .form-fields-hidden {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: all 0.5s ease-out;
+        }
+
+        .form-fields-visible {
+            max-height: 2000px;
+            opacity: 1;
+            transition: all 0.5s ease-in;
+        }
+
         .radio-group {
             display: flex;
             flex-direction: column;
@@ -714,9 +855,14 @@ section {
             text-transform: uppercase;
         }
 
-        .submit-btn:hover {
+        .submit-btn:hover:not(:disabled) {
             background: #8b7355;
             transform: translateY(-2px);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
 @media (max-width: 768px) {
