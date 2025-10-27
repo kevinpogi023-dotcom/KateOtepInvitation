@@ -1,7 +1,7 @@
 // ============================================
 // CONFIGURATION - UPDATE THIS URL ONLY
 // ============================================
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzQvnt9bhnDNAAXyn-Qw6V9udBZE041QVPp0LFuikkC_fFQZ42RlE5__ydA293RwL46/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyiV4QBH4wTdJGkq61gfV3OvN7CbqrnLshaeM_QAL0bh3IESyhNDUw9wWuS3eVj95ry/exec';
 
 // ============================================
 // Burger Menu Toggle
@@ -198,6 +198,7 @@ if (rsvpForm) {
             verificationMessage.classList.remove('verified', 'not-found', 'partial');
             
             try {
+                // FIXED: Send verification data instead of formData
                 const response = await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -206,7 +207,7 @@ if (rsvpForm) {
                         guestNames: names
                     })
                 });
-                
+
                 const result = await response.json();
                 
                 if (result.verified) {
@@ -334,38 +335,44 @@ if (rsvpForm) {
         }
         
         try {
-            await fetch(GOOGLE_SCRIPT_URL, {
+            const response = await fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
-                mode: 'no-cors',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
             });
             
-            // Show success message
-            submitBtn.textContent = '✓ RSVP Submitted!';
-            submitBtn.style.backgroundColor = '#4CAF50';
+            const result = await response.json();
             
-            // Reset form
-            rsvpForm.reset();
-            verificationMessage.style.display = 'none';
-            guestVerified = false;
-            if (verifyBtn) {
-                verifyBtn.classList.remove('verified');
-                verifyBtn.textContent = 'Verify';
+            if (result.status === 'success') {
+                // Show success message
+                submitBtn.textContent = '✓ RSVP Submitted!';
+                submitBtn.style.backgroundColor = '#4CAF50';
+                
+                // Reset form
+                rsvpForm.reset();
+                verificationMessage.style.display = 'none';
+                guestVerified = false;
+                verifiedGuestInfo = null;
+                if (verifyBtn) {
+                    verifyBtn.classList.remove('verified');
+                    verifyBtn.textContent = 'Verify';
+                }
+                
+                // Show success alert
+                alert('Thank you! Your RSVP has been submitted successfully. We look forward to celebrating with you!');
+                
+                // Reset button after 3 seconds
+                setTimeout(() => {
+                    submitBtn.textContent = originalBtnText;
+                    submitBtn.style.backgroundColor = '';
+                    submitBtn.disabled = false;
+                }, 3000);
+            } else {
+                throw new Error(result.message || 'Submission failed');
             }
             
-            // Show success alert
-            alert('Thank you! Your RSVP has been submitted successfully. We look forward to celebrating with you!');
-            
-            // Reset button after 3 seconds
-            setTimeout(() => {
-                submitBtn.textContent = originalBtnText;
-                submitBtn.style.backgroundColor = '';
-                submitBtn.disabled = false;
-            }, 3000);
-            
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Submission error:', error);
             alert('There was an error submitting your RSVP. Please try again or contact us directly.');
             submitBtn.textContent = originalBtnText;
             submitBtn.disabled = false;
