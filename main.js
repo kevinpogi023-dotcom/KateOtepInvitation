@@ -1,7 +1,7 @@
 // ============================================
 // CONFIGURATION - UPDATE THIS URL ONLY
 // ============================================
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwkahl9DrYpF-MaIQfohxx9htstTCfFoVNyktTZNqlFxpJ0nHEMQiBbbpHu6T6sbXSG5Q/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzQ_BsdVg1yF0vpkSUzU9rDHH__XPMT6HLhwNqGsugLumaE-4Mjuk8BDDtKFy93ujli7Q/exec';
 
 // ============================================
 // Burger Menu Toggle
