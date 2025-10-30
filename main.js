@@ -1,7 +1,7 @@
 // ============================================
 // CONFIGURATION - UPDATE THIS URL ONLY
 // ============================================
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzQ_BsdVg1yF0vpkSUzU9rDHH__XPMT6HLhwNqGsugLumaE-4Mjuk8BDDtKFy93ujli7Q/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwkahl9DrYpF-MaIQfohxx9htstTCfFoVNyktTZNqlFxpJ0nHEMQiBbbpHu6T6sbXSG5Q/exec';
 
 // ============================================
 // Burger Menu Toggle
@@ -13,7 +13,6 @@ function toggleMenu() {
     burger.classList.toggle('active');
     mobileMenu.classList.toggle('active');
     
-    // Prevent body scrolling when menu is open
     if (mobileMenu.classList.contains('active')) {
         document.body.style.overflow = 'hidden';
     } else {
@@ -28,7 +27,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         const target = document.querySelector(this.getAttribute('href'));
         
         if (target) {
-            // Close mobile menu if open
             const mobileMenu = document.querySelector('.mobile-menu');
             const burger = document.querySelector('.burger-menu');
             
@@ -50,7 +48,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 const rsvpButtons = document.querySelectorAll('.rsvp-btn');
 rsvpButtons.forEach(btn => {
     btn.addEventListener('click', () => {
-        // Close mobile menu if open
         const mobileMenu = document.querySelector('.mobile-menu');
         const burger = document.querySelector('.burger-menu');
         
@@ -60,7 +57,6 @@ rsvpButtons.forEach(btn => {
             document.body.style.overflow = '';
         }
         
-        // Scroll to RSVP section if it exists
         const rsvpSection = document.getElementById('rsvp');
         if (rsvpSection) {
             rsvpSection.scrollIntoView({
@@ -97,7 +93,6 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-// Observe elements with fade-in class
 document.querySelectorAll('.fade-in').forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(30px)';
@@ -119,7 +114,7 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Close mobile menu on window resize if larger than mobile breakpoint
+// Close mobile menu on window resize
 window.addEventListener('resize', () => {
     if (window.innerWidth > 768) {
         const mobileMenu = document.querySelector('.mobile-menu');
@@ -138,8 +133,8 @@ window.addEventListener('resize', () => {
 // ============================================
 
 let isVerified = false;
+let verifiedRowIndex = null;
 
-// Verify button functionality
 document.addEventListener('DOMContentLoaded', function() {
     const verifyBtn = document.getElementById('verifyBtn');
     const guestNamesInput = document.getElementById('guestNames');
@@ -154,6 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Reset verification when names change
     guestNamesInput.addEventListener('input', function() {
         isVerified = false;
+        verifiedRowIndex = null;
         verificationMsg.textContent = '';
         verificationMsg.className = 'verification-message';
     });
@@ -173,7 +169,6 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const response = await fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
-                mode: 'no-cors',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -183,31 +178,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
             });
             
-            // Note: With no-cors mode, we can't read the response
-            // So we'll use a workaround with a regular fetch
-            const regularResponse = await fetch(GOOGLE_SCRIPT_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    action: 'verify',
-                    names: names
-                })
-            });
-            
-            const result = await regularResponse.json();
+            const result = await response.json();
             
             if (result.success) {
                 isVerified = true;
+                verifiedRowIndex = result.rowIndex;
                 showMessage(verificationMsg, result.message, 'success');
             } else {
                 isVerified = false;
+                verifiedRowIndex = null;
                 showMessage(verificationMsg, result.message, 'error');
             }
         } catch (error) {
             console.error('Verification error:', error);
             showMessage(verificationMsg, 'Unable to verify. Please try again or contact the couple.', 'error');
+            isVerified = false;
+            verifiedRowIndex = null;
         } finally {
             verifyBtn.disabled = false;
             verifyBtn.textContent = 'Verify';
@@ -248,11 +234,15 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (result.success) {
                 showMessage(verificationMsg, result.message, 'success');
-                rsvpForm.reset();
-                isVerified = false;
                 
-                // Show success modal or message
-                alert('Thank you! Your RSVP has been recorded. We can\'t wait to celebrate with you!');
+                // Show success alert
+                setTimeout(() => {
+                    alert('Thank you! Your RSVP has been recorded. We can\'t wait to celebrate with you!');
+                    rsvpForm.reset();
+                    isVerified = false;
+                    verifiedRowIndex = null;
+                    verificationMsg.textContent = '';
+                }, 500);
             } else {
                 showMessage(verificationMsg, result.message, 'error');
             }
@@ -264,6 +254,12 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.textContent = 'RSVP';
         }
     });
+    
+    // Initialize carousel
+    updateDots();
+    setInterval(() => {
+        moveCarousel(1);
+    }, 5000);
 });
 
 function showMessage(element, message, type) {
@@ -281,9 +277,7 @@ function moveCarousel(direction) {
     const totalSlides = images.length;
     
     images[currentSlide].classList.remove('active');
-    
     currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
-    
     images[currentSlide].classList.add('active');
     updateDots();
 }
@@ -291,6 +285,8 @@ function moveCarousel(direction) {
 function updateDots() {
     const dotsContainer = document.querySelector('.carousel-dots');
     const images = document.querySelectorAll('.carousel-img');
+    
+    if (!dotsContainer) return;
     
     dotsContainer.innerHTML = '';
     
@@ -309,13 +305,3 @@ function goToSlide(index) {
     images[currentSlide].classList.add('active');
     updateDots();
 }
-
-// Initialize carousel dots
-document.addEventListener('DOMContentLoaded', function() {
-    updateDots();
-    
-    // Auto-advance carousel every 5 seconds
-    setInterval(() => {
-        moveCarousel(1);
-    }, 5000);
-});
