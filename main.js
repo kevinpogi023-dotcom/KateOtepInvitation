@@ -1,7 +1,20 @@
 // ============================================
-// CONFIGURATION - UPDATE THIS URL ONLY
+// CONFIGURATION - UPDATE THESE VALUES
 // ============================================
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwjd8EnIVUCnYVwHkfBeA5QgRlIZpM3efJxF4r-BC8OvMGahq0mp6eT0k5m_1_AhNBv/exec';
+const GOOGLE_API_KEY = 'AIzaSyAE-LndV0JgF-btRYjd2iW0j0CoA1XueaA';
+const SHEET_ID = '1geWvT54dderCwMsVR0QvQ6X7j90_Lb0V6RaL3Gq0ddQ';
+const SHEET_NAME = 'Kate&Otep'; // Change if your sheet has a different name
+
+// Column configuration for your sheet structure:
+// A = Time Stamp, B = Guest Name, C = Email, D = Attendance, E = Dietary, F = Full Party
+const COLUMN_CONFIG = {
+    GUEST_NAME: 1,      // Column B (0-indexed)
+    EMAIL: 2,           // Column C (0-indexed)
+    ATTENDANCE: 3,      // Column D (0-indexed)
+    DIETARY: 4,         // Column E (0-indexed)
+    TIMESTAMP: 0,       // Column A (0-indexed)
+    FULL_PARTY: 5       // Column F (0-indexed)
+};
 
 // ============================================
 // Burger Menu Toggle
@@ -134,12 +147,110 @@ window.addEventListener('resize', () => {
 });
 
 // ============================================
-// RSVP FORM FUNCTIONALITY
+// GOOGLE SHEETS API FUNCTIONS
 // ============================================
 
 let isVerified = false;
+let guestListCache = null;
 
-// Verify button functionality
+// Fetch all guest data from Google Sheets
+async function fetchGuestList() {
+    if (guestListCache) {
+        return guestListCache;
+    }
+    
+    const range = `${SHEET_NAME}!B:B`; // Only Column B (Guest Name)
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?key=${GOOGLE_API_KEY}`;
+    
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error('Failed to fetch guest list');
+        }
+        
+        const data = await response.json();
+        guestListCache = data.values || [];
+        return guestListCache;
+    } catch (error) {
+        console.error('Error fetching guest list:', error);
+        throw error;
+    }
+}
+
+// Verify guest names (without party size check)
+async function verifyGuests(namesString) {
+    const inputNames = namesString.split(',').map(name => name.trim().toLowerCase());
+    
+    try {
+        const guestList = await fetchGuestList();
+        
+        // Skip header row (index 0)
+        for (let i = 1; i < guestList.length; i++) {
+            const row = guestList[i];
+            const sheetName = (row[0] || '').toString().trim().toLowerCase();
+            
+            // Check if any input name matches
+            if (inputNames.includes(sheetName)) {
+                return {
+                    success: true,
+                    message: `✓ Verified! Welcome ${row[0]}!`,
+                    rowIndex: i + 1 // Store for later update (1-indexed for Sheets API)
+                };
+            }
+        }
+        
+        return {
+            success: false,
+            message: 'Sorry, we could not find your name on the guest list. Please check the spelling or contact the couple.'
+        };
+    } catch (error) {
+        throw new Error('Unable to verify guest list. Please try again.');
+    }
+}
+
+// Submit RSVP to Google Sheets
+async function submitRSVP(rowIndex, names, email, attendance, dietary) {
+    const timestamp = new Date().toISOString();
+    
+    // Update: A=Timestamp, C=Email, D=Attendance, E=Dietary, F=Full Party Names
+    const range = `${SHEET_NAME}!A${rowIndex}:F${rowIndex}`;
+    const values = [
+        [timestamp, '', email, attendance, dietary, names]
+    ];
+    
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?valueInputOption=RAW&key=${GOOGLE_API_KEY}`;
+    
+    try {
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                values: values
+            })
+        });
+        
+        if (!response.ok) {
+            throw new Error('Failed to submit RSVP');
+        }
+        
+        return {
+            success: true,
+            message: 'Thank you! Your RSVP has been recorded.'
+        };
+    } catch (error) {
+        console.error('Error submitting RSVP:', error);
+        throw error;
+    }
+}
+
+// ============================================
+// RSVP FORM FUNCTIONALITY
+// ============================================
+
+let verifiedData = null;
+
 document.addEventListener('DOMContentLoaded', function() {
     const verifyBtn = document.getElementById('verifyBtn');
     const guestNamesInput = document.getElementById('guestNames');
@@ -154,6 +265,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Reset verification when names change
     guestNamesInput.addEventListener('input', function() {
         isVerified = false;
+        verifiedData = null;
         verificationMsg.textContent = '';
         verificationMsg.className = 'verification-message';
     });
@@ -171,38 +283,15 @@ document.addEventListener('DOMContentLoaded', function() {
         verifyBtn.textContent = 'Verifying...';
         
         try {
-            const response = await fetch(GOOGLE_SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    action: 'verify',
-                    names: names
-                })
-            });
-            
-            // Note: With no-cors mode, we can't read the response
-            // So we'll use a workaround with a regular fetch
-            const regularResponse = await fetch(GOOGLE_SCRIPT_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    action: 'verify',
-                    names: names
-                })
-            });
-            
-            const result = await regularResponse.json();
+            const result = await verifyGuests(names);
             
             if (result.success) {
                 isVerified = true;
+                verifiedData = result;
                 showMessage(verificationMsg, result.message, 'success');
             } else {
                 isVerified = false;
+                verifiedData = null;
                 showMessage(verificationMsg, result.message, 'error');
             }
         } catch (error) {
@@ -218,43 +307,35 @@ document.addEventListener('DOMContentLoaded', function() {
     rsvpForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        if (!isVerified) {
+        if (!isVerified || !verifiedData) {
             showMessage(verificationMsg, 'Please verify your guest name(s) first', 'error');
             return;
         }
         
-        const formData = {
-            action: 'submit',
-            names: guestNamesInput.value.trim(),
-            email: document.getElementById('email').value.trim(),
-            attendance: document.querySelector('input[name="attendance"]:checked').value,
-            dietary: document.getElementById('dietaryRestrictions').value.trim()
-        };
+        const names = guestNamesInput.value.trim();
+        const email = document.getElementById('email').value.trim();
+        const attendance = document.querySelector('input[name="attendance"]:checked').value;
+        const dietary = document.getElementById('dietaryRestrictions').value.trim();
         
         const submitBtn = rsvpForm.querySelector('.submit-btn');
         submitBtn.disabled = true;
         submitBtn.textContent = 'Submitting...';
         
         try {
-            const response = await fetch(GOOGLE_SCRIPT_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData)
-            });
-            
-            const result = await response.json();
+            const result = await submitRSVP(verifiedData.rowIndex, names, email, attendance, dietary);
             
             if (result.success) {
                 showMessage(verificationMsg, result.message, 'success');
                 rsvpForm.reset();
                 isVerified = false;
+                verifiedData = null;
                 
-                // Show success modal or message
-                alert('Thank you! Your RSVP has been recorded. We can\'t wait to celebrate with you!');
+                // Show success message
+                setTimeout(() => {
+                    alert('Thank you! Your RSVP has been recorded. We can\'t wait to celebrate with you!');
+                }, 500);
             } else {
-                showMessage(verificationMsg, result.message, 'error');
+                showMessage(verificationMsg, result.message || 'Failed to submit RSVP', 'error');
             }
         } catch (error) {
             console.error('Submission error:', error);
