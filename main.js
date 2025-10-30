@@ -169,9 +169,12 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const response = await fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'text/plain',
                 },
+                redirect: 'follow',
                 body: JSON.stringify({
                     action: 'verify',
                     names: names
@@ -224,9 +227,12 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const response = await fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'text/plain',
                 },
+                redirect: 'follow',
                 body: JSON.stringify(formData)
             });
             
