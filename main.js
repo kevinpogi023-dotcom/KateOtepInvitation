@@ -1,7 +1,7 @@
 // ============================================
 // CONFIGURATION - UPDATE THIS URL ONLY
 // ============================================
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyiV4QBH4wTdJGkq61gfV3OvN7CbqrnLshaeM_QAL0bh3IESyhNDUw9wWuS3eVj95ry/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwjd8EnIVUCnYVwHkfBeA5QgRlIZpM3efJxF4r-BC8OvMGahq0mp6eT0k5m_1_AhNBv/exec';
 
 // ============================================
 // Burger Menu Toggle
@@ -134,248 +134,188 @@ window.addEventListener('resize', () => {
 });
 
 // ============================================
-// RSVP FORM WITH VERIFY BUTTON
+// RSVP FORM FUNCTIONALITY
 // ============================================
-const rsvpForm = document.getElementById('rsvpForm');
-let guestVerified = false;
-let verifiedGuestInfo = null;
 
-if (rsvpForm) {
-    const guestNamesInput = document.getElementById('guestNames');
+let isVerified = false;
+
+// Verify button functionality
+document.addEventListener('DOMContentLoaded', function() {
     const verifyBtn = document.getElementById('verifyBtn');
+    const guestNamesInput = document.getElementById('guestNames');
+    const rsvpForm = document.getElementById('rsvpForm');
     
     // Create verification message element
-    const verificationMessage = document.createElement('div');
-    verificationMessage.className = 'verification-message';
-    verificationMessage.style.display = 'none';
+    const verificationMsg = document.createElement('div');
+    verificationMsg.className = 'verification-message';
+    verificationMsg.style.marginTop = '10px';
+    guestNamesInput.parentNode.parentNode.appendChild(verificationMsg);
     
-    // Insert after the input-with-button div
-    const inputWithButton = document.querySelector('.input-with-button');
-    if (inputWithButton) {
-        inputWithButton.parentNode.insertBefore(verificationMessage, inputWithButton.nextSibling);
-    }
+    // Reset verification when names change
+    guestNamesInput.addEventListener('input', function() {
+        isVerified = false;
+        verificationMsg.textContent = '';
+        verificationMsg.className = 'verification-message';
+    });
     
-    // Reset verification when user types after verifying
-    if (guestNamesInput) {
-        guestNamesInput.addEventListener('input', () => {
-            if (guestVerified) {
-                guestVerified = false;
-                verificationMessage.style.display = 'none';
-                if (verifyBtn) {
-                    verifyBtn.classList.remove('verified');
-                    verifyBtn.textContent = 'Verify';
-                }
-            }
-        });
+    // Verify guests
+    verifyBtn.addEventListener('click', async function() {
+        const names = guestNamesInput.value.trim();
         
-        // Allow pressing Enter to verify
-        guestNamesInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && verifyBtn) {
-                e.preventDefault();
-                verifyBtn.click();
-            }
-        });
-    }
-    
-    // Verify button click handler
-    if (verifyBtn) {
-        verifyBtn.addEventListener('click', async () => {
-            const names = guestNamesInput.value.trim();
-            
-            if (names.length < 3) {
-                alert('Please enter at least one name to verify.');
-                guestNamesInput.focus();
-                return;
-            }
-            
-            // Show loading state
-            verifyBtn.disabled = true;
-            verifyBtn.classList.add('loading');
-            verifyBtn.textContent = 'Checking...';
-            
-            verificationMessage.innerHTML = '<span class="verification-loading">Checking guest list...</span>';
-            verificationMessage.style.display = 'block';
-            verificationMessage.classList.remove('verified', 'not-found', 'partial');
-            
-            try {
-                // FIXED: Send verification data instead of formData
-                const response = await fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        action: 'verify',
-                        guestNames: names
-                    })
-                });
-
-                const result = await response.json();
-                
-                if (result.verified) {
-                    // All guests verified
-                    guestVerified = true;
-                    verifiedGuestInfo = result;
-                    verificationMessage.className = 'verification-message verified';
-                    
-                    let guestList = result.verifiedGuests.map(g => g.name).join(', ');
-                    let seatsText = result.totalSeatsReserved === 1 ? 'seat' : 'seats';
-                    
-                    verificationMessage.innerHTML = `
-                        <div class="verification-icon">✓</div>
-                        <div class="verification-content">
-                            <strong>All guests verified!</strong>
-                            <p>${guestList}</p>
-                            <p class="seats-info">Total: ${result.totalSeatsReserved} ${seatsText} reserved</p>
-                        </div>
-                    `;
-                    verificationMessage.style.display = 'flex';
-                    
-                    // Update button to show verified state
-                    verifyBtn.classList.remove('loading');
-                    verifyBtn.classList.add('verified');
-                    verifyBtn.textContent = '✓ Verified';
-                    verifyBtn.disabled = false;
-                    
-                } else if (result.notFoundGuests && result.notFoundGuests.length > 0) {
-                    // Some guests not found
-                    guestVerified = false;
-                    verificationMessage.className = 'verification-message partial';
-                    
-                    let verifiedList = result.verifiedGuests.length > 0 
-                        ? `<p class="verified-names">✓ Found: ${result.verifiedGuests.map(g => g.name).join(', ')}</p>` 
-                        : '';
-                    
-                    let notFoundList = `<p class="not-found-names">✗ Not found: ${result.notFoundGuests.join(', ')}</p>`;
-                    
-                    verificationMessage.innerHTML = `
-                        <div class="verification-icon">⚠</div>
-                        <div class="verification-content">
-                            <strong>Some guests not found</strong>
-                            ${verifiedList}
-                            ${notFoundList}
-                            <p class="helper-text">Please check spelling or contact us.</p>
-                        </div>
-                    `;
-                    verificationMessage.style.display = 'flex';
-                    
-                    // Reset button
-                    verifyBtn.classList.remove('loading', 'verified');
-                    verifyBtn.textContent = 'Verify';
-                    verifyBtn.disabled = false;
-                    
-                } else {
-                    // No guests found
-                    guestVerified = false;
-                    verificationMessage.className = 'verification-message not-found';
-                    verificationMessage.innerHTML = `
-                        <div class="verification-icon">✗</div>
-                        <div class="verification-content">
-                            <strong>Guests not found</strong>
-                            <p>We couldn't find these names on our guest list. Please check your spelling or contact us for assistance.</p>
-                        </div>
-                    `;
-                    verificationMessage.style.display = 'flex';
-                    
-                    // Reset button
-                    verifyBtn.classList.remove('loading', 'verified');
-                    verifyBtn.textContent = 'Verify';
-                    verifyBtn.disabled = false;
-                }
-            } catch (error) {
-                console.error('Verification error:', error);
-                verificationMessage.className = 'verification-message not-found';
-                verificationMessage.innerHTML = `
-                    <div class="verification-icon">✗</div>
-                    <div class="verification-content">
-                        <strong>Connection Error</strong>
-                        <p>Unable to connect to the server. Please check your internet connection and try again.</p>
-                    </div>
-                `;
-                verificationMessage.style.display = 'flex';
-                
-                // Reset button
-                verifyBtn.classList.remove('loading', 'verified');
-                verifyBtn.textContent = 'Verify';
-                verifyBtn.disabled = false;
-            }
-        });
-    }
-    
-    // Form submission
-    rsvpForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        // Check if guests are verified
-        if (!guestVerified) {
-            alert('Please verify your guest names before submitting your RSVP. Click the "Verify" button first.');
-            if (verifyBtn) verifyBtn.focus();
+        if (!names) {
+            showMessage(verificationMsg, 'Please enter guest name(s)', 'error');
             return;
         }
         
-        const submitBtn = rsvpForm.querySelector('.submit-btn');
-        const originalBtnText = submitBtn.textContent;
-        
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Submitting...';
-        
-        const formData = {
-            guestNames: guestNamesInput.value,
-            email: document.getElementById('email').value,
-            attendance: document.querySelector('input[name="attendance"]:checked')?.value,
-            dietaryRestrictions: document.getElementById('dietaryRestrictions').value,
-            verified: true,
-            totalSeats: verifiedGuestInfo?.totalSeatsReserved || 0
-        };
-        
-        // Check if attendance is selected
-        if (!formData.attendance) {
-            alert('Please select whether you can attend or not.');
-            submitBtn.disabled = false;
-            submitBtn.textContent = originalBtnText;
-            return;
-        }
+        verifyBtn.disabled = true;
+        verifyBtn.textContent = 'Verifying...';
         
         try {
             const response = await fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: 'verify',
+                    names: names
+                })
+            });
+            
+            // Note: With no-cors mode, we can't read the response
+            // So we'll use a workaround with a regular fetch
+            const regularResponse = await fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: 'verify',
+                    names: names
+                })
+            });
+            
+            const result = await regularResponse.json();
+            
+            if (result.success) {
+                isVerified = true;
+                showMessage(verificationMsg, result.message, 'success');
+            } else {
+                isVerified = false;
+                showMessage(verificationMsg, result.message, 'error');
+            }
+        } catch (error) {
+            console.error('Verification error:', error);
+            showMessage(verificationMsg, 'Unable to verify. Please try again or contact the couple.', 'error');
+        } finally {
+            verifyBtn.disabled = false;
+            verifyBtn.textContent = 'Verify';
+        }
+    });
+    
+    // Form submission
+    rsvpForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        if (!isVerified) {
+            showMessage(verificationMsg, 'Please verify your guest name(s) first', 'error');
+            return;
+        }
+        
+        const formData = {
+            action: 'submit',
+            names: guestNamesInput.value.trim(),
+            email: document.getElementById('email').value.trim(),
+            attendance: document.querySelector('input[name="attendance"]:checked').value,
+            dietary: document.getElementById('dietaryRestrictions').value.trim()
+        };
+        
+        const submitBtn = rsvpForm.querySelector('.submit-btn');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Submitting...';
+        
+        try {
+            const response = await fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
                 body: JSON.stringify(formData)
             });
             
             const result = await response.json();
             
-            if (result.status === 'success') {
-                // Show success message
-                submitBtn.textContent = '✓ RSVP Submitted!';
-                submitBtn.style.backgroundColor = '#4CAF50';
-                
-                // Reset form
+            if (result.success) {
+                showMessage(verificationMsg, result.message, 'success');
                 rsvpForm.reset();
-                verificationMessage.style.display = 'none';
-                guestVerified = false;
-                verifiedGuestInfo = null;
-                if (verifyBtn) {
-                    verifyBtn.classList.remove('verified');
-                    verifyBtn.textContent = 'Verify';
-                }
+                isVerified = false;
                 
-                // Show success alert
-                alert('Thank you! Your RSVP has been submitted successfully. We look forward to celebrating with you!');
-                
-                // Reset button after 3 seconds
-                setTimeout(() => {
-                    submitBtn.textContent = originalBtnText;
-                    submitBtn.style.backgroundColor = '';
-                    submitBtn.disabled = false;
-                }, 3000);
+                // Show success modal or message
+                alert('Thank you! Your RSVP has been recorded. We can\'t wait to celebrate with you!');
             } else {
-                throw new Error(result.message || 'Submission failed');
+                showMessage(verificationMsg, result.message, 'error');
             }
-            
         } catch (error) {
             console.error('Submission error:', error);
-            alert('There was an error submitting your RSVP. Please try again or contact us directly.');
-            submitBtn.textContent = originalBtnText;
+            showMessage(verificationMsg, 'Unable to submit RSVP. Please try again or contact the couple.', 'error');
+        } finally {
             submitBtn.disabled = false;
+            submitBtn.textContent = 'RSVP';
         }
     });
+});
+
+function showMessage(element, message, type) {
+    element.textContent = message;
+    element.className = `verification-message ${type}`;
 }
+
+// ============================================
+// CAROUSEL FUNCTIONALITY
+// ============================================
+let currentSlide = 0;
+
+function moveCarousel(direction) {
+    const images = document.querySelectorAll('.carousel-img');
+    const totalSlides = images.length;
+    
+    images[currentSlide].classList.remove('active');
+    
+    currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+    
+    images[currentSlide].classList.add('active');
+    updateDots();
+}
+
+function updateDots() {
+    const dotsContainer = document.querySelector('.carousel-dots');
+    const images = document.querySelectorAll('.carousel-img');
+    
+    dotsContainer.innerHTML = '';
+    
+    images.forEach((_, index) => {
+        const dot = document.createElement('span');
+        dot.className = 'dot' + (index === currentSlide ? ' active' : '');
+        dot.onclick = () => goToSlide(index);
+        dotsContainer.appendChild(dot);
+    });
+}
+
+function goToSlide(index) {
+    const images = document.querySelectorAll('.carousel-img');
+    images[currentSlide].classList.remove('active');
+    currentSlide = index;
+    images[currentSlide].classList.add('active');
+    updateDots();
+}
+
+// Initialize carousel dots
+document.addEventListener('DOMContentLoaded', function() {
+    updateDots();
+    
+    // Auto-advance carousel every 5 seconds
+    setInterval(() => {
+        moveCarousel(1);
+    }, 5000);
+});
