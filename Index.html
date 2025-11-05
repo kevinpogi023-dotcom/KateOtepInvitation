@@ -156,15 +156,13 @@
         </div>
         
         <!-- Step 2: Select Guest -->
-        <div id="step2" class="rsvp-step" >
+        <div id="step2" class="rsvp-step">
             <div class="rsvp-card">
-                <p class="rsvp-select-instruction">Select your info below or try searching again.</p>
-                
                 <div id="guestList" class="guest-name-list">
-                    <!-- Guest names will be populated here -->
+                    <!-- Guest attendance options will be populated here -->
                 </div>
                 
-                <button id="selectBtn" class="rsvp-select-btn">Select</button>
+                <button id="selectBtn" class="rsvp-select-btn">Next Event</button>
                 
                 <p class="rsvp-search-again">
                     <a href="#" id="searchAgainLink">Search again</a>
@@ -172,29 +170,16 @@
             </div>
         </div>
         
+      
         <!-- Step 3: RSVP Form -->
         <div id="step3" class="rsvp-step" style="display: none;">
             <div class="rsvp-card">
-                <h3 class="rsvp-confirm-title">Will you attend?</h3>
+                <h3 class="rsvp-confirm-title">Additional Information</h3>
                 
                 <form id="rsvpForm">
                     <div class="form-group">
                         <label for="email">Email <span class="required">*</span></label>
                         <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Will you come celebrate with us? <span class="required">*</span></label>
-                        <div class="radio-group">
-                            <label class="radio-label">
-                                <input type="radio" name="attendance" value="yes" required>
-                                <span>Yes! Can't wait!</span>
-                            </label>
-                            <label class="radio-label">
-                                <input type="radio" name="attendance" value="no" required>
-                                <span>Sorry, can't make it!</span>
-                            </label>
-                        </div>
                     </div>
 
                     <div class="form-group">

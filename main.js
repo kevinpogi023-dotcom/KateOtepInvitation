@@ -197,19 +197,37 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Step 2: Select guest from list
-    selectBtn.addEventListener('click', function() {
-        const selectedRadio = document.querySelector('input[name="guestSelect"]:checked');
+    // Step 2: Select guest from list - UPDATED
+selectBtn.addEventListener('click', function() {
+    const guestResponses = [];
+    let allAnswered = true;
+    
+    foundGuests.forEach((guest, index) => {
+        const selectedRadio = document.querySelector(`input[name="guest-${index}-attendance"]:checked`);
         
         if (!selectedRadio) {
-            alert('Please select your name from the list');
-            return;
+            allAnswered = false;
+        } else {
+            guestResponses.push({
+                name: guest.name,
+                attendance: selectedRadio.value
+            });
         }
-        
-        const guestIndex = parseInt(selectedRadio.value);
-        selectedGuest = foundGuests[guestIndex];
-        
-        showStep(3);
     });
+    
+    if (!allAnswered) {
+        alert('Please select attendance for all guests');
+        return;
+    }
+    
+    // Store responses
+    selectedGuest = {
+        guests: guestResponses,
+        primaryGuest: foundGuests[0]
+    };
+    
+    showStep(3);
+});
     
     // Search again link
     searchAgainLink.addEventListener('click', function(e) {
@@ -287,58 +305,75 @@ function displayGuestList(guests) {
     
     guestList.innerHTML = '';
     
-    console.log('Displaying', guests.length, 'guests'); // Debug log
+    console.log('Displaying', guests.length, 'guests');
     
     guests.forEach((guest, index) => {
-        const box = document.createElement('div');
-        box.className = 'guest-name-box';
-        box.dataset.index = index;
+        // Create container for each guest
+        const guestItem = document.createElement('div');
+        guestItem.className = 'guest-attendance-item';
         
-        // Create radio input (hidden)
-        const radio = document.createElement('input');
-        radio.type = 'radio';
-        radio.name = 'guestSelect';
-        radio.value = index;
-        radio.id = `guest-${index}`;
-        radio.style.display = 'none';
+        // Guest name label
+        const nameLabel = document.createElement('label');
+        nameLabel.className = 'guest-name-label';
+        nameLabel.textContent = guest.name;
+        if (guest.required) {
+            const asterisk = document.createElement('span');
+            asterisk.className = 'required';
+            asterisk.textContent = ' *';
+            nameLabel.appendChild(asterisk);
+        }
         
-        // Create label for the name
-        const label = document.createElement('label');
-        label.htmlFor = `guest-${index}`;
-        label.textContent = guest.name;
-        label.style.cursor = 'pointer';
-        label.style.display = 'block';
-        label.style.width = '100%';
+        // Radio buttons container
+        const radioContainer = document.createElement('div');
+        radioContainer.className = 'guest-radio-group';
         
-        // Add click handler to the box
-        box.addEventListener('click', function(e) {
-            e.preventDefault();
-            console.log('Guest selected:', guest.name); // Debug log
-            
-            // Remove selected class from all boxes
-            document.querySelectorAll('.guest-name-box').forEach(b => {
-                b.classList.remove('selected');
-            });
-            // Add selected class to clicked box
-            this.classList.add('selected');
-            // Check the radio
-            radio.checked = true;
-        });
+        // Will Attend option
+        const attendLabel = document.createElement('label');
+        attendLabel.className = 'guest-radio-label';
+        const attendRadio = document.createElement('input');
+        attendRadio.type = 'radio';
+        attendRadio.name = `guest-${index}-attendance`;
+        attendRadio.value = 'yes';
+        attendRadio.dataset.guestIndex = index;
+        attendLabel.appendChild(attendRadio);
+        attendLabel.appendChild(document.createTextNode(' Will Attend'));
         
-        box.appendChild(radio);
-        box.appendChild(label);
-        guestList.appendChild(box);
+        // Will Not Attend option
+        const notAttendLabel = document.createElement('label');
+        notAttendLabel.className = 'guest-radio-label';
+        const notAttendRadio = document.createElement('input');
+        notAttendRadio.type = 'radio';
+        notAttendRadio.name = `guest-${index}-attendance`;
+        notAttendRadio.value = 'no';
+        notAttendRadio.dataset.guestIndex = index;
+        notAttendLabel.appendChild(notAttendRadio);
+        notAttendLabel.appendChild(document.createTextNode(' Will Not Attend'));
+        
+        radioContainer.appendChild(attendLabel);
+        radioContainer.appendChild(notAttendLabel);
+        
+        guestItem.appendChild(nameLabel);
+        guestItem.appendChild(radioContainer);
+        guestList.appendChild(guestItem);
+        
+        // Add separator line except for last item
+        if (index < guests.length - 1) {
+            const separator = document.createElement('div');
+            separator.className = 'guest-separator';
+            guestList.appendChild(separator);
+        }
     });
     
-    console.log('Guest list populated with', guestList.children.length, 'items'); // Debug log
+    console.log('Guest list populated with', guests.length, 'guests');
 }
 
 function showStep(stepNumber) {
-    console.log('Showing step:', stepNumber); // Debug log
+    console.log('Showing step:', stepNumber);
     
-    // Hide all steps
+    // Hide all steps and remove active class
     document.querySelectorAll('.rsvp-step').forEach(step => {
         step.style.display = 'none';
+        step.classList.remove('active');  // ADD THIS LINE
     });
     
     // Show the requested step
@@ -346,15 +381,19 @@ function showStep(stepNumber) {
     if (targetStep) {
         targetStep.style.display = 'block';
         
-        console.log('Step', stepNumber, 'is now visible'); // Debug log
-        console.log('Step HTML:', targetStep.innerHTML.substring(0, 200)); // Show first 200 chars
+        // Add active class after a tiny delay for animation
+        setTimeout(() => {
+            targetStep.classList.add('active');  // ADD THIS LINE
+        }, 10);
+        
+        console.log('Step', stepNumber, 'is now visible');
         
         // Scroll to step
         setTimeout(() => {
             targetStep.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }, 100);
     } else {
-        console.error('Step', stepNumber, 'not found'); // Debug log
+        console.error('Step', stepNumber, 'not found');
     }
 }
 
