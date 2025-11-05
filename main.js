@@ -1,7 +1,7 @@
 // ============================================
 // CONFIGURATION - UPDATE THIS URL ONLY
 // ============================================
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzQ_BsdVg1yF0vpkSUzU9rDHH__XPMT6HLhwNqGsugLumaE-4Mjuk8BDDtKFy93ujli7Q/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxH3XEZ13rd_YFBVOw5z4nCAqk8_u3MFedt2k3zGcOME2YgipjpjvccGxhQPIx6Lu02nw/exec';
 
 // ============================================
 // Burger Menu Toggle
@@ -132,39 +132,29 @@ window.addEventListener('resize', () => {
 // RSVP FORM FUNCTIONALITY
 // ============================================
 
-let isVerified = false;
-let verifiedRowIndex = null;
+let foundGuests = [];
+let selectedGuest = null;
 
 document.addEventListener('DOMContentLoaded', function() {
-    const verifyBtn = document.getElementById('verifyBtn');
-    const guestNamesInput = document.getElementById('guestNames');
+    const continueBtn = document.getElementById('continueBtn');
+    const selectBtn = document.getElementById('selectBtn');
+    const searchAgainLink = document.getElementById('searchAgainLink');
     const rsvpForm = document.getElementById('rsvpForm');
+    const searchName = document.getElementById('searchName');
+    const searchError = document.getElementById('searchError');
     
-    // Create verification message element
-    const verificationMsg = document.createElement('div');
-    verificationMsg.className = 'verification-message';
-    verificationMsg.style.marginTop = '10px';
-    guestNamesInput.parentNode.parentNode.appendChild(verificationMsg);
-    
-    // Reset verification when names change
-    guestNamesInput.addEventListener('input', function() {
-        isVerified = false;
-        verifiedRowIndex = null;
-        verificationMsg.textContent = '';
-        verificationMsg.className = 'verification-message';
-    });
-    
-    // Verify guests
-    verifyBtn.addEventListener('click', async function() {
-        const names = guestNamesInput.value.trim();
+    // Step 1: Search for guest
+    continueBtn.addEventListener('click', async function() {
+        const name = searchName.value.trim();
         
-        if (!names) {
-            showMessage(verificationMsg, 'Please enter guest name(s)', 'error');
+        if (!name) {
+            showError('Please enter a name');
             return;
         }
         
-        verifyBtn.disabled = true;
-        verifyBtn.textContent = 'Verifying...';
+        continueBtn.disabled = true;
+        continueBtn.textContent = 'Searching...';
+        searchError.style.display = 'none';
         
         try {
             const response = await fetch(GOOGLE_SCRIPT_URL, {
@@ -176,51 +166,76 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 redirect: 'follow',
                 body: JSON.stringify({
-                    action: 'verify',
-                    names: names
+                    action: 'search',
+                    name: name
                 })
             });
             
             const result = await response.json();
             
-            if (result.success) {
-                isVerified = true;
-                verifiedRowIndex = result.rowIndex;
-                showMessage(verificationMsg, result.message, 'success');
+            console.log('Search result:', result); // Debug log
+            
+            if (result.success && result.guests && result.guests.length > 0) {
+                foundGuests = result.guests;
+                console.log('Found guests:', foundGuests); // Debug log
+                displayGuestList(result.guests);
+                
+                // Small delay to ensure DOM is ready
+                setTimeout(() => {
+                    showStep(2);
+                }, 100);
             } else {
-                isVerified = false;
-                verifiedRowIndex = null;
-                showMessage(verificationMsg, result.message, 'error');
+                showError(result.message || 'Name not found');
             }
         } catch (error) {
-            console.error('Verification error:', error);
-            showMessage(verificationMsg, 'Unable to verify. Please try again or contact the couple.', 'error');
-            isVerified = false;
-            verifiedRowIndex = null;
+            console.error('Search error:', error);
+            showError('Unable to search. Please try again or contact the couple.');
         } finally {
-            verifyBtn.disabled = false;
-            verifyBtn.textContent = 'Verify';
+            continueBtn.disabled = false;
+            continueBtn.textContent = 'Continue';
         }
     });
     
-    // Form submission
+    // Step 2: Select guest from list
+    selectBtn.addEventListener('click', function() {
+        const selectedRadio = document.querySelector('input[name="guestSelect"]:checked');
+        
+        if (!selectedRadio) {
+            alert('Please select your name from the list');
+            return;
+        }
+        
+        const guestIndex = parseInt(selectedRadio.value);
+        selectedGuest = foundGuests[guestIndex];
+        
+        showStep(3);
+    });
+    
+    // Search again link
+    searchAgainLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        resetForm();
+        showStep(1);
+    });
+    
+    // Step 3: Submit RSVP
     rsvpForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        if (!isVerified) {
-            showMessage(verificationMsg, 'Please verify your guest name(s) first', 'error');
+        if (!selectedGuest) {
+            alert('Please select a guest first');
             return;
         }
         
         const formData = {
             action: 'submit',
-            names: guestNamesInput.value.trim(),
+            selectedGuest: selectedGuest,
             email: document.getElementById('email').value.trim(),
             attendance: document.querySelector('input[name="attendance"]:checked').value,
             dietary: document.getElementById('dietaryRestrictions').value.trim()
         };
         
-        const submitBtn = rsvpForm.querySelector('.submit-btn');
+        const submitBtn = rsvpForm.querySelector('.rsvp-submit-btn');
         submitBtn.disabled = true;
         submitBtn.textContent = 'Submitting...';
         
@@ -239,25 +254,18 @@ document.addEventListener('DOMContentLoaded', function() {
             const result = await response.json();
             
             if (result.success) {
-                showMessage(verificationMsg, result.message, 'success');
-                
-                // Show success alert
-                setTimeout(() => {
-                    alert('Thank you! Your RSVP has been recorded. We can\'t wait to celebrate with you!');
-                    rsvpForm.reset();
-                    isVerified = false;
-                    verifiedRowIndex = null;
-                    verificationMsg.textContent = '';
-                }, 500);
+                alert(result.message);
+                resetForm();
+                showStep(1);
             } else {
-                showMessage(verificationMsg, result.message, 'error');
+                alert(result.message || 'Unable to submit RSVP');
             }
         } catch (error) {
             console.error('Submission error:', error);
-            showMessage(verificationMsg, 'Unable to submit RSVP. Please try again or contact the couple.', 'error');
+            alert('Unable to submit RSVP. Please try again or contact the couple.');
         } finally {
             submitBtn.disabled = false;
-            submitBtn.textContent = 'RSVP';
+            submitBtn.textContent = 'Submit RSVP';
         }
     });
     
@@ -268,9 +276,100 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 5000);
 });
 
-function showMessage(element, message, type) {
-    element.textContent = message;
-    element.className = `verification-message ${type}`;
+// FIXED: Display guest list with proper styling and selection
+function displayGuestList(guests) {
+    const guestList = document.getElementById('guestList');
+    
+    if (!guestList) {
+        console.error('Guest list container not found');
+        return;
+    }
+    
+    guestList.innerHTML = '';
+    
+    console.log('Displaying', guests.length, 'guests'); // Debug log
+    
+    guests.forEach((guest, index) => {
+        const box = document.createElement('div');
+        box.className = 'guest-name-box';
+        box.dataset.index = index;
+        
+        // Create radio input (hidden)
+        const radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = 'guestSelect';
+        radio.value = index;
+        radio.id = `guest-${index}`;
+        radio.style.display = 'none';
+        
+        // Create label for the name
+        const label = document.createElement('label');
+        label.htmlFor = `guest-${index}`;
+        label.textContent = guest.name;
+        label.style.cursor = 'pointer';
+        label.style.display = 'block';
+        label.style.width = '100%';
+        
+        // Add click handler to the box
+        box.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('Guest selected:', guest.name); // Debug log
+            
+            // Remove selected class from all boxes
+            document.querySelectorAll('.guest-name-box').forEach(b => {
+                b.classList.remove('selected');
+            });
+            // Add selected class to clicked box
+            this.classList.add('selected');
+            // Check the radio
+            radio.checked = true;
+        });
+        
+        box.appendChild(radio);
+        box.appendChild(label);
+        guestList.appendChild(box);
+    });
+    
+    console.log('Guest list populated with', guestList.children.length, 'items'); // Debug log
+}
+
+function showStep(stepNumber) {
+    console.log('Showing step:', stepNumber); // Debug log
+    
+    // Hide all steps
+    document.querySelectorAll('.rsvp-step').forEach(step => {
+        step.style.display = 'none';
+    });
+    
+    // Show the requested step
+    const targetStep = document.getElementById(`step${stepNumber}`);
+    if (targetStep) {
+        targetStep.style.display = 'block';
+        
+        console.log('Step', stepNumber, 'is now visible'); // Debug log
+        console.log('Step HTML:', targetStep.innerHTML.substring(0, 200)); // Show first 200 chars
+        
+        // Scroll to step
+        setTimeout(() => {
+            targetStep.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 100);
+    } else {
+        console.error('Step', stepNumber, 'not found'); // Debug log
+    }
+}
+
+function showError(message) {
+    const searchError = document.getElementById('searchError');
+    searchError.textContent = message;
+    searchError.style.display = 'block';
+}
+
+function resetForm() {
+    document.getElementById('searchName').value = '';
+    document.getElementById('searchError').style.display = 'none';
+    document.getElementById('rsvpForm').reset();
+    foundGuests = [];
+    selectedGuest = null;
 }
 
 // ============================================

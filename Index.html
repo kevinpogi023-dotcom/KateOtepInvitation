@@ -136,34 +136,55 @@
     </section>
 
 <!-- RSVP Section -->
-<section id="rsvp" class="section-dark">
-    <div class="container">
-        <div class="rsvp-content">
-            <div class="rsvp-text">
-                <h3>RSVP</h3>
-                <p>Let us know if you're able to make it or not by <strong>July 5, 2025</strong>.</p>
-                <p>Please ensure you fill in the information for <strong>ALL</strong> guests in your party and have them specified.</p>
+<section id="rsvp" class="section-light rsvp-section">
+    <div class="rsvp-container">
+        <h2 class="rsvp-main-title">We hope to celebrate with you!</h2>
+        
+        <!-- Step 1: Search Name -->
+        <div id="step1" class="rsvp-step active">
+            <div class="rsvp-card">
+                <p class="rsvp-instruction">Please enter the first and last name of one member of your party below.</p>
+                <p class="rsvp-instruction">If you're responding for you and a guest (or your family), you'll be able to RSVP for your entire group on the next page.</p>
+                
+                <input type="text" id="searchName" placeholder="First and Last name" class="rsvp-input">
+                <p class="rsvp-example">Ex. Sarah Fortune (not The Fortune Family or Dr. & Mr. Fortune)</p>
+                
+                <button id="continueBtn" class="rsvp-continue-btn">Continue</button>
+                
+                <div id="searchError" class="rsvp-error" style="display: none;"></div>
             </div>
-            <div class="rsvp-form">
+        </div>
+        
+        <!-- Step 2: Select Guest -->
+        <div id="step2" class="rsvp-step" >
+            <div class="rsvp-card">
+                <p class="rsvp-select-instruction">Select your info below or try searching again.</p>
+                
+                <div id="guestList" class="guest-name-list">
+                    <!-- Guest names will be populated here -->
+                </div>
+                
+                <button id="selectBtn" class="rsvp-select-btn">Select</button>
+                
+                <p class="rsvp-search-again">
+                    <a href="#" id="searchAgainLink">Search again</a>
+                </p>
+            </div>
+        </div>
+        
+        <!-- Step 3: RSVP Form -->
+        <div id="step3" class="rsvp-step" style="display: none;">
+            <div class="rsvp-card">
+                <h3 class="rsvp-confirm-title">Will you attend?</h3>
+                
                 <form id="rsvpForm">
                     <div class="form-group">
-                        <label for="guestNames">Name(s) <span class="required">(required)</span></label>
-                        <p class="form-helper">Please specify all the guests in your party separated by commas (e.g., "John Doe, Jane Doe"). Kindly check the number of seats reserved in your invitation.</p>
-                        <div class="input-with-button">
-                            <input type="text" id="guestNames" name="guestNames" placeholder="e.g., John Doe, Jane Doe" required>
-                            <button type="button" id="verifyBtn" class="verify-btn">Verify</button>
-                        </div>
-                        <!-- Verification message will appear here -->
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email">Email <span class="required">(required)</span></label>
-                        <p class="form-helper">(One per party is great!)</p>
+                        <label for="email">Email <span class="required">*</span></label>
                         <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
                     </div>
 
                     <div class="form-group">
-                        <label>Will you come celebrate with us?</label>
+                        <label>Will you come celebrate with us? <span class="required">*</span></label>
                         <div class="radio-group">
                             <label class="radio-label">
                                 <input type="radio" name="attendance" value="yes" required>
@@ -177,12 +198,11 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="dietaryRestrictions">Anything else?</label>
-                        <p class="form-helper">Include any dietary restrictions your party may have as well!</p>
-                        <textarea id="dietaryRestrictions" name="dietaryRestrictions" rows="5" placeholder="e.g., Vegetarian, No shellfish, Gluten-free"></textarea>
+                        <label for="dietaryRestrictions">Dietary Restrictions</label>
+                        <textarea id="dietaryRestrictions" name="dietaryRestrictions" rows="4" placeholder="e.g., Vegetarian, No shellfish, Gluten-free"></textarea>
                     </div>
 
-                    <button type="submit" class="submit-btn">RSVP</button>
+                    <button type="submit" class="rsvp-submit-btn">Submit RSVP</button>
                 </form>
             </div>
         </div>
