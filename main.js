@@ -287,11 +287,8 @@ selectBtn.addEventListener('click', function() {
         }
     });
     
-    // Initialize carousel
-    updateDots();
-    setInterval(() => {
-        moveCarousel(1);
-    }, 5000);
+
+   
 });
 
 // FIXED: Display guest list with proper styling and selection
@@ -411,41 +408,3 @@ function resetForm() {
     selectedGuest = null;
 }
 
-// ============================================
-// CAROUSEL FUNCTIONALITY
-// ============================================
-let currentSlide = 0;
-
-function moveCarousel(direction) {
-    const images = document.querySelectorAll('.carousel-img');
-    const totalSlides = images.length;
-    
-    images[currentSlide].classList.remove('active');
-    currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
-    images[currentSlide].classList.add('active');
-    updateDots();
-}
-
-function updateDots() {
-    const dotsContainer = document.querySelector('.carousel-dots');
-    const images = document.querySelectorAll('.carousel-img');
-    
-    if (!dotsContainer) return;
-    
-    dotsContainer.innerHTML = '';
-    
-    images.forEach((_, index) => {
-        const dot = document.createElement('span');
-        dot.className = 'dot' + (index === currentSlide ? ' active' : '');
-        dot.onclick = () => goToSlide(index);
-        dotsContainer.appendChild(dot);
-    });
-}
-
-function goToSlide(index) {
-    const images = document.querySelectorAll('.carousel-img');
-    images[currentSlide].classList.remove('active');
-    currentSlide = index;
-    images[currentSlide].classList.add('active');
-    updateDots();
-}
