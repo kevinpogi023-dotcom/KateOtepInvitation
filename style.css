@@ -290,8 +290,6 @@ section {
  /* Story Section - FIXED */
         #story {
             padding:0;
-           
-
         }
 
         #story .container {
@@ -305,7 +303,7 @@ section {
             margin: 0 auto 4rem;
             display: flex;
             align-items: flex-start;
-            padding: 0 2rem;
+            padding: 0 ;
         }
 
         .story-label {
@@ -362,7 +360,7 @@ section {
         .carousel-track {
             display: flex;
             height: 100%;
-            animation: spin 15s infinite linear; 
+            animation: spin 30s infinite linear; 
         }
 
         .carousel-img {
