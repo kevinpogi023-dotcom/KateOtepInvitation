@@ -292,53 +292,53 @@ section {
             padding:0;
         }
 
-        #story .container {
-            max-width: none;
-            max-height: 100%;
-            padding: 0;
-        }
+       #story .container {
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 0;
+    }
 
-        .story-text-center {
-            max-width: 1200px;
-            margin: 0 auto 4rem;
-            display: flex;
-            align-items: flex-start;
-            padding: 0 ;
-        }
+    .story-label {
+        font-size: 1.5rem;
+        color: #999;
+        font-style: italic;
+        letter-spacing: 1px;
+        margin-bottom: 2rem;
+        font-weight: 300;
+        padding-left: 2rem;
+        padding-top: 2rem;
+    }
 
-        .story-label {
-            font-size: 0.85rem;
-            color: #999;
-            font-style: italic;
-            letter-spacing: 1px;
-            margin-bottom: 1.5rem;
-            font-weight: 300;
-            margin-left: 0;
-            padding-left: 0;
-        }
+    .story-text-center {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: start;
+        margin-bottom: 4rem;
+    }
 
-        .story-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin: 0;
-            color: #ffffff;
-            line-height: 1.2;
-            letter-spacing: 2px;
-            text-align: flex;
-            max-width: 100%;
-            padding-left: 0;
-        }
+    .story-title {
+        font-size: 3rem;
+        font-weight: 700;
+        margin: 0;
+        color: #ffffff;
+        line-height: 1.2;
+        letter-spacing: 2px;
+        text-align: left;
+        padding-left: 2rem;
+    }
 
-        .story-description {
-            font-size: 1.5rem;
-            line-height: 1.8;
-            color: #d0d0d0;
-            font-weight: 300;
-            text-align: justify;
-            max-width: 100%;
-            padding-left: 0;
-            column-count: 2;
-        }
+    .story-description {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #d0d0d0;
+        font-weight: 300;
+        text-align: justify;
+        margin: 0;
+        column-count: 2;
+        padding-right: 1rem;
+      
+    }
 
         .carousel-container {
             width: 100%;
@@ -987,26 +987,105 @@ footer {
 }
 
 /* Responsive */
+@media (max-width: 1200px) {
+    /* Large tablet/small desktop adjustments */
+    .hero-navbar {
+        padding: 1.5rem 3rem;
+    }
+    
+    .hero-navbar a {
+        margin: 0 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .story-text-center {
+        gap: 2rem;
+    }
+    
+    .party-content {
+        max-width: 90%;
+        padding-left: 10px;
+    }
+    
+    .party-text {
+        padding-right: 100px;
+        padding-left: 20px;
+    }
+    
+    .party-text h3 {
+        font-size: 2.5rem;
+    }
+    
+    .party-images {
+        width: 220px;
+    }
+   
+    
+    .party-img-container {
+        height: 210px;
+    }
+    
+    .event-content {
+        gap: 3rem;
+    }
+    
+    .registry-content {
+        gap: 3rem;
+    }
+}
+
 @media (max-width: 1024px) {
     /* Tablet adjustments */
     .hero-navbar {
         padding: 1.5rem 2rem;
     }
     
+    .couple-names {
+        font-size: 4.5rem;
+    }
+    
+    .story-label {
+        text-align: center;
+    }
+    .story-text-center {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 0 2rem;
+    }
+    
+    .story-title {
+        font-size: 2.5rem;
+        text-align: center;
+    }
+    
+    .story-description {
+        column-count: 2;
+        padding: 0;
+    }
+    
+    .carousel-container {
+        height: 600px;
+    }
+    
     .party-content {
-        max-width: 85%;
+        max-width: 95%;
+        padding-left: 15px;
     }
     
     .party-text {
-        padding-right: 80px;
+        padding-right: 60px;
     }
     
-    .rsvp-content {
-        gap: 3rem;
+    .party-text h3 {
+        font-size: 2.2rem;
     }
     
-    .rsvp-text {
-        flex: 0 0 350px;
+    .party-images {
+        width: 200px;
+    }
+    
+    .party-img-container {
+        height: 190px;
     }
 }
 
@@ -1044,19 +1123,22 @@ footer {
     /* Hero Section */
     .hero {
         background-position: center center;
+        height: 100vh;
     }
     
     .couple-names {
-        font-size: 2.8rem;
+        font-size: 3.5rem;
+        letter-spacing: 2px;
     }
 
     .welcome-text {
         font-size: 1.1rem;
+        letter-spacing: 1.5px;
     }
 
     .wedding-date {
-        font-size: 1.3rem;
-        letter-spacing: 4px;
+        font-size: 1.4rem;
+        letter-spacing: 5px;
     }
     
     .scroll-indicator {
@@ -1064,63 +1146,58 @@ footer {
     }
 
     /* Story Section */
+    #story {
+        padding: 4rem 0;
+    }
+
     .story-text-center {
-        margin-bottom: 3rem;
-        flex-direction: column;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2.5rem;
         padding: 0 1.5rem;
     }
     
     .story-label {
-        font-size: 0.85rem;
+        font-size: 1.2rem;
+        padding-left: 1.5rem;
+        padding-top: 1rem;
     }
     
     .story-title {
-        font-size: 1.5rem;
-        padding: 0 1rem;
-        margin-bottom: 1.5rem;
-        text-align: left;
+        font-size: 2rem;
+        padding: 0 1.5rem;
+        margin-bottom: 1rem;
+        text-align: center;
         line-height: 1.3;
     }
 
     .story-description {
         font-size: 1rem;
-        padding: 0 1rem;
+        padding: 0 1.5rem;
         line-height: 1.7;
         column-count: 1;
-        text-align: left;
+        text-align: center;
     }
 
-    .carousel {
+    .carousel-container {
         height: 450px;
-    }
-
-    .carousel-btn {
-        width: 45px;
-        height: 45px;
-        font-size: 1.8rem;
-    }
-
-    .carousel-btn.prev {
-        left: 15px;
-    }
-
-    .carousel-btn.next {
-        right: 15px;
     }
 
     /* Event Section */
     .event-content {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 2.5rem;
     }
 
     .event-image {
-        height: 350px;
+        height: 400px;
         width: 100%;
+        order: 1;
     }
     
     .timeline-list {
-        margin-bottom: 2rem;
+        margin-bottom: 0;
+        order: 2;
     }
     
     .timeline-item {
@@ -1132,37 +1209,39 @@ footer {
     #party {
         background-position: center center;
         min-height: auto;
+        padding: 4rem 0;
     }
 
     .party-content {
         flex-direction: column;
         max-width: 100%;
-        padding: 3rem 1.5rem;
+        padding: 0 1.5rem;
         min-height: auto;
     }
 
     .party-text {
-        padding: 1.5rem 1rem;
-        padding-right: 1rem;
+        padding: 2rem 0;
         order: 2;
     }
 
     .party-text h3 {
-        font-size: 2rem;
+        font-size: 2.2rem;
         text-align: center;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1rem;
+        line-height: 1.2;
     }
 
     .party-text .subtitle {
-        font-size: 1.4rem;
+        font-size: 1.5rem;
         text-align: center;
         margin-bottom: 1.5rem;
     }
 
     .party-text p {
         font-size: 1rem;
-        text-align: center;
+        text-align: justify;
         line-height: 1.7;
+        margin-bottom: 1.2rem;
     }
 
     .party-images {
@@ -1170,82 +1249,95 @@ footer {
         flex-direction: row;
         order: 1;
         padding: 0;
-        gap: 12px;
-        margin-bottom: 2rem;
+        gap: 10px;
+        margin-bottom: 1.5rem;
     }
 
     .party-img-container {
-        width: calc(33.33% - 8px);
-        height: 200px;
+        width: calc(33.33% - 7px);
+        height: 220px;
     }
 
     /* Attire Section */
-    .attire-content {
-        padding: 0 1rem;
+    #attire {
+        padding:0;
+        margin: 0;
     }
-    
-    .attire-images {
+    .attire-content {
         grid-template-columns: 1fr;
-        gap: 2rem;
-        margin-top: 2rem;
+        gap: 2.5rem;
     }
 
-    .attire-image {
-        height: 400px;
+     #attire .section-title {
+        padding: 1.5rem;
     }
+  
 
     /* Registry Section */
+    #registry {
+        padding: 0;
+    }
     .registry-content {
         grid-template-columns: 1fr;
         gap: 2.5rem;
     }
 
+    #registry .section-title {
+        padding: 1.5rem;
+    }
+
     .registry-text {
-        padding: 0 1rem;
+        padding: 0 1.5rem;
         order: 2;
-        text-align: justify;
+        text-align: center;
+       
     }
     
     .registry-text p {
-        font-size: 1rem;
-        line-height: 1.7;
+        font-size: 1.05rem;
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
     }
 
     .registry-image {
-        height: 350px;
+        height: 400px;
         order: 1;
     }
 
+
+     .cta-link {
+        font-size: 1rem;
+        padding-top: 1rem;
+        padding-bottom: 3rem;
+        display: block;
+        text-align: center;
+        color: var(--accent);
+        text-decoration: none;
+        letter-spacing: 1px;
+        border-bottom: 1px solid var(--accent);
+        transition: all 0.3s ease;
+        
+    }
+    .cta-link:hover {
+        opacity: 0.7;
+    }
+
     /* RSVP Section */
-    .rsvp-content {
-        flex-direction: column;
-        gap: 2.5rem;
-        padding: 0 1rem;
-    }
-    
-    .rsvp-text {
-        flex: none;
-        padding-right: 0;
-        text-align: left;
-    }
-    
-    .rsvp-text h3 {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-        text-align: left;
-        letter-spacing: 0.15em;
+    .rsvp-section {
+        padding: 4rem 1.5rem;
     }
 
-    .rsvp-text p {
-        text-align: left;
+    .rsvp-main-title {
+        font-size: 2rem;
+        margin-bottom: 2.5rem;
     }
 
-    .rsvp-form {
-        padding: 0;
+    .rsvp-card {
+        padding: 2.5rem 2rem;
     }
-    
-    .form-group {
-        margin-bottom: 1.8rem;
+
+    .rsvp-instruction {
+        font-size: 1rem;
     }
 
     /* General adjustments */
@@ -1254,12 +1346,18 @@ footer {
     }
 
     .section-title {
-        font-size: 2.3rem;
+        font-size: 2.5rem;
         margin-bottom: 2.5rem;
+        letter-spacing: 2px;
     }
 
     footer {
         padding: 3rem 1.5rem 2rem;
+    }
+
+    .footer-content h2 {
+        font-size: 2rem !important;
+        margin-bottom: 2.5rem !important;
     }
 
     .faq-item {
@@ -1267,25 +1365,326 @@ footer {
     }
 
     .faq-item h4 {
-        font-size: 1.2rem;
+        font-size: 1.15rem;
     }
 
     .faq-item p {
         font-size: 1rem;
+        line-height: 1.6;
     }
 }
 
 /* Extra small devices */
 @media (max-width: 480px) {
+    /* Navigation */
+    .hero-navbar {
+        padding: 0.8rem 1rem;
+    }
+
+    .hero-navbar .nav-center a {
+        font-size: 0.85rem;
+        letter-spacing: 1px;
+    }
+
+    .burger-menu span {
+        width: 22px;
+    }
+
     /* Hero Section */
+    .hero {
+        height: 100vh;
+    }
+
     .couple-names {
-        font-size: 2rem;
+        font-size: 2.5rem;
         letter-spacing: 1px;
     }
     
     .welcome-text {
-        font-size: 0.9rem;
+        font-size: 1rem;
         padding: 0 1rem;
+        letter-spacing: 1px;
+    }
+
+    .wedding-date {
+        font-size: 1.2rem;
+        letter-spacing: 3px;
+    }
+
+    .scroll-indicator {
+        bottom: 1.5rem;
+    }
+
+    .scroll-dot {
+        width: 25px;
+        height: 45px;
+    }
+
+    /* Story Section */
+    #story {
+        padding: 3rem 0;
+    }
+
+    .story-label {
+        font-size: 1rem;
+        padding-left: 1rem;
+    }
+
+    .story-text-center {
+        padding: 0 1rem;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .story-title {
+        font-size: 1.5rem;
+        padding: 0 1rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .story-description {
+        font-size: 0.95rem;
+        padding: 0 1rem;
+        line-height: 1.6;
+    }
+
+    .carousel-container {
+        height: 320px;
+    }
+
+    /* Event Section */
+    .event-image {
+        height: 280px;
+    }
+    
+    .timeline-item {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    /* Party Section */
+    #party {
+        padding: 3rem 0;
+    }
+
+    .party-content {
+        padding: 0 1rem;
+    }
+    
+    .party-text {
+        padding: 1.5rem 0;
+    }
+
+    .party-text h3 {
+        font-size: 1.6rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .party-text .subtitle {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+    }
+
+    .party-text p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+    }
+
+    .party-images {
+        gap: 8px;
+        margin-bottom: 1rem;
+    }
+
+    .party-img-container {
+        width: calc(33.33% - 5px);
+        height: 150px;
+    }
+
+    /* Attire Section */
+     #attire {
+        padding:0;
+        margin: 0;
+    }
+    .attire-content {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+
+    .attire-images {
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .attire-image {
+        height: 320px;
+    }
+
+    /* Registry Section */
+    .registry-content {
+        gap: 2rem;
+    }
+
+    .registry-text {
+        padding: 0 1rem;
+    }
+
+    .registry-image {
+        height: 280px;
+    }
+    
+    .registry-text p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+    .cta-link {
+        font-size: 1rem;
+    }
+
+    /* RSVP Section */
+    .rsvp-section {
+        padding: 3rem 1rem;
+    }
+
+    .rsvp-main-title {
+        font-size: 1.6rem;
+        margin-bottom: 2rem;
+    }
+
+    .rsvp-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .rsvp-instruction {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 1.2rem;
+    }
+
+    .rsvp-input {
+        padding: 0.9rem 1.2rem;
+        font-size: 0.95rem;
+    }
+
+    .rsvp-example {
+        font-size: 0.85rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .rsvp-continue-btn,
+    .rsvp-select-btn,
+    .rsvp-submit-btn {
+        padding: 0.9rem 1.5rem;
+        font-size: 1rem;
+    }
+
+    .guest-name-label {
+        font-size: 1rem;
+    }
+
+    .guest-radio-label {
+        font-size: 0.95rem;
+    }
+
+    .guest-radio-group {
+        gap: 1.5rem;
+    }
+
+    .rsvp-confirm-title {
+        font-size: 1.6rem;
+        margin-bottom: 1.5rem;
+    }
+
+    #step3 .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    #step3 .form-group label {
+        font-size: 0.95rem;
+        margin-bottom: 0.6rem;
+    }
+
+    #step3 input[type="email"],
+    #step3 textarea {
+        padding: 0.9rem 1.2rem;
+        font-size: 0.95rem;
+    }
+
+    #step3 .radio-label {
+        padding: 0.8rem;
+    }
+
+    #step3 .radio-label span {
+        font-size: 0.95rem;
+    }
+
+    /* General adjustments */
+    section {
+        padding: 3rem 1rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        letter-spacing: 1.5px;
+    }
+
+    footer {
+        padding: 2.5rem 1rem 1.5rem;
+    }
+    
+    .footer-content h2 {
+        font-size: 1.8rem !important;
+        margin-bottom: 2rem !important;
+        letter-spacing: 1.5px !important;
+    }
+
+    .faq-item {
+        margin-bottom: 1.5rem;
+    }
+
+    .faq-item h4 {
+        font-size: 1.05rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .faq-item p {
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+
+    .footer-bottom {
+        margin-top: 2.5rem;
+        padding-top: 1.5rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* Ultra small devices (320px and below) */
+@media (max-width: 360px) {
+    /* Navigation */
+    .hero-navbar {
+        padding: 0.7rem 0.8rem;
+    }
+
+    .hero-navbar .nav-center a {
+        font-size: 0.8rem;
+    }
+
+    .burger-menu span {
+        width: 20px;
+    }
+
+    /* Hero Section */
+    .couple-names {
+        font-size: 2rem;
+        letter-spacing: 0.5px;
+    }
+    
+    .welcome-text {
+        font-size: 0.9rem;
+        letter-spacing: 0.5px;
     }
 
     .wedding-date {
@@ -1294,111 +1693,144 @@ footer {
     }
 
     /* Story Section */
-    .story-title {
-        font-size: 1.2rem;
+    .story-label {
+        font-size: 0.9rem;
+        padding-left: 0.8rem;
+        text-align: center;
     }
-    
+
+    .story-text-center {
+        padding: 0 0.8rem;
+    }
+
+    .story-title {
+        font-size: 1.3rem;
+        padding: 0 0.8rem;
+    }
+
     .story-description {
         font-size: 0.9rem;
-        padding: 0 0.5rem;
+        padding: 0 0.8rem;
+        text-align: center;
     }
 
-    .carousel {
-        height: 260px;
-    }
-    
-    .carousel-btn {
-        width: 32px;
-        height: 32px;
-        font-size: 1.3rem;
-    }
-    
-    .carousel-btn.prev {
-        left: 5px;
-    }
-
-    .carousel-btn.next {
-        right: 5px;
+    .carousel-container {
+        height: 280px;
     }
 
     /* Event Section */
     .event-image {
-        height: 220px;
+        height: 240px;
     }
-    
+
     .timeline-item {
         font-size: 0.95rem;
-        margin-bottom: 0.8rem;
     }
 
     /* Party Section */
     .party-content {
-        padding: 1.5rem 0.8rem;
+        padding: 0 0.8rem;
     }
-    
+
     .party-text {
-        padding: 1rem 0.3rem;
+        padding: 1.2rem 0;
     }
 
     .party-text h3 {
         font-size: 1.4rem;
-        margin-bottom: 0.8rem;
     }
 
     .party-text .subtitle {
         font-size: 1.1rem;
-        margin-bottom: 0.8rem;
     }
 
     .party-text p {
-        font-size: 0.85rem;
-        line-height: 1.5;
-    }
-
-    .party-images {
-        gap: 6px;
+        font-size: 0.9rem;
     }
 
     .party-img-container {
-        width: calc(33.33% - 4px);
-        height: 120px;
+        height: 130px;
     }
 
     /* Attire Section */
+    .attire-content {
+        padding: 0 0.8rem;
+    }
+
     .attire-image {
         height: 280px;
     }
 
     /* Registry Section */
-    .registry-image {
-        height: 220px;
+    .registry-text {
+        padding: 0 0.8rem;
     }
-    
+
     .registry-text p {
         font-size: 0.9rem;
-        padding: 0 0.5rem;
+    }
+
+    .registry-image {
+        height: 240px;
     }
 
     /* RSVP Section */
-    .rsvp-text h3 {
-        font-size: 2.2rem;
-        letter-spacing: 0.08em;
+    .rsvp-section {
+        padding: 2.5rem 0.8rem;
     }
 
-    .input-with-button {
-        flex-direction: column;
-        gap: 0.5rem;
+    .rsvp-main-title {
+        font-size: 1.4rem;
     }
 
-    .verify-btn {
-        width: 100%;
-        padding: 0.9rem;
+    .rsvp-card {
+        padding: 1.5rem 1.2rem;
+    }
+
+    .rsvp-instruction {
         font-size: 0.9rem;
     }
 
-    #guestCode {
+    .rsvp-input {
+        padding: 0.8rem 1rem;
         font-size: 0.9rem;
-        padding: 0.9rem;
+    }
+
+    .rsvp-example {
+        font-size: 0.8rem;
+    }
+
+    .rsvp-continue-btn,
+    .rsvp-select-btn,
+    .rsvp-submit-btn {
+        padding: 0.8rem 1.2rem;
+        font-size: 0.95rem;
+    }
+
+    .guest-name-label {
+        font-size: 0.95rem;
+    }
+
+    .guest-radio-label {
+        font-size: 0.9rem;
+    }
+
+    .guest-radio-group {
+        gap: 1.2rem;
+    }
+
+    .rsvp-confirm-title {
+        font-size: 1.4rem;
+    }
+
+    #step3 .form-group label {
+        font-size: 0.9rem;
+    }
+
+    #step3 input[type="email"],
+    #step3 textarea {
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
     }
 
     /* General adjustments */
@@ -1407,49 +1839,34 @@ footer {
     }
 
     .section-title {
-        font-size: 1.6rem;
-        margin-bottom: 1.5rem;
-        letter-spacing: 1.5px;
+        font-size: 1.7rem;
+        margin-bottom: 1.8rem;
     }
 
     footer {
-        padding: 2rem 0.8rem 1.5rem;
+        padding: 2rem 0.8rem 1.2rem;
     }
-    
+
     .footer-content h2 {
         font-size: 1.6rem !important;
-        margin-bottom: 1.5rem !important;
+        margin-bottom: 1.8rem !important;
     }
 
     .faq-item {
-        margin-bottom: 1.2rem;
+        margin-bottom: 1.3rem;
     }
 
     .faq-item h4 {
-        font-size: 0.95rem;
+        font-size: 1rem;
     }
 
     .faq-item p {
-        font-size: 0.85rem;
-        line-height: 1.4;
+        font-size: 0.9rem;
     }
-}
 
-/* Ultra small devices (320px and below) */
-@media (max-width: 360px) {
-    .couple-names {
-        font-size: 1.8rem;
-    }
-    
-    .section-title {
-        font-size: 1.4rem;
-    }
-    
-    .party-text h3 {
-        font-size: 1.2rem;
-    }
-    
-    .rsvp-text h3 {
-        font-size: 2rem;
+    .footer-bottom {
+        font-size: 0.8rem;
+        margin-top: 2rem;
+        padding-top: 1.2rem;
     }
 }
