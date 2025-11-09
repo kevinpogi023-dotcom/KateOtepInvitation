@@ -342,7 +342,7 @@ section {
 
         .carousel-container {
             width: 100%;
-            height: 800px; /* Increased from implicit height */
+            height: 750px; /* Increased from implicit height */
             overflow: hidden;
         }
 
@@ -379,39 +379,117 @@ section {
             }
         }
 
-/* Event Section */
+    /* Event Section */
 #event {
-    background-image: url('images/image.png');
+    background-image: url('images/eventpic.png');
     background-size: cover;
-    background-position: center; 
-    background-repeat: no-repeat;
-    
-    position: relative;
-}
-.event-content {
-    display: grid;
-    grid-template-columns: 1fr 1.5fr;
-    gap: 4rem;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
     align-items: center;
-}
+    justify-content: center;
+    position: relative;
+    padding: 80px 20px;
+    overflow: hidden;
+}   
 
-.timeline-list {
-    list-style: none;
-    padding: 0;
-}
-
-.timeline-item {
-    font-size: 1.2rem;
-    margin-bottom: 1.5rem;
-    color: #ccc;
-    letter-spacing: 1px;
-}
-
-.event-image {
+#event .container {
+    max-width: 1400px;
     width: 100%;
-    height: 500px;
-    object-fit: cover;
-    border-radius: 4px;
+}
+
+.big-day-title {
+    text-align: center;
+    color: white;
+    font-size: 5rem;
+    letter-spacing: 0.5em;
+    font-weight: 300;
+    margin-bottom: 100px;
+    text-transform: uppercase;
+    font-family: 'Garamond', serif;
+}
+
+.timeline-container {
+    position: relative;
+    padding: 100px 0;
+}
+
+/* The main horizontal line */
+.timeline-line {
+    position: absolute;
+    top: 50%;
+    left: 8%;
+    right: 8%;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.8);
+    transform: translateY(-50%);
+}
+
+.timeline-events {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: 0 8%;
+}
+
+.timeline-event {
+    flex: 1;
+    text-align: center;
+    position: relative;
+    color: white;
+}
+
+/* Vertical line markers */
+.timeline-event::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.8);
+    top: -100px;
+}
+
+/* Alternate vertical lines - some go up, some go down */
+.timeline-event:nth-child(odd)::before {
+    top: auto;
+    bottom: -100px;
+}
+
+.event-time {
+    font-size: 1.5rem;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    margin-bottom: 20px;
+}
+
+.event-name {
+    font-size: 1rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.event-location {
+    font-size: 0.85rem;
+    font-weight: 300;
+    font-style: italic;
+    opacity: 0.9;
+    line-height: 1.3;
+}
+
+/* Position odd events above the line */
+.timeline-event:nth-child(odd) {
+    transform: translateY(-120px);
+}
+
+/* Position even events below the line */
+.timeline-event:nth-child(even) {
+    transform: translateY(120px);
 }
 
 /* Wedding Party Section */
@@ -1001,6 +1079,23 @@ footer {
     .story-text-center {
         gap: 2rem;
     }
+
+     .big-day-title {
+        font-size: 4rem;
+        letter-spacing: 0.3em;
+    }
+    
+    .event-time {
+        font-size: 1.2rem;
+    }
+    
+    .event-name {
+        font-size: 0.9rem;
+    }
+    
+    .event-location {
+        font-size: 0.75rem;
+    }
     
     .party-content {
         max-width: 90%;
@@ -1183,26 +1278,103 @@ footer {
         height: 450px;
     }
 
-    /* Event Section */
-    .event-content {
-        grid-template-columns: 1fr;
-        gap: 2.5rem;
+   #event {
+        padding: 60px 20px;
     }
 
-    .event-image {
-        height: 400px;
-        width: 100%;
-        order: 1;
+    .big-day-title {
+        font-size: 2.5rem;
+        letter-spacing: 0.3em;
+        margin-bottom: 80px;
     }
     
-    .timeline-list {
+    .timeline-container {
+        padding: 40px 0;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .timeline-events {
+        flex-direction: column;
+        gap: 0;
+        padding: 0;
+        align-items: stretch;
+    }
+    
+    /* Vertical timeline line */
+    .timeline-line {
+        left: 50%;
+        right: auto;
+        width: 2px;
+        height: 100%;
+        top: 0;
+        transform: translateX(-50%);
+        background: rgba(255, 255, 255, 0.8);
+    }
+    
+    .timeline-event {
+        transform: none !important;
+        margin-bottom: 50px;
+        width: 50%;
+        position: relative;
+    }
+
+    .timeline-event:last-child {
         margin-bottom: 0;
-        order: 2;
     }
     
-    .timeline-item {
-        font-size: 1.1rem;
-        margin-bottom: 1.2rem;
+    /* Left side events (odd) */
+    .timeline-event:nth-child(odd) {
+        align-self: flex-start;
+        text-align: right;
+        padding-right: 40px;
+    }
+
+    /* Right side events (even) */
+    .timeline-event:nth-child(even) {
+        align-self: flex-end;
+        text-align: left;
+        padding-left: 40px;
+    }
+    
+    /* Horizontal lines - Left side */
+    .timeline-event:nth-child(odd)::before {
+        width: 30px;
+        height: 2px;
+        top: 10px;
+        left: auto;
+        right: 0;
+        bottom: auto;
+        transform: none;
+        background: rgba(255, 255, 255, 0.8);
+    }
+
+    /* Horizontal lines - Right side */
+    .timeline-event:nth-child(even)::before {
+        width: 30px;
+        height: 2px;
+        top: 10px;
+        left: 0;
+        right: auto;
+        bottom: auto;
+        transform: none;
+        background: rgba(255, 255, 255, 0.8);
+    }
+    
+    .event-time {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+        font-weight: 400;
+    }
+
+    .event-name {
+        font-size: 0.85rem;
+        margin-bottom: 5px;
+        letter-spacing: 0.1em;
+    }
+
+    .event-location {
+        font-size: 0.75rem;
     }
 
     /* Party Section */
