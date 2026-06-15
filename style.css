@@ -1,3 +1,10 @@
+@font-face {
+    font-family: 'Garamond';
+    src: url('fonts/garamond_[allfont.ru].ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -37,59 +44,125 @@ body {
 }
 
 .hero-navbar .nav-left {
-    flex: 1;
+    flex: 1.5;
     display: flex;
     justify-content: flex-start;
 }
 
 .hero-navbar .nav-center {
-    flex: 1;
+    flex: 2;
     text-align: center;
-    display: flex;
-    justify-content: center;
-}
-
-.hero-navbar .nav-right {
-    flex: 1;
     display: flex;
     justify-content: flex-end;
 }
 
-.hero-navbar a {
-    color: var(--text-light);
-    text-decoration: none;
-    margin: 0 1.5rem;
-    font-size: 0.95rem;
-    letter-spacing: 1px;
-    transition: all 0.3s ease;
-    font-weight: 400;
+.hero-navbar .nav-right {
+    flex: 0;
+    display: flex;
+    justify-content: flex-end;
+    padding-left: 2rem;
 }
 
-.hero-navbar a:hover {
-    opacity: 0.7;
+.nav-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-decoration: none;
+    line-height: 0.4;
+    gap: 0;
+}
+
+.nav-logo .logo-joseph {
+    color: var(--text-light);
+    margin-left: -16px;
+}
+
+.nav-logo .logo-j {
+    font-family: 'Alex Brush', cursive;
+    font-size: 30px;
+    font-weight: 400;
+    color: var(--text-light);
+    margin-right: 4px;
+}
+
+.nav-logo .logo-oseph {
+    font-family: 'Cinzel', serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--text-light);
+}
+
+.nav-logo .logo-amp {
+    font-family: 'Alex Brush', cursive;
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--text-light);
+    padding-left: 90px;
+}
+
+.nav-logo .logo-kate {
+    color: var(--text-light);
+    padding-left: 110px;
+}
+
+.nav-logo .logo-k {
+    font-family: 'Alex Brush', cursive;
+    font-size: 30px;
+    font-weight: 400;
+    color: var(--text-light);
+    margin-right: 4px;
+}
+
+.nav-logo .logo-ate {
+    font-family: 'Cinzel', serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--text-light);
+}
+
+.hero-navbar a:not(.nav-logo) {
+    color: var(--text-light);
+    text-decoration: none;
+    margin: 0 1.2rem;
+    font-size: 1rem;
+    letter-spacing: 1.5px;
+    transition: all 0.3s ease;
+    font-family: 'Garamond', serif;
+    font-weight: 900;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+}
+
+.hero-navbar a:not(.nav-logo):hover {
+    opacity: 1;
+    color: #ffeda8;
+    border-bottom: 1px solid #ffeda8;
 }
 
 .hero-navbar .nav-center a {
-    font-size: 1.1rem;
-    letter-spacing: 2px;
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
     font-weight: 400;
+    white-space: nowrap;
 }
 
 .rsvp-btn {
-    background: var(--text-light);
-    border: none;
-    color: #000000;
-    padding: 0.8rem 1.5rem;
+    background: #f0dfa0;
+    border: 1.5px solid #b8922a;
+    color: #7a5c1e;
+    padding: 0.9rem 2rem;
     font-size: 1rem;
     letter-spacing: 2px;
     text-transform: uppercase;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-family: inherit;
+    font-family: 'Garamond', serif;
+    font-weight: 700;
+    border-radius: 6px;
 }
 
 .hero-navbar .rsvp-btn:hover {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(201, 168, 76, 0.15);
 }
 
 /* Burger Menu */
@@ -192,9 +265,10 @@ body {
     align-items: center;
     justify-content: center;
     background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-                url('images/hero1.png') center/cover;
+                url('images/herobg.jpg') center/cover;
     margin-bottom: 0;
-    background-position: center top;
+    background-size: 100%, 115%;
+    background-position: 0% 64%;
 }
 
 .hero-content {
@@ -203,30 +277,88 @@ body {
     text-align: center;
     color: var(--text-light);
     animation: fadeInUp 1.5s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .welcome-text {
-    font-size: 1.3rem;
+    font-size: 1.6rem;
     letter-spacing: 2px;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     opacity: 0.95;
-    font-weight: 300;
+    font-family: 'Garamond', serif;
+    font-weight: 700;
+    color: var(--text-light);
+    transform: translateY(-7.5rem);
 }
 
 .couple-names {
-    font-size: 5.5rem;
-    font-weight: 300;
-    letter-spacing: 4px;
-    margin: 1rem 0;
-    line-height: 1.2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 0.4;
+    gap: 0;
+    margin: 0;
+    width: 800px;
+    transform: translateY(-6.5rem) translateX(-6rem);
+}
+
+.couple-line {
+    display: inline-flex;
+    align-items: baseline;
+}
+
+.couple-line:first-child {
+    padding-left: 250px;
+}
+
+.couple-amp {
+    font-family: 'Alex Brush', cursive;
+    font-size: 6rem;
+    font-weight: 100;
+    color: #fdbe4b;
+    padding-left: 460px;
+    transform: translateY(0.5rem);
+}
+
+.couple-line:last-child {
+    padding-left: 525px;
+}
+
+.name-initial {
+    font-family: 'Alex Brush', cursive;
+    font-size: 4rem;
+    font-weight: 400;
+    color: #ffeda8;
+    margin-right: 4px;
+}
+
+.name-rest {
+    font-family: 'Cinzel', serif;
+    font-size: 3rem;
+    font-weight: 400;
+    color: #ffeda8;
 }
 
 .wedding-date {
-    font-size: 1.8rem;
-    letter-spacing: 8px;
+    font-size: 2rem;
+    letter-spacing: 2px;
     margin-top: 1.5rem;
-    opacity: 0.95;
-    font-weight: 300;
+    font-family: 'Garamond', serif;
+    font-weight: 700;
+    color: var(--text-light);
+    transform: translateY(9rem);
+}
+
+.wedding-location {
+    font-size: 2rem;
+    letter-spacing: 2px;
+    margin-top: 0.3rem;
+    font-family: 'Garamond', serif;
+    font-weight: 700;
+    color: var(--text-light);
+    transform: translateY(9rem);
 }
 
 .scroll-indicator {
@@ -291,7 +423,10 @@ section {
 
  /* Story Section - FIXED */
         #story {
-            padding:0;
+            padding: 0;
+            overflow: hidden;
+            background: #eeeadf;
+            color: var(--text-dark);
         }
 
        #story .container {
@@ -303,12 +438,109 @@ section {
     .story-label {
         font-size: 1.5rem;
         color: #999;
+        font-family: 'Liana Script', cursive;
         font-style: italic;
         letter-spacing: 1px;
         margin-bottom: 2rem;
         font-weight: 300;
         padding-left: 2rem;
         padding-top: 2rem;
+    }
+
+    .our-love-story-title {
+        text-align: center;
+        margin: 1.5rem 0 1rem;
+        font-size: 2.8rem;
+        font-weight: normal;
+        color: #5a7a52;
+        line-height: 1;
+    }
+
+    .our-love-story-title .ols-initial {
+        font-family: 'Alex Brush', cursive;
+        font-size: 3.8rem;
+        color: #5a7a52;
+    }
+
+    .our-love-story-title .ols-rest {
+        font-family: 'Cinzel', serif;
+        font-size: 2.2rem;
+        color: #5a7a52;
+        letter-spacing: 2px;
+    }
+
+    .story-started-title {
+        text-align: left;
+        font-family: 'Cinzel', serif;
+        font-size: 1.75rem;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: #e9a021;
+        margin: 0 0 1rem;
+        padding-left: 4rem;
+    }
+
+    .story-columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        padding: 0 4rem 2rem;
+    }
+
+    .story-col p {
+        font-family: 'Quicksand', sans-serif;
+        font-size: 1.5rem;
+        line-height: 1.9;
+        color: #3a3a3a;
+        text-align: justify;
+        margin-bottom: 1.2rem;
+    }
+
+    .story-highlight {
+        color: #e9a021;
+        font-weight: 700;
+    }
+
+    .story-carousel-wrapper {
+        border-top: 3px solid #507253;
+        border-bottom: 3px solid #507253;
+        margin: 2rem 0 0;
+        overflow: hidden;
+        background: #507253;
+    }
+
+    .story-carousel {
+        overflow: hidden;
+    }
+
+    .story-carousel-track {
+        display: flex;
+        gap: 3px;
+        animation: storyScroll 12s linear infinite;
+    }
+
+    .story-carousel-track:hover {
+        animation-play-state: paused;
+    }
+
+    .story-photo-frame {
+        flex: 0 0 calc(100% / 3 - 1px);
+        padding: 12px;
+        background: #eeeadf;
+        box-sizing: border-box;
+    }
+
+    .story-photo-frame img {
+        width: 100%;
+        height: 350px;
+        object-fit: cover;
+        display: block;
+    }
+
+    @keyframes storyScroll {
+        0%   { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
     }
 
     .story-text-center {
@@ -383,10 +615,10 @@ section {
 
     /* Event Section */
 #event {
-    background-image: url('images/eventpic.png');
+    background-image: url('images/sched.png');
     background-size: cover;
     background-position: center;
-    min-height: 100vh;
+    height: 900px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -402,13 +634,76 @@ section {
 
 .big-day-title {
     text-align: center;
-    color: white;
-    font-size: 5rem;
-    letter-spacing: 0.5em;
-    font-weight: 300;
-    margin-bottom: 100px;
-    text-transform: uppercase;
+    color: #f9f3e3;
+    font-size: 3.5rem;
+    font-weight: normal;
+    margin-bottom: 60px;
+    line-height: 1;
+    transform: translateY(-13rem);
+}
+
+.big-day-title .ols-initial {
+    font-family: 'Alex Brush', cursive;
+    font-size: 4.5rem;
+    color: #f9f3e3;
+}
+
+.big-day-title .ols-rest {
+    font-family: 'Cinzel', serif;
+    font-size: 2.8rem;
+    letter-spacing: 3px;
+    color: #f9f3e3;
+}
+
+.sched-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1.2fr 1.2fr 0.5fr;
+    gap: 2rem;
+    padding: 0 3rem 0 3rem;
+    margin-right: 1rem;
+    transform: translateY(-13rem);
+}
+
+.sched-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+
+.sched-icon {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    margin-bottom: 1.2rem;
+    opacity: 0.9;
+}
+
+.sched-time {
+    font-family: 'Cinzel', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #ffe575;
+    letter-spacing: 1px;
+    margin-bottom: 0.3rem;
+}
+
+.sched-name {
     font-family: 'Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffe575;
+    letter-spacing: 2.5px;
+    margin-bottom: 0.5rem;
+    white-space: nowrap;
+}
+
+.sched-location {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #f9f3e3;
+    line-height: 1.5;
 }
 
 .timeline-container {
@@ -747,7 +1042,7 @@ section {
     margin-bottom: 2rem;
 }
 
-/* Guest Name Selection Boxes - FIXED */
+/* Guest Name Selection Boxes */
 .guest-name-list {
     display: flex;
     flex-direction: column;
@@ -790,6 +1085,56 @@ section {
     height: 18px;
     cursor: pointer;
     accent-color: #5a5a3d;
+}
+
+/* Dietary Restrictions Field - NEW */
+.dietary-container {
+    margin-top: 1rem;
+    padding-left: 0;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        max-height: 200px;
+    }
+}
+
+.dietary-label {
+    display: block;
+    font-size: 0.95rem;
+    color: #6a6a6a;
+    margin-bottom: 0.5rem;
+    font-weight: 400;
+}
+
+.dietary-input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    font-size: 0.95rem;
+    border: 1px solid #d0c5ba;
+    border-radius: 6px;
+    font-family: inherit;
+    background: white;
+    color: #333;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.dietary-input:focus {
+    outline: none;
+    border-color: #a89584;
+}
+
+.dietary-input::placeholder {
+    color: #999;
 }
 
 .guest-separator {
@@ -838,7 +1183,7 @@ section {
 
 .rsvp-select-btn {
     width: 100%;
-    background: #8a9a8a;
+    background: #5a5a3d;
     color: white;
     border: none;
     padding: 1rem 2rem;
@@ -852,7 +1197,7 @@ section {
 }
 
 .rsvp-select-btn:hover {
-    background: #7a8a7a;
+    background: #4a4a30;
     transform: translateY(-2px);
 }
 
@@ -993,9 +1338,23 @@ section {
     visibility: visible;
 }
 
+/* Mobile Responsive */
 @media (max-width: 768px) {
-    .rsvp-form {
+    .rsvp-main-title {
+        font-size: 2rem;
+    }
+    
+    .rsvp-card {
         padding: 2rem 1.5rem;
+    }
+    
+    .guest-radio-group {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .rsvp-section {
+        padding: 4rem 1rem;
     }
 }
 
@@ -1280,7 +1639,7 @@ footer {
     
     /* Hero Section */
     .hero {
-        background-position: center center;
+        background-position: 90% 70%;
         height: 100vh;
     }
     

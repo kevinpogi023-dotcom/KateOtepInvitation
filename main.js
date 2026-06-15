@@ -74,7 +74,7 @@ window.addEventListener('scroll', () => {
     const parallaxSpeed = 0.5;
     
     if (hero) {
-        hero.style.backgroundPositionY = `${scrolled * parallaxSpeed}px`;
+        hero.style.backgroundPosition = `0% calc(65% + ${scrolled * parallaxSpeed}px)`;
     }
 });
 
@@ -173,14 +173,13 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const result = await response.json();
             
-            console.log('Search result:', result); // Debug log
+            console.log('Search result:', result);
             
             if (result.success && result.guests && result.guests.length > 0) {
                 foundGuests = result.guests;
-                console.log('Found guests:', foundGuests); // Debug log
+                console.log('Found guests:', foundGuests);
                 displayGuestList(result.guests);
                 
-                // Small delay to ensure DOM is ready
                 setTimeout(() => {
                     showStep(2);
                 }, 100);
@@ -196,38 +195,41 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Step 2: Select guest from list
-    // Step 2: Select guest from list - UPDATED
-selectBtn.addEventListener('click', function() {
-    const guestResponses = [];
-    let allAnswered = true;
-    
-    foundGuests.forEach((guest, index) => {
-        const selectedRadio = document.querySelector(`input[name="guest-${index}-attendance"]:checked`);
+    // Step 2: Select guest from list and collect dietary info
+    selectBtn.addEventListener('click', function() {
+        const guestResponses = [];
+        let allAnswered = true;
         
-        if (!selectedRadio) {
-            allAnswered = false;
-        } else {
-            guestResponses.push({
-                name: guest.name,
-                attendance: selectedRadio.value
-            });
+        foundGuests.forEach((guest, index) => {
+            const selectedRadio = document.querySelector(`input[name="guest-${index}-attendance"]:checked`);
+            
+            if (!selectedRadio) {
+                allAnswered = false;
+            } else {
+                const dietaryField = document.getElementById(`dietary-${index}`);
+                const hasDietaryRestrictions = selectedRadio.value === 'yes' && dietaryField;
+                
+                guestResponses.push({
+                    name: guest.name,
+                    attendance: selectedRadio.value,
+                    dietary: hasDietaryRestrictions ? (dietaryField.value.trim() || 'None') : 'None'
+                });
+            }
+        });
+        
+        if (!allAnswered) {
+            alert('Please select attendance for all guests');
+            return;
         }
+        
+        // Store responses
+        selectedGuest = {
+            guests: guestResponses,
+            primaryGuest: foundGuests[0]
+        };
+        
+        showStep(3);
     });
-    
-    if (!allAnswered) {
-        alert('Please select attendance for all guests');
-        return;
-    }
-    
-    // Store responses
-    selectedGuest = {
-        guests: guestResponses,
-        primaryGuest: foundGuests[0]
-    };
-    
-    showStep(3);
-});
     
     // Search again link
     searchAgainLink.addEventListener('click', function(e) {
@@ -247,10 +249,8 @@ selectBtn.addEventListener('click', function() {
         
         const formData = {
             action: 'submit',
-            selectedGuest: selectedGuest,
-            email: document.getElementById('email').value.trim(),
-            attendance: document.querySelector('input[name="attendance"]:checked').value,
-            dietary: document.getElementById('dietaryRestrictions').value.trim()
+            selectedGuest: selectedGuest,  // Contains {guests: [{name, attendance, dietary},...], primaryGuest: {...}}
+            email: document.getElementById('email').value.trim()
         };
         
         const submitBtn = rsvpForm.querySelector('.rsvp-submit-btn');
@@ -286,12 +286,9 @@ selectBtn.addEventListener('click', function() {
             submitBtn.textContent = 'Submit RSVP';
         }
     });
-    
-
-   
 });
 
-// FIXED: Display guest list with proper styling and selection
+// Display guest list with dietary restrictions field
 function displayGuestList(guests) {
     const guestList = document.getElementById('guestList');
     
@@ -349,8 +346,42 @@ function displayGuestList(guests) {
         radioContainer.appendChild(attendLabel);
         radioContainer.appendChild(notAttendLabel);
         
+        // Dietary restrictions field (initially hidden)
+        const dietaryContainer = document.createElement('div');
+        dietaryContainer.className = 'dietary-container';
+        dietaryContainer.style.display = 'none';
+        dietaryContainer.id = `dietary-container-${index}`;
+        
+        const dietaryLabel = document.createElement('label');
+        dietaryLabel.className = 'dietary-label';
+        dietaryLabel.textContent = 'Dietary Restrictions (optional)';
+        
+        const dietaryInput = document.createElement('input');
+        dietaryInput.type = 'text';
+        dietaryInput.id = `dietary-${index}`;
+        dietaryInput.className = 'dietary-input';
+        dietaryInput.placeholder = 'e.g., Vegetarian, No shellfish, Gluten-free';
+        
+        dietaryContainer.appendChild(dietaryLabel);
+        dietaryContainer.appendChild(dietaryInput);
+        
+        // Show/hide dietary field based on attendance selection
+        attendRadio.addEventListener('change', function() {
+            if (this.checked) {
+                dietaryContainer.style.display = 'block';
+            }
+        });
+        
+        notAttendRadio.addEventListener('change', function() {
+            if (this.checked) {
+                dietaryContainer.style.display = 'none';
+                dietaryInput.value = '';
+            }
+        });
+        
         guestItem.appendChild(nameLabel);
         guestItem.appendChild(radioContainer);
+        guestItem.appendChild(dietaryContainer);
         guestList.appendChild(guestItem);
         
         // Add separator line except for last item
@@ -370,7 +401,7 @@ function showStep(stepNumber) {
     // Hide all steps and remove active class
     document.querySelectorAll('.rsvp-step').forEach(step => {
         step.style.display = 'none';
-        step.classList.remove('active');  // ADD THIS LINE
+        step.classList.remove('active');
     });
     
     // Show the requested step
@@ -380,7 +411,7 @@ function showStep(stepNumber) {
         
         // Add active class after a tiny delay for animation
         setTimeout(() => {
-            targetStep.classList.add('active');  // ADD THIS LINE
+            targetStep.classList.add('active');
         }, 10);
         
         console.log('Step', stepNumber, 'is now visible');
@@ -408,7 +439,6 @@ function resetForm() {
     selectedGuest = null;
 }
 
-
 // ============================================
 // FAQ Accordion Functionality
 // ============================================
@@ -419,9 +449,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const question = item.querySelector('.faq-question');
         
         question.addEventListener('click', function() {
-       
             item.classList.toggle('active');
-
         });
     });
 });
