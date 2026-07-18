@@ -444,12 +444,18 @@
         <!-- Step 2: Select Guest -->
         <div id="step2" class="rsvp-step">
             <div class="rsvp-card">
+                <div class="rsvp-note">
+                    <span class="rsvp-note-icon">i</span>
+                    Please respond for each person listed. If you are unsure about someone else in your group, you may still submit — they can search their own name later to update their response.
+                </div>
+
                 <div id="guestList" class="guest-name-list">
                     <!-- Guest attendance options will be populated here -->
                 </div>
-                
+
                 <button id="selectBtn" class="rsvp-select-btn">Next Event</button>
-                
+                <button type="button" class="rsvp-back-btn" id="backBtn2">&larr; Back</button>
+
                 <p class="rsvp-search-again">
                     <a href="#" id="searchAgainLink">Search again</a>
                 </p>
@@ -474,6 +480,7 @@
                     </div>
 
                     <button type="submit" class="rsvp-submit-btn">Submit RSVP</button>
+                    <button type="button" class="rsvp-back-btn" id="backBtn3">&larr; Back</button>
                 </form>
             </div>
         </div>

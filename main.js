@@ -142,6 +142,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const rsvpForm = document.getElementById('rsvpForm');
     const searchName = document.getElementById('searchName');
     const searchError = document.getElementById('searchError');
+    const backBtn2 = document.getElementById('backBtn2');
+    const backBtn3 = document.getElementById('backBtn3');
     
     // Step 1: Search for guest
     continueBtn.addEventListener('click', async function() {
@@ -236,6 +238,16 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         resetForm();
         showStep(1);
+    });
+
+    // Back buttons
+    backBtn2.addEventListener('click', function() {
+        resetForm();
+        showStep(1);
+    });
+
+    backBtn3.addEventListener('click', function() {
+        showStep(2);
     });
     
     // Step 3: Submit RSVP
