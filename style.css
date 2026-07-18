@@ -3368,31 +3368,32 @@ footer {
         padding-top: 1rem !important;
     }
 
-    .rsvp-main-title {
-        font-size: 0.7rem !important;
+     .rsvp-main-title {
+        font-size: 0.61rem !important;
         color: #f9f3e3 !important;
+        transform: translateY(8rem) !important;
     }
 
     .rsvp-initial {
+        display: inline-block !important;
         color: #ffbb23 !important;
-        font-size: 4.2rem !important;
-        
-        
+        font-size: 3.5rem !important;
+        margin-right: 0.6rem !important;
+        transform: translateY(9rem) !important;
     }
-  
 
-    
     .rsvp-word {
+        display: inline-block !important;
         color: #ffbb23 !important;
-        font-size: 3rem !important;
-        
+        font-size: 2.5rem !important;
+        transform: translateY(9rem) !important;
     }
 
     .rsvp-card {
         padding: 0.8rem !important;
         max-width: 260px !important;
-        
         border-radius: 6px !important;
+        transform: translateY(7rem) !important;
     }
 
     .rsvp-instruction {
@@ -3424,6 +3425,7 @@ footer {
     .rsvp-card {
         margin-left: auto !important;
         margin-right: auto !important;
+        margin-top: 2rem !important;
     }
 
     .guest-name-label {
@@ -3622,6 +3624,34 @@ footer {
     .registry-cardno-bpi {
         width: 75% !important;
         margin-top: 0.6rem !important;
+    }
+
+     .rsvp-main-title {
+        font-size: 0.61rem !important;
+        color: #f9f3e3 !important;
+        transform: translateY(8rem) !important;
+    }
+
+    .rsvp-initial {
+        display: inline-block !important;
+        color: #ffbb23 !important;
+        font-size: 3.5rem !important;
+        margin-right: 0.6rem !important;
+        transform: translateY(9rem) !important;
+    }
+
+    .rsvp-word {
+        display: inline-block !important;
+        color: #ffbb23 !important;
+        font-size: 2.5rem !important;
+        transform: translateY(9rem) !important;
+    }
+
+    .rsvp-card {
+        padding: 0.8rem !important;
+        max-width: 260px !important;
+        border-radius: 6px !important;
+        transform: translateY(7rem) !important;
     }
 }
 
@@ -4168,30 +4198,31 @@ footer {
     }
 
     .rsvp-main-title {
-        font-size: 0.7rem !important;
+        font-size: 0.61rem !important;
         color: #f9f3e3 !important;
+        transform: translateY(8rem) !important;
     }
 
     .rsvp-initial {
+        display: inline-block !important;
         color: #ffbb23 !important;
-        font-size: 4.2rem !important;
-        
-        
+        font-size: 3.5rem !important;
+        margin-right: 0.6rem !important;
+        transform: translateY(9rem) !important;
     }
-  
 
-    
     .rsvp-word {
+        display: inline-block !important;
         color: #ffbb23 !important;
-        font-size: 3rem !important;
-        
+        font-size: 2.5rem !important;
+        transform: translateY(9rem) !important;
     }
 
     .rsvp-card {
         padding: 0.8rem !important;
         max-width: 260px !important;
-        
         border-radius: 6px !important;
+        transform: translateY(7rem) !important;
     }
 
     .rsvp-instruction {
@@ -4223,6 +4254,7 @@ footer {
     .rsvp-card {
         margin-left: auto !important;
         margin-right: auto !important;
+        margin-top: 2rem !important;
     }
 
     .guest-name-label {
