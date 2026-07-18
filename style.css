@@ -4214,7 +4214,7 @@ footer {
     .rsvp-word {
         display: inline-block !important;
         color: #ffbb23 !important;
-        font-size: 2.5rem !important;
+        font-size: 2.4rem !important;
         transform: translateY(9rem) !important;
     }
 
@@ -4226,7 +4226,7 @@ footer {
     }
 
     .rsvp-instruction {
-        font-size: 0.55rem !important;
+        font-size: 0.51rem !important;
         font-weight: 550 !important;
         padding: 0.1rem;
     }
