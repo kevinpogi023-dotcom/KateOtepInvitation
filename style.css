@@ -3393,7 +3393,7 @@ footer {
         padding: 0.8rem !important;
         max-width: 300px !important;
         border-radius: 6px !important;
-        transform: translateY(7rem) !important;
+        transform: translateY(8rem) !important;
     }
 
     .rsvp-instruction {
@@ -3649,7 +3649,7 @@ footer {
 
     .rsvp-card {
         padding: 0.8rem !important;
-        max-width: 260px !important;
+        max-width: 280px !important;
         border-radius: 6px !important;
         transform: translateY(7rem) !important;
     }
