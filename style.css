@@ -3962,14 +3962,14 @@ footer {
     }
 
     .party-layout {
-        grid-template-columns: 330px 1fr !important;
+        grid-template-columns: 305px 1fr !important;
         min-height: unset !important;
         align-items: start !important;
         
     }
 
     .party-photos {
-        width: 350px !important;
+        width: 320px !important;
         margin-top: 0 !important;
         padding-top: 0 !important;
         border-right: none;
