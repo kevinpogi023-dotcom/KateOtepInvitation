@@ -3363,7 +3363,7 @@ footer {
         background-size: 100% 50%, 100% auto !important;
         background-position: top center, bottom center !important;
         background-repeat: no-repeat, no-repeat !important;
-        min-height: 110vh !important;
+        min-height: 110svh !important;
         justify-content: flex-start !important;
         padding-top: 1rem !important;
     }
@@ -4192,7 +4192,7 @@ footer {
         background-size: 100% 50%, 100% auto !important;
         background-position: top center, bottom center !important;
         background-repeat: no-repeat, no-repeat !important;
-        min-height: 110vh !important;
+        min-height: 110svh !important;
         justify-content: flex-start !important;
         padding-top: 1rem !important;
     }
