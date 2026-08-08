@@ -1152,6 +1152,16 @@ section {
     justify-content: center;
     padding: 2.5rem 2rem;
     text-align: center;
+    position: relative;
+}
+
+.attire-upflower {
+    position: absolute;
+    top: 0.6rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: auto;
 }
 
 .attire-title {
