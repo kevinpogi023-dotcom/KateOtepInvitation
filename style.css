@@ -1473,6 +1473,7 @@ section {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
     justify-content: center;
 }
 
@@ -1480,6 +1481,17 @@ section {
     max-width: 700px;
     margin: 0 auto;
     width: 100%;
+}
+
+.rsvp-downflower {
+    position: absolute;
+    top: 0;
+    right: -40px;
+    width: 180px;
+    height: auto;
+    z-index: 1;
+    pointer-events: none;
+    transform: rotate(5deg);
 }
 
 .rsvp-heading {
