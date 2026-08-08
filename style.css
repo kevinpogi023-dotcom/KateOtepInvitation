@@ -536,10 +536,11 @@ section {
     .story-started-title {
         text-align: left;
         font-family: 'Cinzel', serif;
-        font-size: 1.75rem;
+        font-size: 1.5rem;
         font-weight: 700;
         letter-spacing: 3px;
         text-transform: uppercase;
+        white-space: nowrap;
         color: #e9a021;
         margin: 0 0 1rem;
         padding-left: 4rem;
@@ -1082,7 +1083,12 @@ section {
     border-right: none;
 }
 
+
 @media (min-width: 768px) {
+    .story-title-break {
+        display: none;
+    }
+
     .attire-photo-women-1 {
         background-image: url('images/women1.png');
         background-size: 80%;
@@ -1500,6 +1506,7 @@ section {
     align-items: center;
     position: relative;
     justify-content: center;
+    overflow: hidden;
 }
 
 .rsvp-container {
@@ -1508,15 +1515,52 @@ section {
     width: 100%;
 }
 
-.rsvp-downflower {
-    position: absolute;
-    top: 0;
-    right: -40px;
-    width: 180px;
-    height: auto;
-    z-index: 1;
-    pointer-events: none;
-    transform: rotate(5deg);
+@media (max-width: 426px) {
+    .rsvp-downflower {
+        position: absolute;
+        top:-5px;
+        right: -20px;
+        width: 180px;
+        height: auto;
+        z-index: 1;
+        pointer-events: none;
+        transform: rotate(5deg);
+    }
+
+    .rsvp-upflower {
+        position: absolute;
+        top: 48%;
+        left: 10px;
+        width: 80px;
+        height: auto;
+        z-index: 1;
+        pointer-events: none;
+        
+    }
+}
+
+@media (min-width: 768px) {
+    .rsvp-downflower {
+        position: absolute;
+        top: -50px;
+        right: 30px;
+        width: 350px;
+        height: auto;
+        z-index: 1;
+        pointer-events: none;
+        transform: rotate(5deg);
+    }
+
+    .rsvp-upflower {
+        position: absolute;
+        bottom: -50px;
+        left: 30px;
+        width: 350px;
+        height: auto;
+        z-index: 1;
+        pointer-events: none;
+        transform: rotate(-5deg);
+    }
 }
 
 .rsvp-heading {
@@ -3592,6 +3636,26 @@ footer {
         padding: 0 0.3rem;
     }
 
+    #hero {
+        overflow: hidden !important;
+    }
+
+    #hero .story-yellowflower {
+        top: auto !important;
+        bottom: 15% !important;
+        right: -30px !important;
+        left: auto !important;
+        transform: none !important;
+        width: 90px !important;
+    }
+
+    #hero .story-whiteflower {
+        top: auto !important;
+        bottom: -30px !important;
+        left: -30px !important;
+        width: 90px !important;
+    }
+
     .attire-grid > .attire-photo-women-3,
     .attire-grid > .attire-extra-box-1 {
         height: 200px !important;
@@ -4502,6 +4566,43 @@ footer {
         text-align: center !important;
     }
 
+    .attire-grid > .attire-photo-women-2 {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .attire-women2-caption {
+        font-family: 'EB Garamond', serif;
+        font-weight: bold;
+        color: #ffe575;
+        font-size: 0.9rem;
+        white-space: nowrap;
+        text-align: center;
+        margin: 0;
+        padding: 0 0.3rem;
+    }
+
+    #hero {
+        overflow: hidden !important;
+    }
+
+    #hero .story-yellowflower {
+        top: auto !important;
+        bottom: 15% !important;
+        right: -30px !important;
+        left: auto !important;
+        transform: none !important;
+        width: 90px !important;
+    }
+
+    #hero .story-whiteflower {
+        top: auto !important;
+        bottom: -30px !important;
+        left: -30px !important;
+        width: 90px !important;
+    }
+
     .attire-footer-text {
         display: none !important;
     }
@@ -4901,4 +5002,6 @@ footer {
         width: 75% !important;
 
     }
+    
+
 }

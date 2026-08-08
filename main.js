@@ -67,6 +67,13 @@ if (window.matchMedia('(max-width: 767px)').matches) {
             caption.textContent = 'Guests are respectfully requested to follow our wedding colors.';
             women2.appendChild(caption);
         }
+
+        // Move the white and yellow flowers into the hero section on mobile
+        const hero = document.querySelector('#hero');
+        const yellowFlower = document.querySelector('.story-yellowflower');
+        const whiteFlower = document.querySelector('.story-whiteflower');
+        if (hero && yellowFlower) hero.appendChild(yellowFlower);
+        if (hero && whiteFlower) hero.appendChild(whiteFlower);
     });
 }
 
