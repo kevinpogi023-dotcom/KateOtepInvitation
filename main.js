@@ -4,6 +4,73 @@
 const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxH3XEZ13rd_YFBVOw5z4nCAqk8_u3MFedt2k3zGcOME2YgipjpjvccGxhQPIx6Lu02nw/exec';
 
 // ============================================
+// Attire Grid - remove (not just hide) the extra
+// outfit photo cells on mobile so their images
+// never load on small screens. Desktop is untouched
+// since this only runs when the mobile breakpoint matches.
+// ============================================
+if (window.matchMedia('(max-width: 767px)').matches) {
+    document.addEventListener('DOMContentLoaded', function() {
+        const selectors = [
+            '.attire-photo-men-1',
+            '.attire-photo-men-2',
+            '.attire-photo-men-3',
+            '.attire-photo-women-4',
+            '.attire-photo-women-5',
+            '.attire-photo-women-6',
+            '.attire-photo-men-4',
+            '.attire-photo-men-5',
+            '.attire-photo-men-6'
+        ];
+        selectors.forEach(function(selector) {
+            const cell = document.querySelector('.attire-grid > ' + selector);
+            if (cell) cell.remove();
+        });
+
+        // Add 1 empty box (no photo yet) below the existing mobile cells
+        const grid = document.querySelector('.attire-grid');
+        if (grid) {
+            const extra1 = document.createElement('div');
+            extra1.className = 'attire-cell attire-photo attire-extra-box-1';
+            grid.appendChild(extra1);
+        }
+
+        function divideIntoSixBoxes(el, images) {
+            if (!el) return;
+            for (let i = 0; i < 6; i++) {
+                const sub = document.createElement('div');
+                sub.className = 'attire-sub-box';
+                if (images && images[i]) {
+                    sub.style.backgroundImage = "url('images/" + images[i] + "')";
+                }
+                el.appendChild(sub);
+            }
+        }
+
+        // Divide the 3rd child (women-3) into 6 equal sub-boxes with women1-3 and men1-3
+        divideIntoSixBoxes(document.querySelector('.attire-grid > .attire-photo-women-3'), [
+            'women1.png', 'women2.png', 'women3.png',
+            'men1.png', 'men2.png', 'men3.png'
+        ]);
+
+        // Divide the 4th child (extra box) into 6 equal sub-boxes with women4-6 and men4-6
+        divideIntoSixBoxes(document.querySelector('.attire-grid > .attire-extra-box-1'), [
+            'women4.png', 'women5.png', 'women6.png',
+            'men4.png', 'men5.png', 'men6.png'
+        ]);
+
+        // Add the wedding-colors reminder text into the 2nd child (women-2)
+        const women2 = document.querySelector('.attire-grid > .attire-photo-women-2');
+        if (women2) {
+            const caption = document.createElement('p');
+            caption.className = 'attire-women2-caption';
+            caption.textContent = 'Guests are respectfully requested to follow our wedding colors.';
+            women2.appendChild(caption);
+        }
+    });
+}
+
+// ============================================
 // Burger Menu Toggle
 // ============================================
 function toggleMenu() {

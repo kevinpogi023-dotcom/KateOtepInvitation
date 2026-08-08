@@ -1,4 +1,4 @@
-@font-face {
+﻿@font-face {
     font-family: 'Garamond';
     src: url('fonts/garamond_[allfont.ru].ttf') format('truetype');
     font-weight: normal;
@@ -766,7 +766,7 @@ section {
 }
 
 .sched-card {
-    width: 700px;
+    width: 600px;
     object-fit: contain;
     margin-top: -5rem;
 }
@@ -864,6 +864,17 @@ section {
     min-height: 100vh;
     position: relative;
     padding: 0;
+}
+
+.party-vine-decor {
+    position: absolute;
+    top: 500px;
+    right: -250px;
+    height: 72%;
+    width: auto;
+    z-index: 2;
+    pointer-events: none;
+    transform: rotate(-3deg);
 }
 
 /* Entourage Layout */
@@ -1046,6 +1057,92 @@ section {
     border-right: none;
 }
 
+@media (min-width: 768px) {
+    .attire-photo-women-1 {
+        background-image: url('images/women1.png');
+        background-size: 80%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .attire-photo-women-2 {
+        background-image: url('images/women2.png');
+        background-size: 78%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .attire-photo-women-3 {
+        background-image: url('images/women3.png');
+        background-size: 78%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .attire-photo-women-4 {
+        background-image: url('images/women4.png');
+        background-size: 110%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .attire-photo-women-5 {
+        background-image: url('images/women5.png');
+        background-size: 75%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .attire-photo-women-6 {
+        background-image: url('images/women6.png');
+        background-size: 64%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .attire-photo-men-1 {
+        background-image: url('images/men1.png');
+        background-size: 78%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .attire-photo-men-2 {
+        background-image: url('images/men2.png');
+        background-size: 75%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .attire-photo-men-3 {
+        background-image: url('images/men3.png');
+        background-size: 82%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .attire-photo-men-4 {
+        background-image: url('images/men4.png');
+        background-size: 80%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .attire-photo-men-5 {
+        background-image: url('images/men5.png');
+        background-size: 78%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .attire-photo-men-6 {
+        background-image: url('images/men6.png');
+        background-size: 78%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+}
+
 .attire-center {
     grid-column: 4;
     grid-row: 1 / 3;
@@ -1116,6 +1213,12 @@ section {
     height: 38px;
     border-radius: 50%;
 }
+
+.leaf-swatch-img {
+    height: 70px;
+    width: auto;
+}
+
 
 .swatch-item span {
     font-family: 'Quicksand', sans-serif;
@@ -2148,7 +2251,7 @@ footer {
         right: 0 !important;
         width: 100% !important;
         padding: 0.8rem 1.2rem;
-        background: #f0ecdc !important;
+        background: transparent !important;
         justify-content: space-between;
     }
 
@@ -3189,14 +3292,14 @@ footer {
     }
 
     .party-layout {
-        grid-template-columns: 370px 1fr !important;
+        grid-template-columns: 376px 1fr !important;
         min-height: unset !important;
         align-items: start !important;
         
     }
 
     .party-photos {
-        width: 450px !important;
+        width: 360px !important;
         margin-top: 0 !important;
         padding-top: 0 !important;
         border-right: none;
@@ -3204,9 +3307,9 @@ footer {
     }
 
     .party-img-container {
-        height: 140px !important;
+        height: 183px !important;
         flex: none !important;
-        padding: 6px 9px !important;
+        padding: 8px 10px !important;
         min-height: unset !important;
         border: 1px solid #507253 !important;
         border-top: none !important;
@@ -3232,23 +3335,24 @@ footer {
     .entourage-title {
         margin-top: 0.6rem !important;
         margin-bottom: 0.2rem !important;
+        transform: translateX(10px) !important;
     }
 
     .entourage-initial {
-        font-size: 1.60rem !important;
+        font-size: 2.2rem !important;
         letter-spacing: -0.05em !important;
         margin-right: 0.1rem;
     }
 
     .entourage-rest {
-        font-size: 1rem !important;
+        font-size: 1.3rem !important;
         letter-spacing: 0.05em !important;
     }
 
     .entourage-role {
-        font-size: 0.40rem !important;
+        font-size: 0.65rem !important;
         margin-bottom: 0.1rem !important;
-        white-space: nowrap !important;
+        white-space: normal !important;
         letter-spacing: 1px !important;
         color: #5a7a52 !important;
         text-transform: uppercase !important;
@@ -3257,9 +3361,14 @@ footer {
     }
 
     .entourage-name {
-        font-size: 0.38rem !important;
+        font-size: 0.6rem !important;
         margin-bottom: 0.05rem !important;
         line-height: 1.5 !important;
+        white-space: nowrap !important;
+    }
+
+    .entourage-role-nowrap {
+        white-space: nowrap !important;
     }
 
     .entourage-row {
@@ -3272,8 +3381,22 @@ footer {
         margin-bottom: 0.2rem !important;
     }
 
+    .entourage-row-candle-veil {
+        transform: translateX(-20px) !important;
+    }
+
+    .entourage-shift-left {
+        transform: translateX(-10px) !important;
+    }
+
+    .entourage-col-shift-right {
+        transform: translateX(20px) !important;
+    }
+
     .entourage-divider {
+        width: 75% !important;
         margin: 0.3rem 0 !important;
+        transform: translateX(10px) !important;
     }
 
     .divider-line {
@@ -3294,17 +3417,17 @@ footer {
         display: flex !important;
         flex-direction: column !important;
         min-height: unset !important;
-        
+
     }
 
     .attire-center {
         order: 1 !important;
         grid-column: unset !important;
         grid-row: unset !important;
-        padding: 9.25rem 1rem 1.5rem !important;
+        padding: 12.5rem 1rem 1.5rem !important;
         text-align: center !important;
         border-bottom: none !important;
-        height: 220px !important;
+        height: 260px !important;
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
@@ -3321,25 +3444,40 @@ footer {
     .attire-title {
         font-size: 1rem !important;
         margin-bottom: 0.3rem !important;
-        
+        white-space: nowrap !important;
+    }
+
+    .attire-title .attire-initial {
+        font-size: 4rem !important;
+    }
+
+    .attire-title .attire-word {
+        font-size: 2.56rem !important;
     }
 
     .attire-desc {
-        font-size: 0.55rem !important;
+        font-size: 0.79rem !important;
         line-height: 1.5 !important;
-        margin-top: auto;   
-        
+        margin-top: auto;
+
     }
 
     .attire-subtitle {
         display: block !important;
-        font-size: 0.6rem !important;
+        font-size: 0.85rem !important;
         font-weight: 700;
-        
     }
 
     .attire-swatches {
-        display: none !important;
+        display: grid !important;
+        grid-template-columns: repeat(6, 1fr) !important;
+        gap: 0.3rem 0.7rem !important;
+        margin: 0 !important;
+    }
+
+    .attire-swatches .leaf-swatch-img {
+        height: 40px !important;
+        width: auto !important;
     }
 
     .attire-swatches .swatch-item {
@@ -3357,7 +3495,7 @@ footer {
     }
 
     .attire-swatches .swatch-item span {
-        font-size: 0.38rem !important;
+        font-size: 0.5rem !important;
         text-align: center !important;
     }
 
@@ -3372,6 +3510,7 @@ footer {
     .attire-grid > .attire-photo:first-child {
         border-top: none !important;
         border-bottom: none !important;
+        height: 100px !important;
     }
 
     .attire-cell {
@@ -3382,7 +3521,99 @@ footer {
     .attire-grid > .attire-photo {
         height: 80px !important;
         display: block !important;
-        
+
+    }
+
+    .attire-grid > .attire-photo-shrink-mobile {
+        height: 70px !important;
+    }
+
+    .attire-grid > .attire-photo-women-2 {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .attire-women2-caption {
+        font-family: 'EB Garamond', serif;
+        font-weight: bold;
+        color: #ffe575;
+        font-size: 0.9rem;
+        white-space: nowrap;
+        text-align: center;
+        margin: 0;
+        padding: 0 0.3rem;
+    }
+
+    .attire-grid > .attire-photo-women-3,
+    .attire-grid > .attire-extra-box-1 {
+        height: 200px !important;
+    }
+
+    .attire-grid > .attire-extra-box-1 {
+        border-bottom: 1px solid #ffeda8 !important;
+    }
+
+    .attire-grid > .attire-photo-women-3,
+    .attire-grid > .attire-extra-box-1 {
+        display: flex !important;
+    }
+
+    .attire-photo-women-3 .attire-sub-box,
+    .attire-extra-box-1 .attire-sub-box {
+        flex: 1 1 0;
+        height: 100%;
+        border-right: 1px solid #ffeda8;
+        background-size: 110%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .attire-photo-women-3 .attire-sub-box:nth-child(1) {
+        background-size: 113%;
+    }
+
+    .attire-photo-women-3 .attire-sub-box:nth-child(4) {
+        background-size: 110%;
+        background-position: -40% center;
+    }
+
+    .attire-photo-women-3 .attire-sub-box:nth-child(5) {
+        background-size: 105%;
+    }
+
+    .attire-photo-women-3 .attire-sub-box:nth-child(6) {
+        background-size: 113%;
+    }
+
+    .attire-photo-women-3 .attire-sub-box:last-child,
+    .attire-extra-box-1 .attire-sub-box:last-child {
+        border-right: none;
+    }
+
+    .attire-extra-box-1 .attire-sub-box:nth-child(1) {
+        background-size: 165%;
+        background-position: 70% center;
+    }
+
+    .attire-extra-box-1 .attire-sub-box:nth-child(3) {
+        background-size: 95%;
+    }
+
+    .attire-extra-box-1 .attire-sub-box:nth-child(4) {
+        background-size: 115%;
+    }
+
+    .attire-grid > .attire-photo-men-1,
+    .attire-grid > .attire-photo-men-2,
+    .attire-grid > .attire-photo-men-3,
+    .attire-grid > .attire-photo-women-4,
+    .attire-grid > .attire-photo-women-5,
+    .attire-grid > .attire-photo-women-6,
+    .attire-grid > .attire-photo-men-4,
+    .attire-grid > .attire-photo-men-5,
+    .attire-grid > .attire-photo-men-6 {
+        display: none !important;
     }
 
     .attire-content {
@@ -3652,7 +3883,9 @@ footer {
     }
 }
 @media (max-width: 376px) {
-
+ #party {
+    height: 1100px;
+ }
  .party-layout {
         grid-template-columns: 340px 1fr !important;
         min-height: unset !important;
@@ -4008,7 +4241,7 @@ footer {
 
     /* Party / Entourage Section */
     #party {
-        padding-top: 0 !important;
+        padding-top: 0 !important;   
         padding-bottom: 0 !important;
     }
 
@@ -4030,7 +4263,7 @@ footer {
    
 
     .party-img-container {
-        height: 140px !important;
+        height: 200px !important;
         flex: none !important;
         padding: 6px 9px !important;
         min-height: unset !important;
@@ -4058,23 +4291,24 @@ footer {
     .entourage-title {
         margin-top: 0.6rem !important;
         margin-bottom: 0.2rem !important;
+        transform: translateX(10px) !important;
     }
 
     .entourage-initial {
-        font-size: 1.45rem !important;
+        font-size: 2rem !important;
         letter-spacing: -0.05em !important;
         margin-right: 0.1rem;
     }
 
     .entourage-rest {
-        font-size: .9rem !important;
+        font-size: 1.15rem !important;
         letter-spacing: 0.05em !important;
     }
 
     .entourage-role {
-        font-size: 0.35rem !important;
+        font-size: 0.6rem !important;
         margin-bottom: 0.1rem !important;
-        white-space: nowrap !important;
+        white-space: normal !important;
         letter-spacing: 1px !important;
         color: #5a7a52 !important;
         text-transform: uppercase !important;
@@ -4083,9 +4317,18 @@ footer {
     }
 
     .entourage-name {
-        font-size: 0.35rem !important;
+        font-size: 0.55rem !important;
         margin-bottom: 0.05rem !important;
         line-height: 1.5 !important;
+        white-space: nowrap !important;
+    }
+
+    .entourage-role-nowrap {
+        white-space: nowrap !important;
+    }
+
+    .entourage-shift-left {
+        transform: translateX(-10px) !important;
     }
 
     .entourage-row {
@@ -4098,8 +4341,18 @@ footer {
         margin-bottom: 0.2rem !important;
     }
 
+    .entourage-row-candle-veil {
+        transform: translateX(-20px) !important;
+    }
+
+    .entourage-col-shift-right {
+        transform: translateX(20px) !important;
+    }
+
     .entourage-divider {
+        width: 75% !important;
         margin: 0.3rem 0 !important;
+        transform: translateX(10px) !important;
     }
 
     .divider-line {
@@ -4120,14 +4373,14 @@ footer {
         display: flex !important;
         flex-direction: column !important;
         min-height: unset !important;
-        
+
     }
 
     .attire-center {
         order: 1 !important;
         grid-column: unset !important;
         grid-row: unset !important;
-        padding: 9.25rem 1rem 1.5rem !important;
+        padding: 12.5rem 1rem 1.5rem !important;
         text-align: center !important;
         border-bottom: none !important;
         height: 220px !important;
@@ -4147,25 +4400,40 @@ footer {
     .attire-title {
         font-size: 1rem !important;
         margin-bottom: 0.3rem !important;
-        
+        white-space: nowrap !important;
+    }
+
+    .attire-title .attire-initial {
+        font-size: 4rem !important;
+    }
+
+    .attire-title .attire-word {
+        font-size: 2.56rem !important;
     }
 
     .attire-desc {
-        font-size: 0.55rem !important;
+        font-size: 0.79rem !important;
         line-height: 1.5 !important;
-        margin-top: auto;   
-        
+        margin-top: auto;
+
     }
 
     .attire-subtitle {
         display: block !important;
-        font-size: 0.6rem !important;
+        font-size: 0.85rem !important;
         font-weight: 700;
-        
     }
 
     .attire-swatches {
-        display: none !important;
+        display: grid !important;
+        grid-template-columns: repeat(6, 1fr) !important;
+        gap: 0.3rem 0.7rem !important;
+        margin: 0 !important;
+    }
+
+    .attire-swatches .leaf-swatch-img {
+        height: 40px !important;
+        width: auto !important;
     }
 
     .attire-swatches .swatch-item {
@@ -4183,7 +4451,7 @@ footer {
     }
 
     .attire-swatches .swatch-item span {
-        font-size: 0.38rem !important;
+        font-size: 0.5rem !important;
         text-align: center !important;
     }
 
@@ -4208,7 +4476,82 @@ footer {
     .attire-grid > .attire-photo {
         height: 80px !important;
         display: block !important;
-        
+
+    }
+
+    .attire-photo-3 {
+        height: 45px !important;
+    }
+
+    .attire-grid > .attire-photo-women-3,
+    .attire-grid > .attire-extra-box-1 {
+        height: 200px !important;
+    }
+
+    .attire-grid > .attire-extra-box-1 {
+        border-bottom: 1px solid #ffeda8 !important;
+    }
+
+    .attire-grid > .attire-photo-women-3,
+    .attire-grid > .attire-extra-box-1 {
+        display: flex !important;
+    }
+
+    .attire-photo-women-3 .attire-sub-box,
+    .attire-extra-box-1 .attire-sub-box {
+        flex: 1 1 0;
+        height: 100%;
+        border-right: 1px solid #ffeda8;
+        background-size: 110%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .attire-photo-women-3 .attire-sub-box:nth-child(1) {
+        background-size: 113%;
+    }
+
+    .attire-photo-women-3 .attire-sub-box:nth-child(4) {
+        background-size: 110%;
+        background-position: -40% center;
+    }
+
+    .attire-photo-women-3 .attire-sub-box:nth-child(5) {
+        background-size: 105%;
+    }
+
+    .attire-photo-women-3 .attire-sub-box:nth-child(6) {
+        background-size: 113%;
+    }
+
+    .attire-photo-women-3 .attire-sub-box:last-child,
+    .attire-extra-box-1 .attire-sub-box:last-child {
+        border-right: none;
+    }
+
+    .attire-extra-box-1 .attire-sub-box:nth-child(1) {
+        background-size: 165%;
+        background-position: 70% center;
+    }
+
+    .attire-extra-box-1 .attire-sub-box:nth-child(3) {
+        background-size: 95%;
+    }
+
+    .attire-extra-box-1 .attire-sub-box:nth-child(4) {
+        background-size: 115%;
+    }
+
+    .attire-grid > .attire-photo-men-1,
+    .attire-grid > .attire-photo-men-2,
+    .attire-grid > .attire-photo-men-3,
+    .attire-grid > .attire-photo-women-4,
+    .attire-grid > .attire-photo-women-5,
+    .attire-grid > .attire-photo-women-6,
+    .attire-grid > .attire-photo-men-4,
+    .attire-grid > .attire-photo-men-5,
+    .attire-grid > .attire-photo-men-6 {
+        display: none !important;
     }
 
     .attire-content {
@@ -4484,6 +4827,7 @@ footer {
 
 /* Ultra small devices (320px and below) */
 @media (max-width: 320px) {
+   
     #registry {
         flex-direction: column !important;
         align-items: center !important;
