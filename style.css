@@ -455,6 +455,17 @@ section {
     color: var(--text-light);
 }
 
+.story-yellowflower {
+    position: absolute;
+    bottom: 0;
+    right: 5%;
+    transform: translateY(50%);
+    width: 220px;
+    height: auto;
+    z-index: 5;
+    pointer-events: none;
+}
+
 .section-light {
     background: var(--bg-light);
 }
@@ -555,12 +566,26 @@ section {
         font-weight: 700;
     }
 
+    .story-carousel-outer {
+        position: relative;
+    }
+
     .story-carousel-wrapper {
         border-top: 3px solid #507253;
         border-bottom: 3px solid #507253;
         margin: 2rem 0 0;
         overflow: hidden;
         background: #507253;
+    }
+
+    .story-whiteflower {
+        position: absolute;
+        top: -80px;
+        left: -15px;
+        width: 160px;
+        height: auto;
+        z-index: 5;
+        pointer-events: none;
     }
 
     .story-carousel {
