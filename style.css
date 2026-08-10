@@ -3166,7 +3166,7 @@ footer {
     }
 
     .entourage-shift-left {
-        transform: translateX(-10px) !important;
+        transform: translateX(-15px) !important;
     }
 
     .entourage-col-shift-right {
@@ -4055,8 +4055,61 @@ footer {
 }
 
 /* iPhone Series */
-@media (max-width: 394px) {
+@media (max-width: 395px) {
+     
+    
+    .party-layout {
+        grid-template-columns: 340px 1fr !important;
+        min-height: unset !important;
+        align-items: start !important;
 
+    }
+
+    .big-day-title {
+        font-size: 1.35rem !important;
+    }
+
+    .big-day-title .ols-initial {
+        font-size: 2rem !important;
+    }
+
+    .big-day-title .ols-rest {
+        font-size: 1.5rem !important;
+    }
+
+    .sched-icon {
+        width: 42px !important;
+        height: 42px !important;
+    }
+
+    .sched-time {
+        font-size: 0.8rem !important;
+    }
+
+    .sched-name {
+        font-size: 0.85rem !important;
+    }
+
+    .sched-location {
+        font-size: 0.75rem !important;
+    }
+
+    .sched-card {
+        width: 350px !important;
+        height: 320px !important;
+    }
+
+    .attire-women2-caption {
+        font-size: 0.78rem;
+    }
+
+    #attire .attire-title {
+        padding-top: 0.8rem;
+    }
+
+    .story-sunflower {
+        width: 62px;
+    }
 }
 
 @media (max-width: 376px) {
