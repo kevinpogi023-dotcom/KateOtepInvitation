@@ -4,6 +4,38 @@
 const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxH3XEZ13rd_YFBVOw5z4nCAqk8_u3MFedt2k3zGcOME2YgipjpjvccGxhQPIx6Lu02nw/exec';
 
 // ============================================
+// Invitation Gate - envelope landing screen
+// shown before the invitation. Clicking the
+// envelope plays an opening animation, fades
+// the gate out, then reveals the site beneath.
+// ============================================
+(function() {
+    const gate = document.getElementById('invitation-gate');
+    const envelope = document.getElementById('openInvitation');
+    if (!gate || !envelope) return;
+
+    document.body.style.overflow = 'hidden';
+    let opened = false;
+
+    function openInvitation() {
+        if (opened) return;
+        opened = true;
+        envelope.classList.add('opening');
+        document.body.style.overflow = '';
+
+        setTimeout(function() {
+            gate.classList.add('gate-hidden');
+        }, 450);
+
+        setTimeout(function() {
+            gate.style.display = 'none';
+        }, 1150);
+    }
+
+    envelope.addEventListener('click', openInvitation);
+})();
+
+// ============================================
 // Attire Grid - remove (not just hide) the extra
 // outfit photo cells on mobile so their images
 // never load on small screens. Desktop is untouched

@@ -10,6 +10,21 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="invitation-gate">
+        <div class="gate-content">
+            <p class="gate-eyebrow">You Are Invited</p>
+            <p class="gate-from">from</p>
+            <h1 class="gate-names">
+                <span class="gate-names-line">Joseph</span>
+                <span class="gate-names-line"><span class="gate-amp">&amp;</span> Kate</span>
+            </h1>
+            <button type="button" class="gate-envelope" id="openInvitation" aria-label="Open invitation">
+                <img src="images/envelope.png" alt="" class="gate-envelope-img">
+            </button>
+            <p class="gate-cta"><span class="gate-cta-line"></span>Click to Open<span class="gate-cta-line"></span></p>
+        </div>
+    </div>
+
    <section id="hero" class="hero">
     <nav class="hero-navbar">
         <div class="nav-left">
@@ -83,6 +98,7 @@
             </h2>
 
             <h3 class="story-started-title">It All Started When We<br class="story-title-break">Both Met Online</h3>
+            <img src="images/sunflower.png" alt="" class="story-sunflower">
 
             <div class="story-columns">
                 <div class="story-col">
@@ -157,6 +173,25 @@
             </div>
         </div>
     </section>
+
+    <!-- Photo Carousel (between Schedule and Entourage) -->
+    <div class="story-carousel-outer event-carousel-outer">
+        <div class="story-carousel-wrapper">
+            <div class="story-carousel">
+                <div class="story-carousel-track">
+                    <div class="story-photo-frame"><img src="images/photo1.JPG" alt="Couple photo 1"></div>
+                    <div class="story-photo-frame"><img src="images/photo2.JPG" alt="Couple photo 2"></div>
+                    <div class="story-photo-frame"><img src="images/photo3.JPG" alt="Couple photo 3"></div>
+                    <div class="story-photo-frame"><img src="images/photo4.JPG" alt="Couple photo 4"></div>
+                    <div class="story-photo-frame"><img src="images/photo1.JPG" alt="Couple photo 1"></div>
+                    <div class="story-photo-frame"><img src="images/photo2.JPG" alt="Couple photo 2"></div>
+                    <div class="story-photo-frame"><img src="images/photo3.JPG" alt="Couple photo 3"></div>
+                    <div class="story-photo-frame"><img src="images/photo4.JPG" alt="Couple photo 4"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Wedding Party Section -->
     <section id="party">
         <img src="images/longleafs.PNG" alt="" class="party-vine-decor">
@@ -422,8 +457,11 @@
             </div>
         </div>
         <div class="registry-cardno-wrapper">
-            <img src="images/cardno.png" alt="Card" class="registry-cardno">
-            <img src="images/bpi (2).png" alt="BPI" class="registry-cardno-bpi">
+            <div class="registry-cardno-inner">
+                <img src="images/greenflower.png" alt="" class="registry-cardno-flower">
+                <img src="images/cardno.png" alt="Card" class="registry-cardno">
+                <img src="images/bpi (2).png" alt="BPI" class="registry-cardno-bpi">
+            </div>
         </div>
     </section>
 

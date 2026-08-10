@@ -487,10 +487,15 @@ section {
 
  /* Story Section - FIXED */
         #story {
+            position: relative;
             padding: 0;
             overflow: hidden;
             background: #eeeadf;
             color: var(--text-dark);
+        }
+
+        .story-sunflower {
+            display: none;
         }
 
        #story .container {
@@ -577,6 +582,10 @@ section {
         margin: 2rem 0 0;
         overflow: hidden;
         background: #507253;
+    }
+
+    .event-carousel-outer .story-carousel-wrapper {
+        margin-top: 0;
     }
 
     .story-whiteflower {
@@ -926,6 +935,17 @@ section {
 .party-img-container:first-child {
     border-top: none;
     padding-top: 0;
+}
+
+@media (min-width: 768px) {
+    .party-img-container:nth-child(6) {
+        display: none;
+    }
+
+    .party-img-container:nth-last-child(2) {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
 }
 
 .party-img-container:last-child {
@@ -1352,10 +1372,18 @@ section {
     width: 100%;
 }
 
+.registry-cardno-inner {
+    position: relative;
+    display: inline-block;
+    line-height: 0;
+}
+
 .registry-cardno {
     width: 100%;
     max-width: 420px;
     display: block;
+    position: relative;
+    z-index: 2;
 }
 
 .registry-cardno-bpi {
@@ -1365,6 +1393,18 @@ section {
     transform: translate(-50%, -50%);
     width: 80%;
     max-width: 350px;
+    z-index: 3;
+}
+
+.registry-cardno-flower {
+    position: absolute;
+    bottom: -28px;
+    left: -22px;
+    width: 100px;
+    height: auto;
+    z-index: 1;
+    pointer-events: none;
+    transform: rotate(-12deg);
 }
 
 
@@ -1515,29 +1555,6 @@ section {
     width: 100%;
 }
 
-@media (max-width: 426px) {
-    .rsvp-downflower {
-        position: absolute;
-        top:-5px;
-        right: -20px;
-        width: 180px;
-        height: auto;
-        z-index: 1;
-        pointer-events: none;
-        transform: rotate(5deg);
-    }
-
-    .rsvp-upflower {
-        position: absolute;
-        top: 48%;
-        left: 10px;
-        width: 80px;
-        height: auto;
-        z-index: 1;
-        pointer-events: none;
-        
-    }
-}
 
 @media (min-width: 768px) {
     .rsvp-downflower {
@@ -2023,25 +2040,6 @@ section {
     visibility: visible;
 }
 
-/* Mobile Responsive */
-@media (max-width: 768px) {
-    .rsvp-main-title {
-        font-size: 2rem;
-    }
-    
-    .rsvp-card {
-        padding: 2rem 1.5rem;
-    }
-    
-    .guest-radio-group {
-        flex-direction: column;
-        gap: 1rem;
-    }
-    
-    .rsvp-section {
-        padding: 4rem 1rem;
-    }
-}
 
 .faq-title {
     text-align: left;
@@ -2329,6 +2327,25 @@ footer {
     }
 }
 
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .rsvp-main-title {
+        font-size: 2rem;
+    }
+    
+    .rsvp-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    .guest-radio-group {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .rsvp-section {
+        padding: 4rem 1rem;
+    }
+}
 @media (max-width: 768px) {
 
      :root {
@@ -2695,7 +2712,7 @@ footer {
     }
 
     .rsvp-instruction {
-        font-size: 1rem;
+        font-size: 1.2rem;
     }
 
     /* General adjustments */
@@ -2736,345 +2753,6 @@ footer {
         font-size: 1rem;
         line-height: 1.6;
     }
-}
-
-/* Extra small devices */
-@media (max-width: 480px) {
-
-     :root {
-        --navbar-height: 65px;  /* ADD THIS at the top of the 768px media query */
-    }
-    /* Navigation */
-    .hero-navbar {
-        padding: 0.8rem 1rem;
-    }
-
-    .hero-navbar .nav-center a {
-        font-size: 0.85rem;
-        letter-spacing: 1px;
-    }
-
-    .burger-menu span {
-        width: 22px;
-    }
-
-    /* Hero Section */
-    .hero {
-        height: 100vh;
-    }
-
-    .couple-names {
-        font-size: 2.5rem;
-        letter-spacing: 1px;
-    }
-    
-    .welcome-text {
-        font-size: 1rem;
-        padding: 0 1rem;
-        letter-spacing: 1px;
-    }
-
-    .wedding-date {
-        font-size: 1.2rem;
-        letter-spacing: 3px;
-    }
-
-    .scroll-indicator {
-        bottom: 1.5rem;
-    }
-
-    .scroll-dot {
-        width: 25px;
-        height: 45px;
-    }
-
-    /* Story Section */
-    #story {
-        padding: 0;
-    }
-
-    .story-label {
-        font-size: 1rem;
-        padding-left: 1rem;
-    }
-
-    .story-text-center {
-        padding: 0 1rem;
-        gap: 1rem;
-        margin-bottom: 2rem;
-    }
-    
-    .story-title {
-        font-size: 1.5rem;
-        padding: 0 1rem;
-        margin-bottom: 0.8rem;
-    }
-    
-    .story-description {
-        font-size: 0.95rem;
-        padding: 0 1rem;
-        line-height: 1.6;
-    }
-
-    .carousel-container {
-        height: 320px;
-    }
-
-    /* Event Section */
-    .event-image {
-        height: 280px;
-    }
-    
-    .timeline-item {
-        font-size: 1rem;
-        margin-bottom: 1rem;
-    }
-
-    /* Party Section */
-    #party {
-        padding: 3rem 0;
-    }
-    
-
-    .party-content {
-        padding: 0 1rem;
-    }
-    
-    .party-text {
-        padding: 1.5rem 0;
-    }
-
-    .party-text h3 {
-        font-size: 1.6rem;
-        margin-bottom: 0.8rem;
-    }
-
-    .party-text .subtitle {
-        font-size: 1.2rem;
-        margin-bottom: 1rem;
-    }
-
-    .party-text p {
-        font-size: 0.95rem;
-        line-height: 1.6;
-        margin-bottom: 1rem;
-    }
-
-    .party-images {
-        gap: 8px;
-        margin-bottom: 1rem;
-    }
-
-    .party-img-container {
-        width: calc(33.33% - 5px);
-        height: 150px;
-    }
-
-    /* Attire Section */
-     #attire {
-        padding:0;
-        margin: 0;
-    }
-    .attire-content {
-        grid-template-columns: 1fr;
-        gap: 2.5rem;
-    }
-
-    .attire-images {
-        gap: 1.5rem;
-        margin-top: 2rem;
-    }
-
-    .attire-image {
-        height: 320px;
-    }
-
-    /* Registry Section */
-
-      /* Registry Section */
-    #registry {
-        padding: 0;
-        background-size: 160% auto;
-        background-position: 10%;
-    }
-    .registry-content {
-        gap: 2rem;
-    }
-
-    .registry-text {
-        padding: 0 1rem;
-    }
-
-    .registry-image {
-        height: 280px;
-    }
-    
-    .registry-text p {
-        font-size: 0.95rem;
-        line-height: 1.6;
-    }
-
-     #registry {
-        flex-direction: column !important;
-        align-items: center !important;
-    }
-
-    .registry-inner {
-        width: 100% !important;
-    }
-
-    .registry-cardno-wrapper {
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-        margin-top: -19rem !important;
-        width: 100% !important;
-    }
-
-    .registry-cardno {
-        width: 300px !important;
-        max-width: none !important;
-    }
-
-    .registry-cardno-bpi {
-        width: 75% !important;
-
-    }
-
-    .cta-link {
-        font-size: 1rem;
-    }
-
-    /* RSVP Section */
-    .rsvp-section {
-        padding: 3rem 1rem;
-    }
-
-    .rsvp-main-title {
-        font-size: 1.6rem;
-        margin-bottom: 2rem;
-    }
-
-    .rsvp-card {
-        padding: 2rem 1.5rem;
-    }
-
-    .rsvp-instruction {
-        font-size: 0.95rem;
-        line-height: 1.6;
-        margin-bottom: 1.2rem;
-    }
-
-    .rsvp-input {
-        padding: 0.9rem 1.2rem;
-        font-size: 0.95rem;
-    }
-
-    .rsvp-example {
-        font-size: 0.85rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .rsvp-continue-btn,
-    .rsvp-select-btn,
-    .rsvp-submit-btn {
-        padding: 0.9rem 1.5rem;
-        font-size: 1rem;
-    }
-
-    .guest-name-label {
-        font-size: 1rem;
-    }
-
-    .guest-radio-label {
-        font-size: 0.95rem;
-    }
-
-    .guest-radio-group {
-        gap: 1.5rem;
-    }
-
-    .rsvp-confirm-title {
-        font-size: 1.6rem;
-        margin-bottom: 1.5rem;
-    }
-
-    #step3 .form-group {
-        margin-bottom: 1.5rem;
-    }
-
-    #step3 .form-group label {
-        font-size: 0.95rem;
-        margin-bottom: 0.6rem;
-    }
-
-    #step3 input[type="email"],
-    #step3 textarea {
-        padding: 0.9rem 1.2rem;
-        font-size: 0.95rem;
-    }
-
-    #step3 .radio-label {
-        padding: 0.8rem;
-    }
-
-    #step3 .radio-label span {
-        font-size: 0.95rem;
-    }
-
-    /* General adjustments */
-    section {
-        padding: 3rem 1rem;
-    }
-
-    .section-title {
-        font-size: 2rem;
-        margin-bottom: 2rem;
-        letter-spacing: 1.5px;
-    }
-
-    footer {
-        padding: 2.5rem 1rem 1.5rem;
-        background: url('images/faqs.JPG') center top/cover no-repeat !important;
-    }
-
-    .footer-content h2 {
-        font-size: 1.8rem !important;
-        margin-bottom: 2rem !important;
-        letter-spacing: 1.5px !important;
-    }
-
-    .faq-item {
-        margin-bottom: 1.5rem;
-    }
-
-    .faq-item h4 {
-        font-size: 1.05rem;
-        margin-bottom: 0.4rem;
-    }
-
-    .faq-item p {
-        font-size: 0.95rem;
-        line-height: 1.5;
-    }
-
-    .footer-bottom {
-        margin-top: 1.2rem;
-        padding-top: 1rem;
-        font-size: 0.85rem;
-    }
-
-    /* Registry */
-    .registry-title .attire-initial {
-        font-size: 3.5rem !important;
-    }
-    .registry-title .attire-word {
-        font-size: 2rem !important;
-    }
-    #registry .registry-desc {
-        font-size: 0.85rem !important;
-    }
-
 }
 
 @media (max-width: 767px) {
@@ -3197,6 +2875,17 @@ footer {
     #story .container {
         padding-left: 1.5rem !important;
         padding-right: 1.5rem !important;
+    }
+
+    .story-sunflower {
+        display: block;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: 60px;
+        height: auto;
+        z-index: 5;
+        pointer-events: none;
     }
 
     .story-photo-frame {
@@ -3784,13 +3473,13 @@ footer {
 
     .rsvp-card {
         padding: 0.8rem !important;
-        max-width: 300px !important;
+        max-width: 330px !important;
         border-radius: 6px !important;
         transform: translateY(8rem) !important;
     }
 
     .rsvp-instruction {
-        font-size: 0.55rem !important;
+        font-size: 0.8rem !important;
         font-weight: 550 !important;
         padding: 0.1rem;
     }
@@ -3802,7 +3491,7 @@ footer {
     }
 
     .rsvp-example {
-        font-size: 0.45rem !important;
+        font-size: 0.7rem !important;
         margin-bottom: 0.3rem !important;
     }
 
@@ -3993,11 +3682,432 @@ footer {
         display: none !important;
     }
 }
+
+/* Extra small devices */
+@media (max-width: 480px) {
+
+     :root {
+        --navbar-height: 65px;  /* ADD THIS at the top of the 768px media query */
+    }
+    /* Navigation */
+    .hero-navbar {
+        padding: 0.8rem 1rem;
+    }
+
+    .hero-navbar .nav-center a {
+        font-size: 0.85rem;
+        letter-spacing: 1px;
+    }
+
+    .burger-menu span {
+        width: 22px;
+    }
+
+    /* Hero Section */
+    .hero {
+        height: 100vh;
+    }
+
+    .couple-names {
+        font-size: 2.5rem;
+        letter-spacing: 1px;
+    }
+    
+    .welcome-text {
+        font-size: 1rem;
+        padding: 0 1rem;
+        letter-spacing: 1px;
+    }
+
+    .wedding-date {
+        font-size: 1.2rem;
+        letter-spacing: 3px;
+    }
+
+    .scroll-indicator {
+        bottom: 1.5rem;
+    }
+
+    .scroll-dot {
+        width: 25px;
+        height: 45px;
+    }
+
+    /* Story Section */
+    #story {
+        padding: 0;
+    }
+
+    .story-label {
+        font-size: 1rem;
+        padding-left: 1rem;
+    }
+
+    .story-text-center {
+        padding: 0 1rem;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .story-title {
+        font-size: 1.5rem;
+        padding: 0 1rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .story-description {
+        font-size: 0.95rem;
+        padding: 0 1rem;
+        line-height: 1.6;
+    }
+
+    .carousel-container {
+        height: 320px;
+    }
+
+    /* Event Section */
+    .event-image {
+        height: 280px;
+    }
+    
+    .timeline-item {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    /* Party Section */
+    #party {
+        padding: 3rem 0;
+    }
+    
+
+    .party-content {
+        padding: 0 1rem;
+    }
+    
+    .party-text {
+        padding: 1.5rem 0;
+    }
+
+    .party-text h3 {
+        font-size: 1.6rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .party-text .subtitle {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+    }
+
+    .party-text p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+    }
+
+    .party-images {
+        gap: 8px;
+        margin-bottom: 1rem;
+    }
+
+    .party-img-container {
+        width: calc(33.33% - 5px);
+        height: 150px;
+    }
+
+    /* Attire Section */
+     #attire {
+        padding:0;
+        margin: 0;
+    }
+    .attire-content {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+
+    .attire-images {
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .attire-image {
+        height: 320px;
+    }
+
+    /* Registry Section */
+
+      /* Registry Section */
+    #registry {
+        padding: 0;
+        background-size: 160% auto;
+        background-position: 10%;
+    }
+    .registry-content {
+        gap: 2rem;
+    }
+
+    .registry-text {
+        padding: 0 1rem;
+    }
+
+    .registry-image {
+        height: 280px;
+    }
+    
+    .registry-text p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+     #registry {
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+
+    .registry-inner {
+        width: 100% !important;
+         transform: translateY(-14rem) !important;
+    }
+
+    .registry-cardno-wrapper {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+         margin-top: -2rem !important;
+        width: 100% !important;
+    }
+
+    .registry-cardno {
+        width: 300px !important;
+        max-width: none !important;
+    }
+
+    .registry-cardno-bpi {
+        width: 75% !important;
+
+    }
+
+    .cta-link {
+        font-size: 1rem;
+    }
+
+    /* RSVP Section */
+    .rsvp-section {
+        padding: 3rem 1rem;
+    }
+
+    .rsvp-main-title {
+        font-size: 1.6rem;
+        margin-bottom: 2rem;
+    }
+
+    .rsvp-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .rsvp-instruction {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 1.2rem;
+    }
+
+    .rsvp-input {
+        padding: 0.9rem 1.2rem;
+        font-size: 0.95rem;
+    }
+
+    .rsvp-example {
+        font-size: 0.85rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .rsvp-continue-btn,
+    .rsvp-select-btn,
+    .rsvp-submit-btn {
+        padding: 0.9rem 1.5rem;
+        font-size: 1rem;
+    }
+
+    .guest-name-label {
+        font-size: 1rem;
+    }
+
+    .guest-radio-label {
+        font-size: 0.95rem;
+    }
+
+    .guest-radio-group {
+        gap: 1.5rem;
+    }
+
+    .rsvp-confirm-title {
+        font-size: 1.6rem;
+        margin-bottom: 1.5rem;
+    }
+
+    #step3 .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    #step3 .form-group label {
+        font-size: 0.95rem;
+        margin-bottom: 0.6rem;
+    }
+
+    #step3 input[type="email"],
+    #step3 textarea {
+        padding: 0.9rem 1.2rem;
+        font-size: 0.95rem;
+    }
+
+    #step3 .radio-label {
+        padding: 0.8rem;
+    }
+
+    #step3 .radio-label span {
+        font-size: 0.95rem;
+    }
+
+    /* General adjustments */
+    section {
+        padding: 3rem 1rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        letter-spacing: 1.5px;
+    }
+
+    footer {
+        padding: 2.5rem 1rem 1.5rem;
+        background: url('images/faqs.JPG') center top/cover no-repeat !important;
+    }
+
+    .footer-content h2 {
+        font-size: 1.8rem !important;
+        margin-bottom: 2rem !important;
+        letter-spacing: 1.5px !important;
+    }
+
+    .faq-item {
+        margin-bottom: 1.5rem;
+    }
+
+    .faq-item h4 {
+        font-size: 1.05rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .faq-item p {
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+
+    .footer-bottom {
+        margin-top: 1.2rem;
+        padding-top: 1rem;
+        font-size: 0.85rem;
+    }
+
+    /* Registry */
+    .registry-title .attire-initial {
+        font-size: 3.5rem !important;
+    }
+    .registry-title .attire-word {
+        font-size: 2rem !important;
+    }
+    #registry .registry-desc {
+        font-size: 0.85rem !important;
+    }
+
+}
+@media (max-width: 426px) {
+    #attire {
+        padding: 0.75rem;
+    }
+
+    .story-sunflower {
+        width: 70px;
+    }
+
+    .rsvp-downflower {
+        position: absolute;
+        top:-5px;
+        right: -20px;
+        width: 180px;
+        height: auto;
+        z-index: 1;
+        pointer-events: none;
+        transform: rotate(5deg);
+    }
+
+    .rsvp-upflower {
+        position: absolute;
+        top: 48%;
+        left: 10px;
+        width: 80px;
+        height: auto;
+        z-index: 1;
+        pointer-events: none;
+        
+    }
+}
+
+/* iPhone Series */
+@media (max-width: 394px) {
+
+}
+
 @media (max-width: 376px) {
  #party {
-    height: 1100px;
+    min-height: 1100px;
  }
- .party-layout {
+
+    .story-sunflower {
+        width: 60px;
+        right: 0.5rem;
+        top: .5rem;
+    }
+
+    .big-day-title {
+        font-size: 1.4rem !important;
+    }
+
+    .big-day-title .ols-initial {
+        font-size: 2.5rem !important;
+    }
+
+    .big-day-title .ols-rest {
+        font-size: 1.5rem !important;
+    }
+
+    .sched-card {
+        width: 340px !important;
+        height: 300px !important;
+    }
+
+    .sched-icon {
+        width: 38px !important;
+        height: 38px !important;
+    }
+
+    .sched-time {
+        font-size: 0.9rem !important;
+    }
+
+    .sched-name {
+        font-size: 0.9rem !important;
+    }
+
+    .sched-location {
+        font-size: 0.65rem !important;
+    }
+
+    #attire {
+        padding: 0.75rem;
+    }
+    .party-layout {
         grid-template-columns: 340px 1fr !important;
         min-height: unset !important;
         align-items: start !important;
@@ -4011,8 +4121,18 @@ footer {
         border-right: none;
         box-shadow: none;
     }
+      #registry {
+         min-height: 865px;
+    }
+       .registry-inner {
+        transform: translateY(-14rem) !important;
+    }
 
-       .registry-cardno {
+    .registry-cardno-wrapper {
+        margin-top: -2rem !important;
+    }
+
+    .registry-cardno {
         width: 290px !important;
         max-width: none !important;
     }
@@ -4044,14 +4164,25 @@ footer {
 
     .rsvp-card {
         padding: 0.8rem !important;
-        max-width: 280px !important;
+        max-width: 310px !important;
         border-radius: 6px !important;
         transform: translateY(7rem) !important;
+    }
+    .rsvp-upflower {
+        width: 70px;
+        left:-15px;
+        
     }
 }
 
 /* Ultra small devices (360px and below) */
 @media (max-width: 360px) {
+    .story-sunflower {
+        width: 51px;     
+        right: 2.5rem;
+                
+    }
+
     /* Navigation */
     .hero-navbar {
         padding: 0.6rem 0.6rem;
@@ -4266,19 +4397,19 @@ footer {
     }
 
     .big-day-title {
-        font-size: 1.5rem !important;
+        font-size: 1.7rem !important;
         transform: none !important;
         margin-top: 1.5rem !important;
         word-spacing: -0.5rem !important;
     }
 
     .big-day-title .ols-initial {
-        font-size: 1.5rem !important;
+        font-size: 1.7rem !important;
         margin-right: -0.3rem !important;
     }
 
     .big-day-title .ols-rest {
-        font-size: 1.2rem !important;
+        font-size: 1.35rem !important;
         letter-spacing: 1px !important;
     }
 
@@ -4311,12 +4442,12 @@ footer {
         column-gap: 0.8rem !important;
         row-gap: 0 !important;
         align-items: start !important;
-       
+
     }
 
     .sched-icon {
-        width: 35px !important;
-        height: 35px !important;
+        width: 40px !important;
+        height: 40px !important;
         margin-bottom: 0 !important;
         grid-column: 1 !important;
         grid-row: 1 / 4 !important;
@@ -4324,14 +4455,14 @@ footer {
     }
 
     .sched-time {
-        font-size: 0.65rem !important;
+        font-size: 0.75rem !important;
         margin-bottom: 0.1rem !important;
         grid-column: 2 !important;
         grid-row: 1 !important;
     }
 
     .sched-name {
-        font-size: 0.7rem !important;
+        font-size: 0.8rem !important;
         white-space: normal !important;
         margin-bottom: 0.1rem !important;
         grid-column: 2 !important;
@@ -4339,14 +4470,14 @@ footer {
     }
 
     .sched-location {
-        font-size: 0.6rem !important;
+        font-size: 0.68rem !important;
         grid-column: 2 !important;
         grid-row: 3 !important;
     }
 
     .sched-card {
-        width: 350px !important;
-        height: 300px !important;
+        width: 310px !important;
+        height: 260px !important;
         margin-top: 0.5rem;
     }
 
@@ -4354,10 +4485,11 @@ footer {
     #party {
         padding-top: 0 !important;   
         padding-bottom: 0 !important;
+        min-height: 950px !important;
     }
 
     .party-layout {
-        grid-template-columns: 310px 1fr !important;
+        grid-template-columns: 315px 1fr !important;
         min-height: unset !important;
         align-items: start !important;
         
@@ -4374,12 +4506,20 @@ footer {
    
 
     .party-img-container {
-        height: 200px !important;
+        height: 190px !important;
         flex: none !important;
         padding: 6px 9px !important;
         min-height: unset !important;
         border: 1px solid #507253 !important;
         border-top: none !important;
+    }
+
+    .party-img-container:nth-child(6) {
+        display: none !important;
+    }
+
+    .party-img-container:nth-last-child(2) {
+        border-bottom: none !important;
     }
 
     .party-img-container:last-child {
@@ -4506,7 +4646,7 @@ footer {
         background-repeat: no-repeat !important;
     }
 
-    
+
 
     .attire-title {
         font-size: 1rem !important;
@@ -4515,15 +4655,15 @@ footer {
     }
 
     .attire-title .attire-initial {
-        font-size: 4rem !important;
+        font-size: 3.4rem !important;
     }
 
     .attire-title .attire-word {
-        font-size: 2.56rem !important;
+        font-size: 1.9rem !important;
     }
 
     .attire-desc {
-        font-size: 0.79rem !important;
+        font-size: 0.65rem !important;
         line-height: 1.5 !important;
         margin-top: auto;
 
@@ -4531,7 +4671,7 @@ footer {
 
     .attire-subtitle {
         display: block !important;
-        font-size: 0.85rem !important;
+        font-size: 0.75rem !important;
         font-weight: 700;
     }
 
@@ -4566,7 +4706,8 @@ footer {
         text-align: center !important;
     }
 
-    .attire-grid > .attire-photo-women-2 {
+    .attire-grid > .attire-photo.attire-photo-women-2 {
+        height: 65px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
@@ -4576,11 +4717,10 @@ footer {
         font-family: 'EB Garamond', serif;
         font-weight: bold;
         color: #ffe575;
-        font-size: 0.9rem;
-        white-space: nowrap;
+        font-size: .98rem;
+        white-space: normal;
         text-align: center;
-        margin: 0;
-        padding: 0 0.3rem;
+        margin: 0; 
     }
 
     #hero {
@@ -4712,7 +4852,7 @@ footer {
 
     /* Registry Section */
     #registry {
-         min-height: 700px;
+         min-height: 770px;
     }
     .registry-text {
         padding: 0 0.8rem;
@@ -4762,13 +4902,13 @@ footer {
 
     .rsvp-card {
         padding: 0.8rem !important;
-        max-width: 260px !important;
+        max-width: 290px !important;
         border-radius: 6px !important;
         transform: translateY(7rem) !important;
     }
 
     .rsvp-instruction {
-        font-size: 0.51rem !important;
+        font-size: 0.75rem !important;
         font-weight: 550 !important;
         padding: 0.1rem;
     }
@@ -4780,7 +4920,7 @@ footer {
     }
 
     .rsvp-example {
-        font-size: 0.45rem !important;
+        font-size: 0.65rem !important;
         margin-bottom: 0.3rem !important;
     }
 
@@ -4966,6 +5106,7 @@ footer {
         display: flex !important;
         margin-top: -1rem !important;
          transform: translateY(-1rem);
+          margin-top: -19rem !important;
     }
 
     .registry-card-wrapper {
@@ -4975,15 +5116,101 @@ footer {
 
 /* Ultra small devices (320px and below) */
 @media (max-width: 320px) {
-   
+    #party {
+        min-height: 950px;
+    }
+
+    .story-sunflower {
+        width: 45px;
+        right: 0.8rem;
+        top: 1.4rem;
+    }
+
+    .sched-card {
+        width: 260px !important;
+        height: 220px !important;
+    }
+    .party-img-container {
+        height: 190px !important;
+    }
+
+    .party-img-container:nth-child(6) {
+        display: none !important;
+    }
+
+    .party-img-container:nth-last-child(2) {
+        border-bottom: none !important;
+    }
+
+    .attire-title .attire-initial {
+        font-size: 3.3rem !important;
+    }
+
+    .attire-title .attire-word {
+        font-size: 1.9rem !important;
+    }
+
+    .attire-desc {
+        font-size: 0.62rem !important;
+    }
+
+    .attire-subtitle {
+        font-size: 0.65rem !important;
+    }
+
+    .attire-footer-text {
+        font-size: 0.78rem !important;
+    }
+
+    .attire-grid > .attire-photo-women-2 {
+        height: 60px !important;
+    }
+
+    .attire-women2-caption {
+        white-space: normal;
+        text-align: center;
+        font-size: .93rem !important;
+    }
+
+    .attire-swatches .leaf-swatch-img {
+        height: 35px !important;
+    }
+
+    .rsvp-main-title {
+        transform: translateY(6rem) !important;
+    }
+
+    .rsvp-initial,
+    .rsvp-word {
+        transform: translateY(7rem) !important;
+    }
+
+    .rsvp-card {
+        transform: translateY(5rem) !important;
+    }
+
+    .rsvp-downflower {
+        width: 150px;
+        top: 1px;
+        right:-35px;
+    }
+
+    .rsvp-upflower {
+        width: 60px;
+        left:-4px;
+    }
+
     #registry {
         flex-direction: column !important;
         align-items: center !important;
+        min-height: 750px !important;
+       
     }
 
     .registry-inner {
         width: 100% !important;
     }
+    
 
     .registry-cardno-wrapper {
         display: flex !important;
@@ -5002,6 +5229,157 @@ footer {
         width: 75% !important;
 
     }
-    
+}
 
+/* ============================================
+   Invitation Gate (envelope landing screen)
+   ============================================ */
+#invitation-gate {
+    position: fixed;
+    inset: 0;
+    z-index: 20000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f3ece2;
+    transition: opacity 0.7s ease;
+}
+
+#invitation-gate.gate-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.gate-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    max-width: 90vw;
+    min-width: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+#invitation-gate.gate-hidden .gate-content {
+    opacity: 0;
+    transform: translateY(-12px);
+}
+
+.gate-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: #7c8c4a;
+    margin-bottom: 0.9rem;
+}
+
+.gate-from {
+    font-family: 'Alex Brush', cursive;
+    font-size: 2rem;
+    font-weight: 400;
+    color: #7c8c4a;
+    margin-bottom: 0.4rem;
+}
+
+.gate-names {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    font-size: 5.8rem;
+    letter-spacing: 10px;
+    text-transform: uppercase;
+    color: #7c8c4a;
+    margin-bottom: 1.2rem;
+    line-height: 1.3;
+}
+
+.gate-names-line {
+    display: block;
+}
+
+.gate-names .gate-amp {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    font-size: 5.8rem;
+    color: #7c8c4a;
+    margin-right: 0.35rem;
+}
+
+.gate-envelope {
+    position: relative;
+    width: 480px;
+    max-width: 86vw;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.gate-envelope-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 14px 20px rgba(70, 80, 40, 0.25));
+}
+
+.gate-envelope.opening {
+    opacity: 0;
+    transform: scale(0.96);
+}
+
+.gate-cta {
+    margin-top: 1.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #7c8c4a;
+}
+
+.gate-cta-line {
+    width: 26px;
+    height: 1px;
+    background: #b7a06a;
+}
+
+@media (max-width: 480px) {
+    .gate-eyebrow {
+        font-size: 0.8rem;
+        letter-spacing: 3px;
+    }
+
+    .gate-from {
+        font-size: 1.5rem;
+    }
+
+    .gate-names {
+        font-size: 4rem;
+        letter-spacing: 10px;
+        margin-bottom: -1rem;
+    }
+
+    .gate-names .gate-amp {
+        font-size: 4rem;
+    }
+
+    .gate-envelope {
+        width: 450px;
+        max-width: none;
+    }
+
+    .gate-cta {
+        font-size: 0.rem;
+        gap: 0.6rem;
+    }
+
+    .gate-cta-line {
+        width: 18px;
+    }
 }
