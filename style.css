@@ -229,7 +229,7 @@ body::-webkit-scrollbar {
 .burger-menu span {
     width: 25px;
     height: 2px;
-    background: var(--text-light);
+    background: #807253;
     margin: 3px 0;
     transition: all 0.3s ease;
     display: block;
@@ -317,7 +317,7 @@ body::-webkit-scrollbar {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3) 0%, rgba(0, 0, 0, 0) 18%, rgba(0, 0, 0, 0.3) 35%, rgba(0, 0, 0, 0.3) 100%),
                 url('images/herobg.jpg') center/cover;
     margin-bottom: 0;
     background-size: 100%, 115%;
@@ -1400,7 +1400,7 @@ section {
     position: absolute;
     bottom: -28px;
     left: 8px;
-    width: 100px;
+    width: 112px;
     height: auto;
     z-index: 4;
     pointer-events: none;
@@ -4022,6 +4022,79 @@ footer {
     }
 
 }
+
+@media (max-width: 441px) {
+    .big-day-title {
+        font-size: 1.55rem !important;
+    }
+
+    .big-day-title .ols-initial {
+        font-size: 1.7rem !important;
+    }
+
+    .big-day-title .ols-rest {
+        font-size: 1.55rem !important;
+    }
+
+    .sched-icon {
+        width: 50px !important;
+        height: 50px !important;
+    }
+
+    .sched-time {
+        font-size: 0.95rem !important;
+    }
+
+    .sched-card {
+        width: 400px !important;
+        height: 300px !important;
+    }
+
+    .story-sunflower {
+        width: 68px;
+    }
+
+    #attire {
+        padding: 0.75rem;
+    }
+
+    #attire .attire-title {
+        padding-top: 0.1rem;
+    }
+
+    
+    .rsvp-downflower {
+        position: absolute;
+        top:-5px;
+        right: -20px;
+        width: 180px;
+        height: auto;
+        z-index: 1;
+        pointer-events: none;
+        transform: rotate(5deg);
+    }
+
+    .rsvp-upflower {
+        position: absolute;
+        top: 48%;
+        left: 5px;
+        width: 80px;
+        height: auto;
+        z-index: 1;
+        pointer-events: none;
+        
+    }
+
+     .registry-cardno {
+        width: 350px !important;
+        max-width: none !important;
+    }
+    .registry-cardno-bpi {
+        width: 90% !important;
+        margin-top: 0.6rem !important;
+    }
+}
+
 @media (max-width: 426px) {
     #attire {
         padding: 0.75rem;
