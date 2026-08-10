@@ -4110,6 +4110,10 @@ footer {
     .story-sunflower {
         width: 62px;
     }
+
+    .rsvp-upflower {
+        left: -20px;
+    }
 }
 
 @media (max-width: 376px) {
