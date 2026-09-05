@@ -5646,10 +5646,12 @@ footer {
 
     .rsvp-downflower {
         width: 180px;
+        bottom: 35px;
     }
 
     .rsvp-upflower {
         width: 180px;
+        bottom: 42px;
     }
 
     .rsvp-step {
@@ -5791,7 +5793,7 @@ footer {
     }
 
     .rsvp-heading {
-        margin-top: -4rem !important;
+        margin-top: -2rem !important;
     }
 
     .rsvp-step {
@@ -5800,6 +5802,14 @@ footer {
 
     .rsvp-main-title {
         margin-top: 1rem !important;
+    }
+
+    .rsvp-downflower {
+        bottom: 35px !important;
+    }
+
+    .rsvp-upflower {
+        bottom: 40px !important;
     }
 
     .story-sunflower {
