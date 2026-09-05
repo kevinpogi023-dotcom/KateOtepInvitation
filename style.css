@@ -458,9 +458,9 @@ section {
 .story-yellowflower {
     position: absolute;
     bottom: 0;
-    right: 5%;
+    right: 1%;
     transform: translateY(50%);
-    width: 220px;
+    width: 320px;
     height: auto;
     z-index: 5;
     pointer-events: none;
@@ -591,8 +591,8 @@ section {
     .story-whiteflower {
         position: absolute;
         top: -80px;
-        left: -15px;
-        width: 160px;
+        left: -60px;
+        width: 240px;
         height: auto;
         z-index: 5;
         pointer-events: none;
@@ -608,9 +608,6 @@ section {
         animation: storyScroll 12s linear infinite;
     }
 
-    .story-carousel-track:hover {
-        animation-play-state: paused;
-    }
 
     .story-photo-frame {
         flex: 0 0 calc(100% / 3 - 1px);
@@ -706,7 +703,7 @@ section {
     background-image: url('images/sched.png');
     background-size: cover;
     background-position: center;
-    height: 900px;
+    height: 1100px;
     display: flex;
     align-items: flex-start;
     justify-content: center;
@@ -721,9 +718,10 @@ section {
 
 .big-day-title {
     text-align: center;
-    color: #f9f3e3;
+    color: #ffe575;
     font-size: 3.5rem;
     font-weight: normal;
+    margin-top: 2rem;
     margin-bottom: 60px;
     line-height: 1;
     transform: translateY(-3rem);
@@ -732,24 +730,24 @@ section {
 
 .big-day-title .ols-initial {
     font-family: 'Alex Brush', cursive;
-    font-size: 4.5rem;
-    color: #f9f3e3;
+    font-size: 6rem;
+    color: #ffe575;
 }
 
 .big-day-title .ols-rest {
     font-family: 'Cinzel', serif;
-    font-size: 2.8rem;
+    font-size: 3.6rem;
     letter-spacing: 3px;
-    color: #f9f3e3;
+    color: #ffe575;
 }
 
 .sched-grid {
     display: grid;
-    grid-template-columns: 1.2fr 1.2fr 1.2fr 0.5fr;
-    gap: 2rem;
-    padding: 0 3rem 0 3rem;
-    margin-right: 1rem;
-    transform: translateY(-5rem);
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8rem;
+    padding: 0;
+    margin-right: 0;
+    transform: translate(-9rem, -5rem);
 }
 
 .sched-item {
@@ -760,16 +758,16 @@ section {
 
 
 .sched-icon {
-    width: 90px;
-    height: 90px;
+    width: 140px;
+    height: 140px;
     object-fit: contain;
-    margin-bottom: 1.2rem;
+    margin-bottom: 1.1rem;
     opacity: 0.9;
 }
 
 .sched-time {
     font-family: 'Cinzel', serif;
-    font-size: 1.3rem;
+    font-size: 1.8rem;
     font-weight: 700;
     color: #ffe575;
     letter-spacing: 1px;
@@ -778,20 +776,25 @@ section {
 
 .sched-name {
     font-family: 'Garamond', serif;
-    font-size: 1.5rem;
+    font-size: 2.2rem;
     font-weight: 700;
     color: #ffe575;
-    letter-spacing: 2.5px;
+    letter-spacing: 2px;
     margin-bottom: 0.5rem;
     white-space: nowrap;
 }
 
 .sched-location {
     font-family: 'Quicksand', sans-serif;
-    font-size: 1.1rem;
+    font-size: 1.65rem;
     font-weight: 700;
     color: #f9f3e3;
-    line-height: 1.5;
+    line-height: 1.4;
+    white-space: nowrap;
+}
+
+.sched-item:first-child .sched-location {
+    word-spacing: 0.3em;
 }
 
 .sched-card-wrapper {
@@ -804,6 +807,49 @@ section {
     width: 600px;
     object-fit: contain;
     margin-top: -5rem;
+}
+
+.map-card-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.map-card {
+    position: relative;
+    display: inline-block;
+}
+
+.map-card-map {
+    position: absolute;
+    top: 20%;
+    left: 48%;
+    transform: translate(-50%, -50%);
+    width: 75%;
+    height: auto;
+    pointer-events: none;
+    transition: transform 0.3s ease;
+}
+
+.map-card-link:hover .map-card-map {
+    transform: translate(-50%, -50%) scale(1.08);
+}
+
+.map-card-cta {
+    position: absolute;
+    bottom: 28%;
+    left: 46%;
+    transform: translateX(-50%);
+    margin: 0;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #ff8b1d;
+    white-space: nowrap;
 }
 
 .timeline-container {
@@ -891,12 +937,11 @@ section {
 
 /* Wedding Party Section */
 #party {
-    background-image: url('images/weddingparty.png');
-    background-color: #eeeadf;
-    background-size: contain;
-    background-position: bottom right;
+    background-color: #efeadd;
+    background-image: url('images/entouragebg.png');
+    background-size: 1800px;
+    background-position: bottom 80px right -250px;
     background-repeat: no-repeat;
-    min-height: 100vh;
     position: relative;
     padding: 0;
 }
@@ -914,9 +959,7 @@ section {
 
 /* Entourage Layout */
 .party-layout {
-    display: grid;
-    grid-template-columns: 320px 1fr;
-    min-height: 100vh;
+    padding-bottom: 2rem;
 }
 
 .party-photos {
@@ -928,7 +971,7 @@ section {
     flex: 1 1 0;
     min-height: 0;
     border: 2px solid #507253;
-    background: #eeeadf;
+    background: #efeadd;
     padding: 20px;
 }
 
@@ -937,7 +980,7 @@ section {
     padding-top: 0;
 }
 
-@media (min-width: 768px) {
+    @media (min-width: 769px) {
     .party-img-container:nth-child(6) {
         display: none;
     }
@@ -960,6 +1003,73 @@ section {
     display: block;
 }
 
+.party-carousel-outer {
+    position: relative;
+    margin-top: 7rem;
+}
+
+.party-carousel-wrapper {
+    border-top: 3px solid #507253;
+    border-bottom: 3px solid #507253;
+    overflow: hidden;
+    background: #507253;
+}
+
+.party-carousel {
+    overflow: hidden;
+}
+
+.party-carousel-track {
+    display: flex;
+    gap: 3px;
+    animation: partyScroll 12s linear infinite;
+}
+
+
+.party-photo-frame {
+    flex: 0 0 calc(100% / 3 - 2px);
+    height: 500px;
+    padding: 20px;
+    background: #efeadd;
+    box-sizing: border-box;
+}
+
+.party-photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    display: block;
+}
+
+.party-photo-frame img[src*="c1.jpg"] {
+    object-position: center 25%;
+}
+
+.party-photo-frame img[src*="c2.jpg"] {
+    object-position: center 30%;
+}
+
+.party-photo-frame img[src*="c3.jpg"] {
+    object-position: center 15%;
+}
+
+.party-photo-frame img[src*="c4.JPG"] {
+    object-position: center 20%;
+}
+
+.party-photo-frame img[src*="c5.JPG"],
+.party-photo-frame img[src*="c6.JPG"],
+.party-photo-frame img[src*="c7.JPG"],
+.party-photo-frame img[src*="c8.JPG"] {
+    object-position: center 18%;
+}
+
+@keyframes partyScroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
 .party-entourage {
     flex: 1;
     padding: 3rem 5rem 3rem 4rem;
@@ -971,20 +1081,23 @@ section {
 /* Entourage Title */
 .entourage-title {
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-top: 4rem;
+    margin-bottom: 0.1rem;
     line-height: 1.2;
+    word-spacing: 1em;
+    letter-spacing: 6px;
 }
 
 .entourage-initial {
     font-family: 'Alex Brush', cursive;
-    font-size: 4.5rem;
+    font-size: 10rem;
     font-weight: 400;
     color: #e9a021;
 }
 
 .entourage-rest {
     font-family: 'Cinzel', serif;
-    font-size: 2.8rem;
+    font-size: 6.2rem;
     font-weight: 400;
     letter-spacing: 4px;
     color: #e9a021;
@@ -1001,6 +1114,114 @@ section {
     text-align: center;
 }
 
+.entourage-row-3col {
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 90%;
+}
+
+.entourage-bearers {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas:
+        "ring coin bible"
+        "flower flower flower";
+    width: 90%;
+    gap: 2rem;
+    margin: 0.5rem auto;
+    text-align: center;
+}
+
+.eb-ring { grid-area: ring; min-width: 0; }
+.eb-coin { grid-area: coin; min-width: 0; }
+.eb-bible { grid-area: bible; min-width: 0; }
+.eb-flower { grid-area: flower; margin-top: 1rem; min-width: 0; }
+
+.eb-flower-names {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.entourage-row-groom-bride {
+    gap: 14rem;
+    transform: translateX(-40px);
+}
+
+.entourage-row-groom-bride .entourage-role,
+.entourage-row-groom-bride .entourage-name {
+    transform: translateX(-40px);
+}
+
+.entourage-row-parents {
+    gap: 14rem;
+    transform: translateX(-15px);
+}
+
+.entourage-row-parents .entourage-col:first-child {
+    transform: translateX(-50px);
+}
+
+.entourage-row-parents .entourage-col:last-child {
+    transform: translateX(30px);
+}
+
+.entourage-row-sponsors {
+    gap: 16.5rem;
+    transform: translateX(-25px);
+}
+
+.entourage-row-sponsors .entourage-col:first-child {
+    transform: translateX(-40px);
+}
+
+.entourage-row-sponsors .entourage-col:last-child {
+    transform: translateX(25px);
+}
+
+.entourage-row-parents .entourage-name {
+    white-space: nowrap;
+}
+
+.entourage-row-candle-veil {
+    gap: 14rem;
+    transform: translateX(-140px);
+}
+
+.entourage-row-candle-veil .entourage-col:first-child {
+    transform: translateX(-65px);
+}
+
+.entourage-row-candle-veil .entourage-col:last-child {
+    transform: translateX(30px);
+}
+
+.entourage-shift-left .entourage-col:first-child {
+    transform: translateX(-160px);
+}
+
+.entourage-shift-left .entourage-col:last-child {
+    transform: translateX(60px);
+}
+
+.entourage-shift-left .entourage-role,
+.entourage-shift-left .entourage-name {
+    line-height: 1.2;
+}
+
+.entourage-shift-left .entourage-role {
+    letter-spacing: 3px;
+}
+
+
+
+.entourage-row-groom-bride .entourage-name {
+    white-space: nowrap;
+}
+
+.entourage-row-groom-bride .entourage-col:first-child {
+    transform: translateX(-70px);
+}
+
 .entourage-col {
     display: flex;
     flex-direction: column;
@@ -1015,19 +1236,64 @@ section {
 /* Role headers (GROOM, BRIDE, PARENTS OF...) */
 .entourage-role {
     font-family: 'Garamond', 'EB Garamond', serif;
-    font-size: 1.1rem;
+    font-size: 2.8rem;
     font-weight: 700;
-    -webkit-text-stroke: 0.3px #5a7a52;
-    letter-spacing: 2.5px;
+    -webkit-text-stroke: 0.3px #ff8b1d;
+    letter-spacing: 8px;
     text-transform: uppercase;
-    color: #5a7a52;
-    margin-bottom: 0.3rem;
+    color: #ff8b1d;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.entourage-role-parents {
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: 8px;
+    font-size: 2.8rem;
+}
+
+.entourage-role-sponsors-title,
+.entourage-role-secondary {
+    font-size: 2.8rem;
+    letter-spacing: 10px;
+}
+
+.entourage-role-secondary,
+.entourage-row-candle-veil .entourage-role,
+.entourage-single .entourage-role {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.entourage-row-candle-veil .entourage-role,
+.entourage-single .entourage-role {
+    font-size: 2.6rem;
+}
+
+.entourage-row-candle-veil .entourage-name,
+.entourage-single .entourage-name {
+    line-height: 1.2;
+}
+
+.entourage-role-secondary {
+    margin-top: 1.5rem;
+    transform: translateX(50px);
+}
+
+.entourage-row-groom-bride .entourage-role {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.entourage-name-cord2 {
+    transform: translateX(20px);
 }
 
 /* Section titles (PRINCIPAL SPONSORS, SECONDARY SPONSORS) */
 .entourage-section-title {
     font-family: 'Garamond', serif;
-    font-size: 0.9rem;
+    font-size: 1.05rem;
     font-weight: 700;
     letter-spacing: 3px;
     text-transform: uppercase;
@@ -1039,17 +1305,24 @@ section {
 /* Name text */
 .entourage-name {
     font-family: 'Quicksand', sans-serif;
-    font-size: 1rem;
-    color: #5a7a52;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #507253;
     margin-bottom: 0.15rem;
     text-align: center;
+    letter-spacing: 5px;
+    white-space: nowrap;
+}
+
+.entourage-row-sponsors .entourage-name {
+    letter-spacing: 3px;
 }
 
 /* Divider */
 .entourage-divider {
     display: flex;
     align-items: center;
-    width: 48%;
+    width: 95%;
     margin: 0.8rem auto;
 }
 
@@ -1070,14 +1343,12 @@ section {
 
 /* Attire Section */
 #attire {
-    background-image: url('images/dresscode.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background-color: #efeadf;
     padding: 20px 0;
     margin: 0;
     min-height: 100vh;
-    border-top: 1px solid #ffeda8;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 -6px 12px rgba(0, 0, 0, 0.06);
 }
 
 .attire-grid {
@@ -1088,7 +1359,7 @@ section {
 }
 
 .attire-cell {
-    border: 2px solid #ffeda8;
+    border: 1px solid #8e9f4f;
 }
 
 /* Remove outer left border */
@@ -1104,8 +1375,17 @@ section {
 }
 
 
-@media (min-width: 768px) {
-    .story-title-break {
+@media (min-width: 769px) {
+    .story-title-break,
+    .rsvp-title-break {
+        display: none;
+    }
+
+    .story-columns-mobile {
+        display: none;
+    }
+
+    .story-sunflower-mobile {
         display: none;
     }
 
@@ -1211,7 +1491,7 @@ section {
     top: 0.6rem;
     left: 50%;
     transform: translateX(-50%);
-    width: 60px;
+    width: 240px;
     height: auto;
 }
 
@@ -1237,20 +1517,32 @@ section {
     text-transform: uppercase;
 }
 
+#attire .attire-title .attire-initial {
+    font-size: 6.5rem;
+}
+
+#attire .attire-title .attire-word {
+    font-size: 4.2rem;
+}
+
+#attire .attire-title {
+    margin-top: 0rem;
+}
+
 .attire-desc {
     font-family: 'Quicksand', sans-serif;
-    font-size: 1.2rem;
+    font-size: 1.45rem;
     line-height: 1.7;
-    color: #ffffff;
+    color: #507253;
     margin-bottom: 1.5rem;
-    max-width: 400px;
+    max-width: 480px;
 }
 
 .attire-subtitle {
     font-family: 'EB Garamond', serif;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: bold;
-    color: #ffe575;
+    color: #e9a021;
     letter-spacing: 1px;
     margin-bottom: 1.2rem;
 }
@@ -1283,17 +1575,19 @@ section {
 
 .swatch-item span {
     font-family: 'Quicksand', sans-serif;
-    font-size: 0.78rem;
+    font-size: 0.95rem;
     font-weight: bold;
-    color: #ffffff;
+    color: #507253;
 }
 
 .attire-footer-text {
     font-family: 'Quicksand', sans-serif;
-    font-size: 1.2rem;
-    color: #ffffff;
+    font-size: 1.4rem;
+    color: #507253;
     line-height: 1.5;
 }
+
+
 
 /* Registry Section */
 .registry-title {
@@ -1404,7 +1698,6 @@ section {
     height: auto;
     z-index: 4;
     pointer-events: none;
-    transform: rotate(-12deg);
 }
 
 
@@ -1556,12 +1849,12 @@ section {
 }
 
 
-@media (min-width: 768px) {
+@media (min-width: 769px) {
     .rsvp-downflower {
         position: absolute;
-        top: -50px;
-        right: 30px;
-        width: 350px;
+        bottom: -50px;
+        right: -20px;
+        width: 590px;
         height: auto;
         z-index: 1;
         pointer-events: none;
@@ -1571,8 +1864,8 @@ section {
     .rsvp-upflower {
         position: absolute;
         bottom: -50px;
-        left: 30px;
-        width: 350px;
+        left: -20px;
+        width: 590px;
         height: auto;
         z-index: 1;
         pointer-events: none;
@@ -2207,9 +2500,1095 @@ footer {
     }
 }
 
+   
+
+    /* 4K and above */
+@media (max-width: 2561px) {
+        .map-card-map {
+            top: 33%;
+        }
+
+        .map-card-cta {
+            font-size: 1.3rem;
+        }
+
+        .welcome-text {
+            font-size: 1.6rem;
+        }
+
+        .name-initial {
+            font-size: 4rem;
+        }
+
+        .name-rest {
+            font-size: 3rem;
+        }
+
+        .couple-amp {
+            font-size: 6rem;
+        }
+
+        .wedding-date {
+            font-size: 2rem;
+        }
+
+        .wedding-location {
+            font-size: 2rem;
+        }
+
+        .hero-navbar {
+            padding: 4rem 8rem;
+        }
+
+        .hero-navbar .nav-center a {
+            font-size: 1.3rem;
+        }
+
+        .hero-navbar .rsvp-btn {
+            padding: 1.3rem 2.8rem;
+            font-size: 1.3rem;
+        }
+
+        .nav-logo .logo-j,
+        .nav-logo .logo-k {
+            font-size: 30px;
+        }
+
+        .nav-logo .logo-oseph,
+        .nav-logo .logo-ate {
+            font-size: 24px;
+        }
+
+        .nav-logo .logo-amp {
+            font-size: 32px;
+        }
+
+        .story-started-title {
+            text-align: left;
+            padding-left: 4rem;
+            font-size: 2.83rem;
+    }
+
+        .our-love-story-title {
+            font-size: 4.5rem;
+            margin-bottom: 3.5rem;
+            margin-top: 3.5rem;
+        }
+
+        .our-love-story-title .ols-initial {
+            font-size: 8rem;
+        }
+
+        .our-love-story-title .ols-rest {
+            font-size: 5rem;
+        }
+
+        .story-col p {
+            font-size: 2.65rem;
+        }
+
+        .story-photo-frame img {
+            height: 550px;
+        }
+
+        .rsvp-downflower,
+        .rsvp-upflower {
+            width: 700px;
+        }
+
+        .big-day-title {
+            margin-top: 4rem;
+        }
+
+        .big-day-title .ols-initial {
+            font-size: 9rem;
+        }
+
+        .big-day-title .ols-rest {
+            font-size: 5.4rem;
+        }
+
+        .sched-icon {
+            width: 190px;
+            height: 190px;
+        }
+
+        .sched-time {
+            font-size: 2.3rem;
+        }
+
+        .sched-name {
+            font-size: 2.8rem;
+        }
+
+        .sched-location {
+            font-size: 2.1rem;
+        }
+
+        .sched-grid {
+            gap: 12rem;
+            transform: translate(-26rem, -5rem);
+        }
+
+        #event {
+            height: 1250px;
+        }
+}
+
+ @media (max-width: 1921px) {
+        .sched-card {
+            width: 750px;
+        }
+
+        .registry-qr {
+            width: 900px;
+            height: 900px;
+            margin-top: 16rem;
+            transform: translateX(40px);
+        }
+
+        .map-card-map {
+            top: 38%;
+        }
+
+        .map-card-cta {
+            font-size: 1.4rem;
+            bottom: 22%;
+        }
+
+        .welcome-text {
+            font-size: 1.6rem;
+        }
+
+        .name-initial {
+            font-size: 4rem;
+        }
+
+        .name-rest {
+            font-size: 3rem;
+        }
+
+        .couple-amp {
+            font-size: 6rem;
+        }
+
+        .wedding-date {
+            font-size: 2rem;
+        }
+
+        .wedding-location {
+            font-size: 2rem;
+        }
+
+        .hero-navbar {
+            padding: 3rem 6rem;
+        }
+
+        .hero-navbar .nav-center a {
+            font-size: 0.85rem;
+        }
+
+        .hero-navbar .rsvp-btn {
+            padding: 0.9rem 2rem;
+            font-size: 1rem;
+        }
+
+        .nav-logo .logo-j,
+        .nav-logo .logo-k {
+            font-size: 30px;
+        }
+
+        .nav-logo .logo-oseph,
+        .nav-logo .logo-ate {
+            font-size: 24px;
+        }
+
+        .nav-logo .logo-amp {
+            font-size: 32px;
+        }
+
+        .story-started-title {
+            text-align: left;
+            padding-left: 4rem;
+            font-size: 2rem;
+        }
+
+        .our-love-story-title {
+            font-size: 3.6rem;
+            margin-bottom: 2.8rem;
+            margin-top: 2.8rem;
+        }
+
+        .our-love-story-title .ols-initial {
+            font-size: 6rem;
+            padding: 0.1rem;
+        }
+
+        .our-love-story-title .ols-rest {
+            font-size: 4rem;
+            padding: 0.3rem;
+        }
+
+        .story-col p {
+            font-size: 1.95rem;
+        }
+
+        .story-photo-frame img {
+            height: 350px;
+        }
+
+        .rsvp-downflower,
+        .rsvp-upflower {
+            width: 590px;
+        }
+
+        .big-day-title .ols-initial {
+            font-size: 6.4rem;
+        }
+
+        .big-day-title .ols-rest {
+            font-size: 4.3rem;
+        }
+
+        .sched-icon {
+            width: 148px;
+            height: 148px;
+        }
+
+        .sched-time {
+            font-size: 1.82rem;
+        }
+
+        .sched-name {
+            font-size: 2.2rem;
+        }
+
+        .sched-location {
+            font-size: 1.68rem;
+        }
+
+        .sched-grid {
+            gap: 7rem;
+            transform: translate(-10rem, -5rem);
+        }
+
+        .entourage-title {
+            margin-top: 4rem;
+        }
+
+        .entourage-initial {
+            font-size: 10rem;
+        }
+
+        .entourage-rest {
+            font-size: 6.2rem;
+        }
+
+        .entourage-role,
+        .entourage-role-parents,
+        .entourage-role-sponsors-title,
+        .entourage-role-secondary {
+            font-size: 2.8rem;
+            letter-spacing: 8px;
+        }
+
+        .entourage-name {
+            font-size: 2.2rem;
+            letter-spacing: 5px;
+        }
+
+        .entourage-row-groom-bride {
+            gap: 14rem;
+            transform: translateX(-40px);
+        }
+
+        .entourage-row-groom-bride .entourage-role,
+        .entourage-row-groom-bride .entourage-name {
+            transform: translateX(-40px);
+        }
+
+        .entourage-row-groom-bride .entourage-col:first-child {
+            transform: translateX(-70px);
+        }
+
+        .entourage-row-parents {
+            gap: 14rem;
+            transform: translateX(-15px);
+        }
+
+        .entourage-row-parents .entourage-col:first-child {
+            transform: translateX(-50px);
+        }
+
+        .entourage-row-parents .entourage-col:last-child {
+            transform: translateX(30px);
+        }
+
+        .entourage-row-sponsors {
+            gap: 16.5rem;
+            transform: translateX(-25px);
+        }
+
+        .entourage-row-sponsors .entourage-col:first-child {
+            transform: translateX(-40px);
+        }
+
+        .entourage-row-sponsors .entourage-col:last-child {
+            transform: translateX(25px);
+        }
+
+        .entourage-row-candle-veil {
+            gap: 14rem;
+            transform: translateX(-140px);
+        }
+
+        .entourage-row-candle-veil .entourage-col:first-child {
+            transform: translateX(-65px);
+        }
+
+        .entourage-row-candle-veil .entourage-col:last-child {
+            transform: translateX(30px);
+        }
+
+        .entourage-shift-left .entourage-col:first-child {
+            transform: translateX(-160px);
+        }
+
+        .entourage-shift-left .entourage-col:last-child {
+            transform: translateX(60px);
+        }
+
+        .entourage-role-secondary {
+            transform: translateX(50px);
+        }
+    }
+
+@media (max-width: 1513px) {
+        .attire-upflower {
+            width: 190px;
+            top: 0.5rem;
+        }
+
+        .attire-subtitle {
+            font-size: 1.5rem;
+        }
+
+        #attire .attire-title {
+            padding-top: 2.9rem;
+        }
+
+        #attire .attire-title .attire-initial {
+            font-size: 5rem;
+        }
+
+        #attire .attire-title .attire-word {
+            font-size: 3.2rem;
+        }
+
+        .attire-desc {
+            font-size: 1.35rem;
+        }
+
+        .welcome-text {
+            font-size: 1.6rem;
+        }
+
+        .name-initial {
+            font-size: 4rem;
+        }
+
+        .name-rest {
+            font-size: 3rem;
+        }
+
+        .couple-amp {
+            font-size: 6rem;
+        }
+
+        .wedding-date {
+            font-size: 2rem;
+        }
+
+        .wedding-location {
+            font-size: 2rem;
+        }
+
+        .hero-navbar {
+            padding: 3rem 6rem;
+        }
+
+        .hero-navbar .nav-center a {
+            font-size: 0.85rem;
+        }
+
+        .hero-navbar .rsvp-btn {
+            padding: 0.9rem 2rem;
+            font-size: 1rem;
+        }
+
+        .nav-logo .logo-j,
+        .nav-logo .logo-k {
+            font-size: 30px;
+        }
+
+        .nav-logo .logo-oseph,
+        .nav-logo .logo-ate {
+            font-size: 24px;
+        }
+
+        .nav-logo .logo-amp {
+            font-size: 32px;
+        }
+
+        .story-started-title {
+            text-align: left;
+            padding-left: 4rem;
+            font-size: 1.46rem;
+    }
+
+        .our-love-story-title {
+            font-size: 3.2rem;
+        }
+
+        .our-love-story-title .ols-initial {
+            font-size: 6.2rem;
+        }
+
+        .our-love-story-title .ols-rest {
+            font-size: 3.5rem;
+        }
+
+        .story-col p {
+            font-size: 1.5rem;
+        }
+
+        .story-photo-frame img {
+            height: 350px;
+        }
+
+        .rsvp-downflower,
+        .rsvp-upflower {
+            width: 470px;
+        }
+
+        .party-photo-frame {
+            flex: 0 0 calc(100% / 2.5 - 2px);
+        }
+
+        .big-day-title .ols-initial {
+            font-size: 5.6rem;
+        }
+
+        .big-day-title .ols-rest {
+            font-size: 3.3rem;
+        }
+
+        .sched-icon {
+            width: 100px;
+            height: 100px;
+        }
+
+        .sched-time {
+            font-size: 1.4rem;
+        }
+
+        .sched-name {
+            font-size: 1.65rem;
+        }
+
+        .sched-location {
+            font-size: 1.2rem;
+        }
+
+        .sched-grid {
+            gap: 5.5rem;
+            transform: translate(2.5rem, -5rem);
+        }
+
+        .entourage-title {
+            margin-top: 3.3rem;
+        }
+
+        .entourage-initial {
+            font-size: 8.6rem;
+        }
+
+        .entourage-rest {
+            font-size: 5.3rem;
+        }
+
+        .entourage-role,
+        .entourage-role-parents,
+        .entourage-role-sponsors-title,
+        .entourage-role-secondary {
+            font-size: 2.5rem;
+            letter-spacing: 6.5px;
+        }
+
+        .entourage-name {
+            font-size: 1.9rem;
+            letter-spacing: 3.5px;
+        }
+
+        .entourage-row-groom-bride {
+            gap: 10rem;
+            transform: translateX(-30px);
+        }
+
+        .entourage-row-groom-bride .entourage-role,
+        .entourage-row-groom-bride .entourage-name {
+            transform: translateX(-30px);
+        }
+
+        .entourage-row-groom-bride .entourage-col:first-child {
+            transform: translateX(-50px);
+        }
+
+        .entourage-row-parents {
+            gap: 10rem;
+            transform: translateX(-12px);
+        }
+
+        .entourage-row-parents .entourage-col:first-child {
+            transform: translateX(-35px);
+        }
+
+        .entourage-row-parents .entourage-col:last-child {
+            transform: translateX(20px);
+        }
+
+        .entourage-row-sponsors {
+            gap: 12rem;
+            transform: translateX(-90px);
+        }
+
+        .entourage-row-sponsors .entourage-col:first-child {
+            transform: translateX(-30px);
+        }
+
+        .entourage-row-sponsors .entourage-col:last-child {
+            transform: translateX(18px);
+        }
+
+        .entourage-row-candle-veil {
+            gap: 10rem;
+            transform: translateX(-100px);
+        }
+
+        .entourage-row-candle-veil .entourage-col:first-child {
+            transform: translateX(-45px);
+        }
+
+        .entourage-row-candle-veil .entourage-col:last-child {
+            transform: translateX(20px);
+        }
+
+        .entourage-shift-left .entourage-col:first-child {
+            transform: translateX(-115px);
+        }
+
+        .entourage-shift-left .entourage-col:last-child.entourage-col-shift-right {
+            transform: translateX(90px);
+        }
+
+        .entourage-shift-left .entourage-col:last-child {
+            transform: translateX(42px);
+        }
+
+        .entourage-role-secondary {
+            transform: translateX(35px);
+        }
+}
+
+@media (max-width: 1441px) {
+        .rsvp-downflower,
+        .rsvp-upflower {
+            width: 400px;
+        }
+
+        .party-photo-frame {
+            flex: 0 0 calc(100% / 2.5 - 2px);
+        }
+
+        .attire-upflower {
+            width: 172px;
+            top: 0.5rem;
+        }
+
+        .attire-subtitle {
+            font-size: 1.35rem;
+        }
+
+        #attire .attire-title {
+            padding-top: 2.7rem;
+        }
+
+        #attire .attire-title .attire-initial {
+            font-size: 4.85rem;
+        }
+
+        #attire .attire-title .attire-word {
+            font-size: 3.05rem;
+        }
+
+        .attire-desc {
+            font-size: 1.25rem;
+        }
+
+        .welcome-text {
+            font-size: 1.6rem;
+        }
+
+        .name-initial {
+            font-size: 4rem;
+        }
+
+        .name-rest {
+            font-size: 3rem;
+        }
+
+        .couple-amp {
+            font-size: 6rem;
+        }
+
+        .wedding-date {
+            font-size: 2rem;
+        }
+
+        .wedding-location {
+            font-size: 2rem;
+        }
+
+        .hero-navbar {
+            padding: 3rem 6rem;
+        }
+
+        .hero-navbar .nav-center a {
+            font-size: 0.85rem;
+        }
+
+        .hero-navbar .rsvp-btn {
+            padding: 0.9rem 2rem;
+            font-size: 1rem;
+        }
+
+        .nav-logo .logo-j,
+        .nav-logo .logo-k {
+            font-size: 30px;
+        }
+
+        .nav-logo .logo-oseph,
+        .nav-logo .logo-ate {
+            font-size: 24px;
+        }
+
+        .nav-logo .logo-amp {
+            font-size: 32px;
+        }
+
+        .story-started-title {
+            text-align: left;
+            padding-left: 4rem;
+            font-size: 1.39rem;
+        }
+
+        .our-love-story-title {
+            font-size: 3.2rem;
+        }
+
+        .our-love-story-title .ols-initial {
+            font-size: 6.2rem;
+        }
+
+        .our-love-story-title .ols-rest {
+            font-size: 3.5rem;
+        }
+
+        .story-col p {
+            font-size: 1.43rem;
+        }
+
+        .story-photo-frame img {
+            height: 350px;
+        }
+
+        .big-day-title .ols-initial {
+            font-size: 5.2rem;
+        }
+
+        .big-day-title .ols-rest {
+            font-size: 3.1rem;
+        }
+
+        .sched-icon {
+            width: 100px;
+            height: 100px;
+        }
+
+        .sched-time {
+            font-size: 1.35rem;
+        }
+
+        .sched-name {
+            font-size: 1.6rem;
+        }
+
+        .sched-location {
+            font-size: 1.2rem;
+        }
+
+        .sched-grid {
+            gap: 4.5rem;
+            transform: translate(3.5rem, -5rem);
+        }
+
+        .entourage-title {
+            margin-top: 3rem;
+        }
+
+        .entourage-initial {
+            font-size: 8.1rem;
+        }
+
+        .entourage-rest {
+            font-size: 5rem;
+        }
+
+        .entourage-role,
+        .entourage-role-parents,
+        .entourage-role-sponsors-title,
+        .entourage-role-secondary {
+            font-size: 2.35rem;
+            letter-spacing: 6px;
+        }
+
+        .entourage-name {
+            font-size: 1.8rem;
+            letter-spacing: 3px;
+        }
+
+        .entourage-row-groom-bride {
+            gap: 9rem;
+            transform: translateX(-25px);
+        }
+
+        .entourage-row-groom-bride .entourage-role,
+        .entourage-row-groom-bride .entourage-name {
+            transform: translateX(-25px);
+        }
+
+        .entourage-row-groom-bride .entourage-col:first-child {
+            transform: translateX(-90px);
+        }
+
+        .entourage-row-parents {
+            gap: 9rem;
+            transform: translateX(-10px);
+        }
+
+        .entourage-row-parents .entourage-col:first-child {
+            transform: translateX(-30px);
+        }
+
+        .entourage-row-parents .entourage-col:last-child {
+            transform: translateX(18px);
+        }
+
+        .entourage-row-sponsors {
+            gap: 14rem;
+            transform: translateX(-80px);
+        }
+
+        .entourage-row-sponsors .entourage-col:first-child {
+            transform: translateX(-25px);
+        }
+
+        .entourage-row-sponsors .entourage-col:last-child {
+            transform: translateX(15px);
+        }
+
+        .entourage-row-candle-veil {
+            gap: 9rem;
+            transform: translateX(-90px);
+        }
+
+        .entourage-row-candle-veil .entourage-col:first-child {
+            transform: translateX(-40px);
+        }
+
+        .entourage-row-candle-veil .entourage-col:last-child {
+            transform: translateX(-20px);
+        }
+
+        .entourage-single {
+            transform: translateX(20px);
+        }
+
+        .entourage-shift-left .entourage-col:first-child {
+            transform: translateX(-100px);
+        }
+
+        .entourage-shift-left .entourage-col:last-child.entourage-col-shift-right {
+            transform: translateX(95px);
+        }
+
+        .entourage-shift-left .entourage-col:last-child {
+            transform: translateX(38px);
+        }
+
+        .entourage-role-secondary {
+            transform: translateX(30px);
+        }
+}
+
+@media (max-width: 1367px) {
+        .attire-upflower {
+            width: 155px;
+            top: 0.5rem;
+        }
+
+        .party-photo-frame {
+            flex: 0 0 calc(100% / 2.5 - 2px);
+        }
+
+        .attire-subtitle {
+            font-size: 1.2rem;
+        }
+
+        #attire .attire-title {
+            padding-top: 5rem;
+        }
+
+        #attire .attire-title .attire-initial {
+            font-size: 4.5rem;
+        }
+
+        #attire .attire-title .attire-word {
+            font-size: 2.80rem;
+        }
+
+        .attire-desc {
+            font-size: 1.20rem;
+        }
+
+        .story-yellowflower {
+            width: 280px;
+        }
+
+        .welcome-text {
+            font-size: 1.6rem;
+        }
+
+        .name-initial {
+            font-size: 4rem;
+        }
+
+        .name-rest {
+            font-size: 3rem;
+        }
+
+        .couple-amp {
+            font-size: 6rem;
+        }
+
+        .wedding-date {
+            font-size: 2rem;
+        }
+
+        .wedding-location {
+            font-size: 2rem;
+        }
+
+        .hero-navbar {
+            padding: 3rem 6rem;
+        }
+
+        .hero-navbar .nav-center a {
+            font-size: 0.85rem;
+        }
+
+        .hero-navbar .rsvp-btn {
+            padding: 0.9rem 2rem;
+            font-size: 1rem;
+        }
+
+        .nav-logo .logo-j,
+        .nav-logo .logo-k {
+            font-size: 30px;
+        }
+
+        .nav-logo .logo-oseph,
+        .nav-logo .logo-ate {
+            font-size: 24px;
+        }
+
+        .nav-logo .logo-amp {
+            font-size: 32px;
+        }
+
+        .story-started-title {
+            text-align: left;
+            padding-left: 4rem;
+            font-size: 1.26rem;
+    }
+
+        .our-love-story-title {
+            font-size: 3rem;
+            margin-bottom: 2.5rem;
+            margin-top: 2.5rem;
+        }
+
+        .our-love-story-title .ols-initial {
+            font-size: 5rem;
+            padding: 0.1rem;
+        }
+
+        .our-love-story-title .ols-rest {
+            font-size: 3.5rem;
+        }
+
+        .story-col p {
+            font-size: 1.3rem;
+        }
+
+        .story-photo-frame img {
+            height: 350px;
+        }
+
+        .rsvp-downflower,
+        .rsvp-upflower {
+            width: 380px;
+        }
+
+        .big-day-title .ols-initial {
+            font-size: 5rem;
+        }
+
+        .big-day-title .ols-rest {
+            font-size: 3rem;
+        }
+
+        .sched-icon {
+            width: 95px;
+            height: 95px;
+        }
+
+        .sched-time {
+            font-size: 1.3rem;
+        }
+
+        .sched-name {
+            font-size: 1.55rem;
+        }
+
+        .sched-location {
+            font-size: 1.15rem;
+        }
+
+        .sched-grid {
+            gap: 4rem;
+            transform: translate(3rem, -5rem);
+        }
+
+        .entourage-title {
+            margin-top: 2.7rem;
+        }
+
+        .entourage-initial {
+            font-size: 7.3rem;
+        }
+
+        .entourage-rest {
+            font-size: 4.5rem;
+        }
+
+        .entourage-role,
+        .entourage-role-parents,
+        .entourage-role-sponsors-title,
+        .entourage-role-secondary {
+            font-size: 2.1rem;
+            letter-spacing: 5px;
+        }
+
+        .entourage-name {
+            font-size: 1.6rem;
+            letter-spacing: 2.5px;
+        }
+
+        .entourage-row-groom-bride {
+            gap: 8rem;
+            transform: translateX(-20px);
+        }
+
+        .entourage-row-groom-bride .entourage-role,
+        .entourage-row-groom-bride .entourage-name {
+            transform: translateX(-20px);
+        }
+
+        .entourage-row-groom-bride .entourage-col:first-child {
+            transform: translateX(-38px);
+        }
+
+        .entourage-row-parents {
+            gap: 8rem;
+            transform: translateX(-8px);
+        }
+
+        .entourage-row-parents .entourage-col:first-child {
+            transform: translateX(-25px);
+        }
+
+        .entourage-row-parents .entourage-col:last-child {
+            transform: translateX(15px);
+        }
+
+        .entourage-row-sponsors {
+            gap: 9rem;
+            transform: translateX(-60px);
+        }
+
+        .entourage-row-sponsors .entourage-col:first-child {
+            transform: translateX(-20px);
+        }
+
+        .entourage-row-sponsors .entourage-col:last-child {
+            transform: translateX(12px);
+        }
+
+        .entourage-row-candle-veil {
+            gap: 8rem;
+            transform: translateX(-75px);
+        }
+
+        .entourage-row-candle-veil .entourage-col:first-child {
+            transform: translateX(-32px);
+        }
+
+        .entourage-row-candle-veil .entourage-col:last-child {
+            transform: translateX(15px);
+        }
+
+        .entourage-shift-left .entourage-col:first-child {
+            transform: translateX(-85px);
+        }
+
+        .entourage-shift-left .entourage-col:last-child.entourage-col-shift-right {
+            transform: translateX(32px);
+        }
+
+        .entourage-shift-left .entourage-col:last-child {
+            transform: translateX(32px);
+        }
+
+        .entourage-role-secondary {
+            transform: translateX(25px);
+        }
+}
+
 /* Responsive */
 @media (max-width: 1200px) {
     /* Large tablet/small desktop adjustments */
+    
     .hero-navbar {
         padding: 1.5rem 3rem;
     }
@@ -2217,7 +3596,49 @@ footer {
     .hero-navbar a {
         margin: 0 1rem;
         font-size: 0.9rem;
+    }.nav-logo .logo-j,
+        .nav-logo .logo-k {
+            font-size: 30px;
+        }
+
+        .nav-logo .logo-oseph,
+        .nav-logo .logo-ate {
+            font-size: 24px;
+        }
+
+        .nav-logo .logo-amp {
+            font-size: 32px;
+        }
+
+        .story-started-title {
+            text-align: left;
+            padding-left: 4rem;
+            font-size: 1.05rem;
     }
+
+        .our-love-story-title {
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            margin-top: 2rem;
+        }
+
+        .our-love-story-title .ols-initial {
+            font-size: 4rem;
+            padding: 0.1rem;
+        }
+
+        .our-love-story-title .ols-rest {
+            font-size: 2.5rem;
+        }
+
+        .story-col p {
+            font-size: 1.14rem;
+        }
+
+        .story-photo-frame img {
+            height: 280px;
+        }
+
     
     .story-text-center {
         gap: 2rem;
@@ -2300,6 +3721,10 @@ footer {
         column-count: 2;
         padding: 0;
     }
+     .story-started-title {
+            text-align: left;
+            padding-left: 4rem;
+        }
     
     .carousel-container {
         height: 600px;
@@ -2728,7 +4153,10 @@ footer {
 
     footer {
         padding: 3rem 1.5rem 2rem;
-        background: url('images/faqs.JPG') center top/cover no-repeat !important;
+        background: linear-gradient(to bottom, rgba(20,20,18,1) 0%, rgba(20,20,18,0.85) 15%, rgba(20,20,18,0) 55%) center bottom/100% auto no-repeat,
+                    url('images/faqscorrect.jpg') center bottom/auto 45% no-repeat,
+                    url('images/faqsblack1.jpg') center top/cover no-repeat !important;
+        min-height: 100vh !important;
     }
 
     .footer-content h2 {
@@ -2755,7 +4183,11 @@ footer {
     }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
+    .story-columns-desktop {
+        display: none !important;
+    }
+
 /* Navigation */
     .hero-navbar {
         padding: 0.6rem 0.6rem;
@@ -2873,8 +4305,8 @@ footer {
     }
 
     #story .container {
-        padding-left: 1.5rem !important;
-        padding-right: 1.5rem !important;
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
     }
 
     .story-sunflower {
@@ -2888,6 +4320,10 @@ footer {
         pointer-events: none;
     }
 
+    .story-sunflower-desktop {
+        display: none;
+    }
+
     .story-photo-frame {
         flex: 0 0 100% !important;
     }
@@ -2897,18 +4333,31 @@ footer {
     }
 
     .our-love-story-title .ols-initial {
+        font-family: 'Cinzel', serif !important;
         font-size: 1.5rem !important;
-        margin-right: 0.2rem;
+        margin-right: -0.1em;
+        margin-left: -0.3em;
+        padding-right: 0.2rem !important;
+    }
+
+    .our-love-story-title .ols-initial:first-child {
+        font-family: 'Alex Brush', cursive !important;
+        font-size: 1.8rem !important;
+        margin-right: -0.1em;
+        margin-left: 0;
+        padding-right: 0.4rem !important;
     }
 
     .our-love-story-title .ols-rest {
         font-size: 1.5rem !important;
+        letter-spacing: 0 !important;
+        padding: 0 !important;
     }
 
     .our-love-story-title {
-        margin: 2rem 0 0.2rem !important;
+        margin: 3rem 0 0.2rem !important;
         white-space: nowrap;
-        font-size: 1.3rem !important;
+        font-size: 1.1rem !important;
         padding: 0 0.5rem;
         text-align: left;
     }
@@ -2937,7 +4386,7 @@ footer {
         line-height: 1.3;
         text-align: left;
         padding: 0 0.5rem;
-        margin: 0.5rem 0 0 !important;
+        margin: 0.5rem 0 1rem !important;
     }
 
     .story-columns {
@@ -2947,8 +4396,12 @@ footer {
         padding: 0 !important;
     }
 
+    .story-columns-desktop {
+        display: none !important;
+    }
+
     .story-col p {
-        font-size: 0.65rem !important;
+        font-size: 0.9rem !important;
         line-height: 1.5;
         text-align: justify;
         margin: 0 0 0.4rem;
@@ -2986,10 +4439,30 @@ footer {
     }
 
     .big-day-title .ols-initial {
-        font-size: 1.3rem !important;
+        font-family: 'Alex Brush', cursive !important;
+        font-size: 1.6rem !important;
+    }
+
+    .entourage-single {
+        transform: none !important;
+    }
+
+    .registry-btn.registry-btn-desktop {
+        display: none !important;
+    }
+
+    .registry-btn-mobile {
+        display: block !important;
+        position: relative;
+        margin: -52px auto 0 !important;
+        width: fit-content;
+        font-size: 0.7rem !important;
+        white-space: nowrap;
+        z-index: 999;
     }
 
     .big-day-title .ols-rest {
+        font-family: 'Cinzel', serif !important;
         font-size: 1.2rem !important;
         letter-spacing: 1px !important;
     }
@@ -3072,78 +4545,55 @@ footer {
     }
 
     .party-layout {
-        grid-template-columns: 376px 1fr !important;
         min-height: unset !important;
-        align-items: start !important;
-        
-    }
-
-    .party-photos {
-        width: 360px !important;
-        margin-top: 0 !important;
-        padding-top: 0 !important;
-        border-right: none;
-        box-shadow: none;
-    }
-
-    .party-img-container {
-        height: 183px !important;
-        flex: none !important;
-        padding: 8px 10px !important;
-        min-height: unset !important;
-        border: 1px solid #507253 !important;
-        border-top: none !important;
-    }
-
-    .party-img-container:last-child {
-        border-bottom: none !important;
-    }
-
-    .party-img {
-        width: 100% !important;
-        height: 100% !important;
-        object-fit: center !important;
+        padding-bottom: 1rem !important;
     }
 
     .party-entourage {
-        padding: 0.3rem 0.8rem !important;
-        position: relative !important;
-        left: -255px !important;
-        width: 320px !important;
+        padding: 0.5rem 1rem !important;
+        width: 100% !important;
     }
 
     .entourage-title {
-        margin-top: 0.6rem !important;
-        margin-bottom: 0.2rem !important;
-        transform: translateX(10px) !important;
+        margin-top: 1.5rem !important;
+        margin-bottom: 0.3rem !important;
+        transform: none !important;
+        word-spacing: normal !important;
     }
 
     .entourage-initial {
-        font-size: 2.2rem !important;
+        font-size: 3.1rem !important;
         letter-spacing: -0.05em !important;
         margin-right: 0.1rem;
     }
 
     .entourage-rest {
-        font-size: 1.3rem !important;
-        letter-spacing: 0.05em !important;
+        font-size: 1.8rem !important;
+        letter-spacing: 1px !important;
     }
 
-    .entourage-role {
-        font-size: 0.65rem !important;
-        margin-bottom: 0.1rem !important;
+    .entourage-role,
+    .entourage-role-parents,
+    .entourage-role-sponsors-title,
+    .entourage-role-secondary {
+        font-size: 0.85rem !important;
+        margin-top: 0.5rem !important;
+        margin-bottom: 0.15rem !important;
         white-space: normal !important;
-        letter-spacing: 1px !important;
-        color: #5a7a52 !important;
+        letter-spacing: 1.5px !important;
+        color: #ff8b1d !important;
         text-transform: uppercase !important;
         font-family: 'Garamond', serif !important;
-        font-weight: 100 !important;
+        font-weight: 700 !important;
+        transform: none !important;
+        -webkit-text-stroke: 0 !important;
     }
 
     .entourage-name {
-        font-size: 0.6rem !important;
+        font-size: 0.72rem !important;
         margin-bottom: 0.05rem !important;
-        line-height: 1.5 !important;
+        line-height: 1.4 !important;
+        letter-spacing: 0.5px !important;
         white-space: nowrap !important;
     }
 
@@ -3151,32 +4601,61 @@ footer {
         white-space: nowrap !important;
     }
 
-    .entourage-row {
-        gap: 1rem !important;
-        margin-bottom: 1rem !important;
-    }
-
-    .entourage-row {
-        gap: 0.3rem !important;
-        margin-bottom: 0.2rem !important;
-    }
-
+    .entourage-row,
+    .entourage-row-3col,
+    .entourage-row-groom-bride,
+    .entourage-row-parents,
+    .entourage-row-sponsors,
     .entourage-row-candle-veil {
-        transform: translateX(-20px) !important;
+        grid-template-columns: 1fr 1fr !important;
+        width: 100% !important;
+        gap: 0.3rem 0.8rem !important;
+        margin-bottom: 0.4rem !important;
+        transform: none !important;
+    }
+
+    .entourage-bearers {
+        grid-template-columns: 1fr 1fr !important;
+        grid-template-areas:
+            "ring coin"
+            "bible flower" !important;
+        width: 100% !important;
+        gap: 0.3rem 0.8rem !important;
+    }
+
+    .eb-flower {
+        margin-top: 0 !important;
+    }
+
+    .eb-flower-names {
+        flex-direction: column !important;
+        gap: 0 !important;
     }
 
     .entourage-shift-left {
-        transform: translateX(-15px) !important;
+        transform: none !important;
+        gap: 0.3rem 0.8rem !important;
     }
 
+    .entourage-row-groom-bride .entourage-col:first-child,
+    .entourage-row-groom-bride .entourage-role,
+    .entourage-row-groom-bride .entourage-name,
+    .entourage-row-parents .entourage-col:first-child,
+    .entourage-row-parents .entourage-col:last-child,
+    .entourage-row-sponsors .entourage-col:first-child,
+    .entourage-row-sponsors .entourage-col:last-child,
+    .entourage-row-candle-veil .entourage-col:first-child,
+    .entourage-row-candle-veil .entourage-col:last-child,
+    .entourage-shift-left .entourage-col:first-child,
+    .entourage-shift-left .entourage-col:last-child,
     .entourage-col-shift-right {
-        transform: translateX(20px) !important;
+        transform: none !important;
     }
 
     .entourage-divider {
-        width: 75% !important;
-        margin: 0.3rem 0 !important;
-        transform: translateX(10px) !important;
+        width: 90% !important;
+        margin: 0.4rem auto !important;
+        transform: none !important;
     }
 
     .divider-line {
@@ -3186,6 +4665,17 @@ footer {
     .divider-diamond {
         width: 3px !important;
         height: 3px !important;
+    }
+
+    /* Bottom photo carousel */
+    .party-carousel-outer {
+        margin-top: 2rem !important;
+    }
+
+    .party-photo-frame {
+        flex: 0 0 50% !important;
+        height: 160px !important;
+        padding: 8px !important;
     }
 
     /* Attire / Dress Code Section */
@@ -3213,13 +4703,17 @@ footer {
         align-items: center !important;
         justify-content: center !important;
         position: relative !important;
-        background-image: linear-gradient(to right, rgba(255,237,168,0.5) 15%, transparent 15%, transparent 85%, rgba(255,237,168,0.5) 85%) !important;
+        background-image: linear-gradient(to right, rgba(182,171,123,0.5) 15%, transparent 15%, transparent 85%, rgba(182,171,123,0.5) 85%) !important;
         background-size: 100% 1px !important;
         background-position: bottom !important;
         background-repeat: no-repeat !important;
     }
 
     
+
+    .attire-upflower {
+        width: 100px !important;
+    }
 
     .attire-title {
         font-size: 1rem !important;
@@ -3294,7 +4788,7 @@ footer {
     }
 
     .attire-cell {
-        border: 0.05px solid #ffeda8 !important;
+        border: 0.05px solid #b6ab7b !important;
         border-bottom: none !important;
     }
 
@@ -3317,7 +4811,7 @@ footer {
     .attire-women2-caption {
         font-family: 'EB Garamond', serif;
         font-weight: bold;
-        color: #ffe575;
+        color: #507253;
         font-size: 0.9rem;
         white-space: nowrap;
         text-align: center;
@@ -3330,19 +4824,11 @@ footer {
     }
 
     #hero .story-yellowflower {
-        top: auto !important;
-        bottom: 15% !important;
-        right: -30px !important;
-        left: auto !important;
-        transform: none !important;
-        width: 90px !important;
+        display: none !important;
     }
 
     #hero .story-whiteflower {
-        top: auto !important;
-        bottom: -30px !important;
-        left: -30px !important;
-        width: 90px !important;
+        display: none !important;
     }
 
     .attire-grid > .attire-photo-women-3,
@@ -3351,7 +4837,7 @@ footer {
     }
 
     .attire-grid > .attire-extra-box-1 {
-        border-bottom: 1px solid #ffeda8 !important;
+        border-bottom: 1px solid #b6ab7b !important;
     }
 
     .attire-grid > .attire-photo-women-3,
@@ -3363,7 +4849,7 @@ footer {
     .attire-extra-box-1 .attire-sub-box {
         flex: 1 1 0;
         height: 100%;
-        border-right: 1px solid #ffeda8;
+        border-right: 1px solid #b6ab7b;
         background-size: 110%;
         background-position: center;
         background-repeat: no-repeat;
@@ -3440,20 +4926,51 @@ footer {
     /* RSVP Section */
     .rsvp-section {
         padding: 2.5rem 0.8rem;
-        background: none !important;
-        background-image: url('images/sched.png'), url('images/doublepic.jpg') !important;
-        background-size: 100% 50%, 100% auto !important;
-        background-position: top center, bottom center !important;
-        background-repeat: no-repeat, no-repeat !important;
-        min-height: 110svh !important;
         justify-content: flex-start !important;
-        padding-top: 1rem !important;
+        padding-top: 9rem !important;
+    }
+
+    .rsvp-downflower {
+        position: absolute;
+        bottom: 30px;
+        right: 0;
+        width: 270px;
+        height: auto;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .rsvp-upflower {
+        position: absolute;
+        bottom: 30px;
+        left: 0;
+        width: 270px;
+        height: auto;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .rsvp-container {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .rsvp-heading {
+        order: 1 !important;
+    }
+
+    .rsvp-step {
+        order: 2 !important;
     }
 
      .rsvp-main-title {
-        font-size: 0.61rem !important;
-        color: #f9f3e3 !important;
-        transform: translateY(8rem) !important;
+        order: 3 !important;
+        font-size: 0.95rem !important;
+        color: #778d60 !important;
+        margin-top: 1.5rem !important;
+        max-width: 330px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
     }
 
     .rsvp-initial {
@@ -3461,21 +4978,18 @@ footer {
         color: #ffbb23 !important;
         font-size: 3.5rem !important;
         margin-right: 0.6rem !important;
-        transform: translateY(9rem) !important;
     }
 
     .rsvp-word {
         display: inline-block !important;
         color: #ffbb23 !important;
         font-size: 2.5rem !important;
-        transform: translateY(9rem) !important;
     }
 
     .rsvp-card {
         padding: 0.8rem !important;
         max-width: 330px !important;
         border-radius: 6px !important;
-        transform: translateY(8rem) !important;
     }
 
     .rsvp-instruction {
@@ -3507,7 +5021,7 @@ footer {
     .rsvp-card {
         margin-left: auto !important;
         margin-right: auto !important;
-        margin-top: 2rem !important;
+        margin-top: 0.3rem !important;
     }
 
     .guest-name-label {
@@ -3548,13 +5062,12 @@ footer {
 
     footer {
         padding: 2rem 0.8rem 1.2rem;
-        background: url('images/faqs.JPG') !important;
+        background: linear-gradient(to bottom, rgba(20,20,18,1) 0%, rgba(20,20,18,0.85) 15%, rgba(20,20,18,0) 55%) center bottom/100% auto no-repeat,
+                    url('images/faqscorrect.jpg') center bottom/auto 45% no-repeat,
+                    url('images/faqsblack1.jpg') center top/cover no-repeat !important;
         background-color: #111 !important;
-        background-size: 200% !important;
-        background-position: center top !important;
-        background-repeat: no-repeat !important;
         text-align: left !important;
-        min-height: 110svh !important;
+        min-height: 100vh !important;
         margin-top: -3rem !important;
         position: relative !important;
     }
@@ -3981,7 +5494,10 @@ footer {
 
     footer {
         padding: 2.5rem 1rem 1.5rem;
-        background: url('images/faqs.JPG') center top/cover no-repeat !important;
+        background: linear-gradient(to bottom, rgba(20,20,18,1) 0%, rgba(20,20,18,0.85) 15%, rgba(20,20,18,0) 55%) center bottom/100% auto no-repeat,
+                    url('images/faqscorrect.jpg') center bottom/auto 45% no-repeat,
+                    url('images/faqsblack1.jpg') center top/cover no-repeat !important;
+        min-height: 200vh !important;
     }
 
     .footer-content h2 {
@@ -4023,7 +5539,32 @@ footer {
 
 }
 
+/* iPhone Pro Max Series */
 @media (max-width: 441px) {
+    .entourage-initial {
+        font-size: 3.5rem !important;
+    }
+
+    .entourage-rest {
+        font-size: 2.05rem !important;
+    }
+
+    .our-love-story-title .ols-initial {
+        font-size: 1.65rem !important;
+    }
+
+    .our-love-story-title .ols-initial:first-child {
+        font-size: 2.35rem !important;
+    }
+
+    .our-love-story-title .ols-rest {
+        font-size: 1.65rem !important;
+    }
+
+    .story-started-title {
+        font-size: 0.92rem !important;
+    }
+
     .big-day-title {
         font-size: 1.55rem !important;
     }
@@ -4031,6 +5572,7 @@ footer {
     .big-day-title .ols-initial {
         font-size: 1.7rem !important;
     }
+
 
     .big-day-title .ols-rest {
         font-size: 1.55rem !important;
@@ -4045,13 +5587,32 @@ footer {
         font-size: 0.95rem !important;
     }
 
+    .sched-name {
+        font-size: 1rem !important;
+    }
+
+    .sched-location {
+        font-size: 0.85rem !important;
+    }
+
+    .sched-item {
+        grid-template-columns: 50px 1fr !important;
+        column-gap: 1.1rem !important;
+    }
+
     .sched-card {
         width: 400px !important;
         height: 300px !important;
     }
 
     .story-sunflower {
-        width: 68px;
+        width: 95px;
+        top: 2.5rem;
+        right: 1.8rem;
+    }
+
+    .our-love-story-title {
+        font-size: 1.4rem !important;
     }
 
     #attire {
@@ -4062,27 +5623,13 @@ footer {
         padding-top: 0.1rem;
     }
 
-    
+
     .rsvp-downflower {
-        position: absolute;
-        top:-5px;
-        right: -20px;
         width: 180px;
-        height: auto;
-        z-index: 1;
-        pointer-events: none;
-        transform: rotate(5deg);
     }
 
     .rsvp-upflower {
-        position: absolute;
-        top: 48%;
-        left: 5px;
-        width: 80px;
-        height: auto;
-        z-index: 1;
-        pointer-events: none;
-        
+        width: 180px;
     }
 
      .registry-cardno {
@@ -4105,34 +5652,68 @@ footer {
     }
 
     .rsvp-downflower {
-        position: absolute;
-        top:-5px;
-        right: -20px;
-        width: 180px;
-        height: auto;
-        z-index: 1;
-        pointer-events: none;
-        transform: rotate(5deg);
+        width: 230px;
     }
 
     .rsvp-upflower {
-        position: absolute;
-        top: 48%;
-        left: 10px;
-        width: 80px;
-        height: auto;
-        z-index: 1;
-        pointer-events: none;
-        
+        width: 230px;
     }
 }
 
 /* iPhone Series */
 @media (max-width: 395px) {
-     
-    
+    .entourage-initial {
+        font-size: 3.1rem !important;
+    }
+
+    .entourage-rest {
+        font-size: 1.8rem !important;
+    }
+
+    .our-love-story-title {
+        font-size: 0.8rem !important;
+        letter-spacing: 0.5px;
+        word-spacing: 0.1em;
+    }
+
+    .our-love-story-title .ols-initial {
+        font-size: 1.45rem !important;
+        margin-right: -0.2em !important;
+    }
+
+    .our-love-story-title .ols-initial:first-child {
+        font-size: 2.3rem !important;
+        margin-left: 0 !important;
+        margin-right: -0.2em !important;
+    }
+
+    .our-love-story-title .ols-rest {
+        font-size: 1.45rem !important;
+    }
+
+    .story-started-title {
+        font-size: 0.8rem !important;
+    }
+
+    .story-col p {
+        font-size: 0.75rem !important;
+    }
+
+    .map-card-map {
+        width: 70% !important;
+        top: 26% !important;
+    }
+
+    .map-card-cta {
+        bottom: 34% !important;
+    }
+
+    .sched-item {
+        grid-template-columns: 50px 1fr !important;
+        column-gap: 1.1rem !important;
+    }
+
     .party-layout {
-        grid-template-columns: 340px 1fr !important;
         min-height: unset !important;
         align-items: start !important;
 
@@ -4151,8 +5732,8 @@ footer {
     }
 
     .sched-icon {
-        width: 42px !important;
-        height: 42px !important;
+        width: 50px !important;
+        height: 50px !important;
     }
 
     .sched-time {
@@ -4181,23 +5762,67 @@ footer {
     }
 
     .story-sunflower {
-        width: 62px;
+        width: 80px;
+        right: 2rem;
+        top: 3.2rem;
     }
 
+    #story .container {
+        padding-left: 2.3rem !important;
+        padding-right: 2.3rem !important;
+    }
+
+    .rsvp-downflower,
     .rsvp-upflower {
-        left: -20px;
+        width: 170px;
     }
 }
 
 @media (max-width: 376px) {
  #party {
-    min-height: 1100px;
+    min-height: unset;
  }
 
+    .registry-cardno-flower {
+        width: 90px !important;
+    }
+
+    .our-love-story-title .ols-initial {
+        font-size: 1.2rem !important;
+    }
+
+    .our-love-story-title .ols-initial:first-child {
+        font-size: 2.15rem !important;
+    }
+
+    .our-love-story-title .ols-rest {
+        font-size: 1.35rem !important;
+    }
+
+    .story-started-title {
+        font-size: 0.75rem !important;
+    }
+
+    #attire .attire-title .attire-initial {
+        font-size: 3.6rem !important;
+    }
+
+    #attire .attire-title .attire-word {
+        font-size: 2rem !important;
+    }
+
+    #attire .attire-title {
+        padding-top: 1.5rem !important;
+    }
+
+    .attire-upflower {
+        width: 100px !important;
+    }
+
     .story-sunflower {
-        width: 60px;
-        right: 0.5rem;
-        top: .5rem;
+        width: 80px;
+        right: 2rem;
+        top: 2.9rem;
     }
 
     .big-day-title {
@@ -4238,10 +5863,9 @@ footer {
         padding: 0.75rem;
     }
     .party-layout {
-        grid-template-columns: 340px 1fr !important;
         min-height: unset !important;
         align-items: start !important;
-        
+
     }
 
     .party-photos {
@@ -4272,9 +5896,12 @@ footer {
     }
 
      .rsvp-main-title {
-        font-size: 0.61rem !important;
-        color: #f9f3e3 !important;
-        transform: translateY(8rem) !important;
+        font-size: 0.85rem !important;
+        color: #778d60 !important;
+        margin-top: 1.3rem !important;
+        max-width: 310px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
     }
 
     .rsvp-initial {
@@ -4282,35 +5909,44 @@ footer {
         color: #ffbb23 !important;
         font-size: 3.5rem !important;
         margin-right: 0.6rem !important;
-        transform: translateY(9rem) !important;
     }
 
     .rsvp-word {
         display: inline-block !important;
         color: #ffbb23 !important;
         font-size: 2.5rem !important;
-        transform: translateY(9rem) !important;
     }
 
     .rsvp-card {
         padding: 0.8rem !important;
         max-width: 310px !important;
         border-radius: 6px !important;
-        transform: translateY(7rem) !important;
     }
     .rsvp-upflower {
-        width: 70px;
+        width: 190px;
         left:-15px;
-        
+
+    }
+    .rsvp-downflower {
+        width: 190px;
     }
 }
 
 /* Ultra small devices (360px and below) */
 @media (max-width: 360px) {
+    .map-card-map {
+        top: 45% !important;
+    }
+
+    .map-card-cta {
+        bottom: 22% !important;
+        font-size: 0.85rem !important;
+    }
+
     .story-sunflower {
-        width: 51px;     
+        width: 74px;
         right: 2.5rem;
-                
+        top: 1.8rem;
     }
 
     /* Navigation */
@@ -4430,8 +6066,8 @@ footer {
     }
 
     #story .container {
-        padding-left: 1.5rem !important;
-        padding-right: 1.5rem !important;
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
     }
 
     .story-photo-frame {
@@ -4443,12 +6079,21 @@ footer {
     }
 
     .our-love-story-title .ols-initial {
-        font-size: 1.6rem !important;
-        margin-right: 0.2rem;
+        font-family: 'Cinzel', serif !important;
+        font-size: 1.2rem !important;
+        margin-right: 0;
+        margin-left: -0.3em;
+    }
+
+    .our-love-story-title .ols-initial:first-child {
+        font-family: 'Alex Brush', cursive !important;
+        font-size: 1.45rem !important;
+        margin-right: -0.1em;
+        margin-left: 0;
     }
 
     .our-love-story-title .ols-rest {
-        font-size: 1.3rem !important;
+        font-size: 1.2rem !important;
     }
 
     .our-love-story-title {
@@ -4479,11 +6124,11 @@ footer {
     }
 
     .story-started-title {
-        font-size: .9rem !important;
+        font-size: .80rem !important;
         line-height: 1.3;
         text-align: left;
         padding: 0 0.5rem;
-        margin: 0.5rem 0 0 !important;
+        margin: 0.5rem 0 1rem !important;
         letter-spacing: 1.25px !important;
         max-width: 100% !important;
     }
@@ -4495,8 +6140,12 @@ footer {
         padding: 0 !important;
     }
 
+    .story-columns-desktop {
+        display: none !important;
+    }
+
     .story-col p {
-        font-size: 0.53rem !important;
+        font-size: 0.70rem !important;
         line-height: 1.5;
         text-align: justify;
         margin: 0 0 0.4rem;
@@ -4613,94 +6262,59 @@ footer {
 
     /* Party / Entourage Section */
     #party {
-        padding-top: 0 !important;   
+        padding-top: 0 !important;
         padding-bottom: 0 !important;
-        min-height: 950px !important;
     }
 
     .party-layout {
-        grid-template-columns: 315px 1fr !important;
         min-height: unset !important;
-        align-items: start !important;
-        
-    }
-
-    .party-photos {
-        width: 330px !important;
-        margin-top: 0 !important;
-        padding-top: 0 !important;
-        border-right: none;
-        box-shadow: none;
-    }
-
-   
-
-    .party-img-container {
-        height: 190px !important;
-        flex: none !important;
-        padding: 6px 9px !important;
-        min-height: unset !important;
-        border: 1px solid #507253 !important;
-        border-top: none !important;
-    }
-
-    .party-img-container:nth-child(6) {
-        display: none !important;
-    }
-
-    .party-img-container:nth-last-child(2) {
-        border-bottom: none !important;
-    }
-
-    .party-img-container:last-child {
-        border-bottom: none !important;
-    }
-
-    .party-img {
-        width: 100% !important;
-        height: 100% !important;
-        object-fit: cover !important;
+        padding-bottom: 0.8rem !important;
     }
 
     .party-entourage {
-        padding: 0.3rem 0.8rem !important;
-        position: relative !important;
-        left: -255px !important;
-        width: 320px !important;
+        padding: 0.4rem 0.7rem !important;
+        width: 100% !important;
     }
 
     .entourage-title {
-        margin-top: 0.6rem !important;
+        margin-top: 1.2rem !important;
         margin-bottom: 0.2rem !important;
-        transform: translateX(10px) !important;
+        transform: none !important;
     }
 
     .entourage-initial {
-        font-size: 2rem !important;
+        font-size: 2.2rem !important;
         letter-spacing: -0.05em !important;
         margin-right: 0.1rem;
     }
 
     .entourage-rest {
-        font-size: 1.15rem !important;
-        letter-spacing: 0.05em !important;
+        font-size: 1.25rem !important;
+        letter-spacing: 1px !important;
     }
 
-    .entourage-role {
-        font-size: 0.6rem !important;
+    .entourage-role,
+    .entourage-role-parents,
+    .entourage-role-sponsors-title,
+    .entourage-role-secondary {
+        font-size: 0.72rem !important;
+        margin-top: 0.4rem !important;
         margin-bottom: 0.1rem !important;
         white-space: normal !important;
         letter-spacing: 1px !important;
-        color: #5a7a52 !important;
+        color: #ff8b1d !important;
         text-transform: uppercase !important;
         font-family: 'Garamond', serif !important;
-        font-weight: 100 !important;
+        font-weight: 700 !important;
+        transform: none !important;
+        -webkit-text-stroke: 0 !important;
     }
 
     .entourage-name {
-        font-size: 0.55rem !important;
+        font-size: 0.62rem !important;
         margin-bottom: 0.05rem !important;
-        line-height: 1.5 !important;
+        line-height: 1.4 !important;
+        letter-spacing: 0.3px !important;
         white-space: nowrap !important;
     }
 
@@ -4708,32 +6322,71 @@ footer {
         white-space: nowrap !important;
     }
 
-    .entourage-shift-left {
-        transform: translateX(-10px) !important;
-    }
-
-    .entourage-row {
-        gap: 1rem !important;
-        margin-bottom: 1rem !important;
-    }
-
-    .entourage-row {
-        gap: 0.3rem !important;
-        margin-bottom: 0.2rem !important;
-    }
-
+    .entourage-row,
+    .entourage-row-3col,
+    .entourage-row-groom-bride,
+    .entourage-row-parents,
+    .entourage-row-sponsors,
     .entourage-row-candle-veil {
-        transform: translateX(-20px) !important;
+        grid-template-columns: 1fr 1fr !important;
+        width: 100% !important;
+        gap: 0.2rem 0.6rem !important;
+        margin-bottom: 0.3rem !important;
+        transform: none !important;
     }
 
+    .entourage-bearers {
+        grid-template-columns: 1fr 1fr !important;
+        grid-template-areas:
+            "ring coin"
+            "bible flower" !important;
+        width: 100% !important;
+        gap: 0.2rem 0.6rem !important;
+    }
+
+    .eb-flower {
+        margin-top: 0 !important;
+    }
+
+    .eb-flower-names {
+        flex-direction: column !important;
+        gap: 0 !important;
+    }
+
+    .entourage-shift-left {
+        transform: none !important;
+        gap: 0.2rem 0.6rem !important;
+    }
+
+    .entourage-row-groom-bride .entourage-col:first-child,
+    .entourage-row-groom-bride .entourage-role,
+    .entourage-row-groom-bride .entourage-name,
+    .entourage-row-parents .entourage-col:first-child,
+    .entourage-row-parents .entourage-col:last-child,
+    .entourage-row-sponsors .entourage-col:first-child,
+    .entourage-row-sponsors .entourage-col:last-child,
+    .entourage-row-candle-veil .entourage-col:first-child,
+    .entourage-row-candle-veil .entourage-col:last-child,
+    .entourage-shift-left .entourage-col:first-child,
+    .entourage-shift-left .entourage-col:last-child,
     .entourage-col-shift-right {
-        transform: translateX(20px) !important;
+        transform: none !important;
     }
 
     .entourage-divider {
-        width: 75% !important;
-        margin: 0.3rem 0 !important;
-        transform: translateX(10px) !important;
+        width: 90% !important;
+        margin: 0.3rem auto !important;
+        transform: none !important;
+    }
+
+    .party-carousel-outer {
+        margin-top: 1.5rem !important;
+    }
+
+    .party-photo-frame {
+        flex: 0 0 50% !important;
+        height: 130px !important;
+        padding: 6px !important;
     }
 
     .divider-line {
@@ -4770,13 +6423,21 @@ footer {
         align-items: center !important;
         justify-content: center !important;
         position: relative !important;
-        background-image: linear-gradient(to right, rgba(255,237,168,0.5) 15%, transparent 15%, transparent 85%, rgba(255,237,168,0.5) 85%) !important;
+        background-image: linear-gradient(to right, rgba(182,171,123,0.5) 15%, transparent 15%, transparent 85%, rgba(182,171,123,0.5) 85%) !important;
         background-size: 100% 1px !important;
         background-position: bottom !important;
         background-repeat: no-repeat !important;
     }
 
 
+
+    .attire-upflower {
+        width: 90px !important;
+    }
+
+    #attire .attire-title {
+        padding-top: 0.9rem !important;
+    }
 
     .attire-title {
         font-size: 1rem !important;
@@ -4792,8 +6453,16 @@ footer {
         font-size: 1.9rem !important;
     }
 
+    #attire .attire-title .attire-initial {
+        font-size: 2.8rem !important;
+    }
+
+    #attire .attire-title .attire-word {
+        font-size: 1.5rem !important;
+    }
+
     .attire-desc {
-        font-size: 0.65rem !important;
+        font-size: 0.61rem !important;
         line-height: 1.5 !important;
         margin-top: auto;
 
@@ -4846,8 +6515,8 @@ footer {
     .attire-women2-caption {
         font-family: 'EB Garamond', serif;
         font-weight: bold;
-        color: #ffe575;
-        font-size: .98rem;
+        color: #507253;
+        font-size: .75rem;
         white-space: normal;
         text-align: center;
         margin: 0; 
@@ -4858,19 +6527,11 @@ footer {
     }
 
     #hero .story-yellowflower {
-        top: auto !important;
-        bottom: 15% !important;
-        right: -30px !important;
-        left: auto !important;
-        transform: none !important;
-        width: 90px !important;
+        display: none !important;
     }
 
     #hero .story-whiteflower {
-        top: auto !important;
-        bottom: -30px !important;
-        left: -30px !important;
-        width: 90px !important;
+        display: none !important;
     }
 
     .attire-footer-text {
@@ -4887,7 +6548,7 @@ footer {
     }
 
     .attire-cell {
-        border: 0.05px solid #ffeda8 !important;
+        border: 0.05px solid #b6ab7b !important;
         border-bottom: none !important;
     }
 
@@ -4907,7 +6568,7 @@ footer {
     }
 
     .attire-grid > .attire-extra-box-1 {
-        border-bottom: 1px solid #ffeda8 !important;
+        border-bottom: 1px solid #b6ab7b !important;
     }
 
     .attire-grid > .attire-photo-women-3,
@@ -4919,7 +6580,7 @@ footer {
     .attire-extra-box-1 .attire-sub-box {
         flex: 1 1 0;
         height: 100%;
-        border-right: 1px solid #ffeda8;
+        border-right: 1px solid #b6ab7b;
         background-size: 110%;
         background-position: center;
         background-repeat: no-repeat;
@@ -4999,42 +6660,56 @@ footer {
     /* RSVP Section */
     .rsvp-section {
         padding: 2.5rem 0.8rem;
-        background: none !important;
-        background-image: url('images/sched.png'), url('images/doublepic.jpg') !important;
-        background-size: 100% 50%, 100% auto !important;
-        background-position: top center, bottom center !important;
-        background-repeat: no-repeat, no-repeat !important;
-        min-height: 110svh !important;
         justify-content: flex-start !important;
-        padding-top: 1rem !important;
+        padding-top: 9rem !important;
+    }
+
+    .rsvp-downflower {
+        position: absolute;
+        bottom: 25px;
+        right: 0;
+        width: 165px;
+        height: auto;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .rsvp-upflower {
+        position: absolute;
+        bottom: 25px;
+        left: 0;
+        width: 165px;
+        height: auto;
+        z-index: 1;
+        pointer-events: none;
     }
 
     .rsvp-main-title {
-        font-size: 0.61rem !important;
-        color: #f9f3e3 !important;
-        transform: translateY(8rem) !important;
+        font-size: 0.8rem !important;
+        color: #778d60 !important;
+        margin-top: 1.2rem !important;
+        max-width: 290px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
     }
 
     .rsvp-initial {
         display: inline-block !important;
         color: #ffbb23 !important;
-        font-size: 3.5rem !important;
+        font-size: 4rem !important;
         margin-right: 0.6rem !important;
-        transform: translateY(9rem) !important;
     }
 
     .rsvp-word {
         display: inline-block !important;
         color: #ffbb23 !important;
         font-size: 2.4rem !important;
-        transform: translateY(9rem) !important;
     }
 
     .rsvp-card {
         padding: 0.8rem !important;
         max-width: 290px !important;
         border-radius: 6px !important;
-        transform: translateY(7rem) !important;
     }
 
     .rsvp-instruction {
@@ -5066,7 +6741,7 @@ footer {
     .rsvp-card {
         margin-left: auto !important;
         margin-right: auto !important;
-        margin-top: 2rem !important;
+        margin-top: 0.3rem !important;
     }
 
     .guest-name-label {
@@ -5107,12 +6782,11 @@ footer {
 
     footer {
         padding: 2rem 0.8rem 1.2rem;
-        background: url('images/faqs.JPG') !important;
+        background: linear-gradient(to bottom, rgba(20,20,18,1) 0%, rgba(20,20,18,0.85) 15%, rgba(20,20,18,0) 55%) center bottom/100% auto no-repeat,
+                    url('images/faqscorrect.jpg') center bottom/auto 45% no-repeat,
+                    url('images/faqsblack1.jpg') center top/cover no-repeat !important;
         background-color: #111 !important;
-        background-size: 200% !important;
-        background-position: center top !important;
-        background-repeat: no-repeat !important;
-        min-height: 110svh !important;
+        min-height: 100vh !important;
     }
 
     .footer-content {
@@ -5246,14 +6920,64 @@ footer {
 
 /* Ultra small devices (320px and below) */
 @media (max-width: 320px) {
+    #attire .attire-title {
+        padding-top: 0.6rem !important;
+    }
+
+    .rsvp-downflower,
+    .rsvp-upflower {
+        width: 148px !important;
+    }
+
+    .attire-upflower {
+        width: 105px !important;
+    }
+
+    .map-card-cta {
+        font-size: 0.65rem !important;
+    }
+
+    #attire .attire-title.attire-initial,
+    #attire .attire-title .attire-initial {
+        font-size: 2.5rem !important;
+    }
+
+    #attire .attire-title .attire-word {
+        font-size: 1.36rem !important;
+    }
+
     #party {
-        min-height: 950px;
+        min-height: unset;
+    }
+
+    .our-love-story-title {
+        font-size: 1rem !important;
+    }
+
+    .our-love-story-title .ols-initial {
+        font-size: 1.02rem !important;
+    }
+
+    .our-love-story-title .ols-initial:first-child {
+        font-size: 1.22rem !important;
+    }
+
+    .our-love-story-title .ols-rest {
+        font-size: 1.02rem !important;
+    }
+
+    .story-started-title {
+        font-size: 0.68rem !important;
+    }
+
+    .story-col p {
+        font-size: 0.62rem !important;
     }
 
     .story-sunflower {
-        width: 45px;
-        right: 0.8rem;
-        top: 1.4rem;
+        width: 65px;
+        right: 2.2rem;
+        top: 1.5rem;
     }
 
     .sched-card {
@@ -5299,35 +7023,21 @@ footer {
     .attire-women2-caption {
         white-space: normal;
         text-align: center;
-        font-size: .93rem !important;
+        font-size: .65rem !important;
+        font-color:#507253;
     }
 
     .attire-swatches .leaf-swatch-img {
         height: 35px !important;
     }
 
-    .rsvp-main-title {
-        transform: translateY(6rem) !important;
-    }
-
-    .rsvp-initial,
-    .rsvp-word {
-        transform: translateY(7rem) !important;
-    }
-
-    .rsvp-card {
-        transform: translateY(5rem) !important;
-    }
 
     .rsvp-downflower {
-        width: 150px;
-        top: 1px;
-        right:-35px;
+        width: 200px;
     }
 
     .rsvp-upflower {
-        width: 60px;
-        left:-4px;
+        width: 200px;
     }
 
     #registry {
@@ -5415,9 +7125,9 @@ footer {
 }
 
 .gate-names {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Cinzel', serif;
     font-weight: 500;
-    font-size: 5.8rem;
+    font-size: 3.5rem;
     letter-spacing: 10px;
     text-transform: uppercase;
     color: #7c8c4a;
@@ -5429,10 +7139,24 @@ footer {
     display: block;
 }
 
+.gate-name-initial {
+    font-family: 'Alex Brush', cursive;
+    font-weight: 400;
+    font-size: 1.333em;
+    text-transform: none;
+    letter-spacing: 0;
+    margin-right: 0.1em;
+}
+
+.gate-name-rest {
+    font-family: 'Cinzel', serif;
+}
+
 .gate-names .gate-amp {
-    font-family: 'Playfair Display', serif;
-    font-weight: 500;
-    font-size: 5.8rem;
+    font-family: 'Alex Brush', cursive;
+    font-weight: 400;
+    font-size: 2em;
+    text-transform: none;
     color: #7c8c4a;
     margin-right: 0.35rem;
 }
@@ -5490,17 +7214,34 @@ footer {
     }
 
     .gate-names {
-        font-size: 5.5rem;
+        font-size: 3.5rem;
         letter-spacing: 10px;
+        line-height: 1;
         margin-bottom: -1.5rem;
+        transform: translateX(50px);
+    }
+
+    .gate-names-line-1 {
+        transform: translateX(-200px);
+    }
+
+    .gate-kate-wrap {
+        display: inline-block;
+        transform: translateX(90px) translateY(-47px);
     }
 
     .gate-names .gate-amp {
-        font-size: 5.5rem;
+        display: block;
+        font-size: 1.6em;
+        line-height: 1;
+        margin-right: 0;
+        margin-top: -2.5rem;
+        margin-bottom: -0.6rem;
+        transform: translateX(-20px);
     }
 
     .gate-envelope {
-        width: 500px;
+        width: 700px;
         max-width: 86vw;
     }
 
@@ -5525,13 +7266,9 @@ footer {
     }
 
     .gate-names {
-        font-size: 6rem;
+        font-size: 4.9rem;
         letter-spacing: 10px;
         margin-bottom: -1.5rem;
-    }
-
-    .gate-names .gate-amp {
-        font-size: 6rem;
     }
 
     .gate-envelope {
@@ -5560,13 +7297,27 @@ footer {
     }
 
     .gate-names {
-        font-size: 5rem;
+        font-size: 2.9rem;
         letter-spacing: 10px;
         margin-bottom: -1rem;
     }
 
+    .gate-name-rest {
+        letter-spacing: 7px;
+    }
+
+    .gate-names-line-1 {
+        transform: translateX(-140px);
+    }
+
+    .gate-kate-wrap {
+        display: inline-block;
+        transform: translateX(50px) translateY(-20px);
+    }
+
     .gate-names .gate-amp {
-        font-size: 5rem;
+        display: block;
+        margin-bottom: -0.3rem;
     }
 
     .gate-envelope {
@@ -5595,13 +7346,27 @@ footer {
     }
 
     .gate-names {
-        font-size: 3.9rem;
+        font-size: 2.2rem;
         letter-spacing: 10px;
         margin-bottom: -1rem;
     }
 
+    .gate-name-rest {
+        letter-spacing: 7px;
+    }
+
+    .gate-names-line-1 {
+        transform: translateX(-140px);
+    }
+
+    .gate-kate-wrap {
+        display: inline-block;
+        transform: translateX(50px) translateY(-20px);
+    }
+
     .gate-names .gate-amp {
-        font-size: 3.9rem;
+        display: block;
+        margin-bottom: -0.3rem;
     }
 
     .gate-envelope {
@@ -5630,13 +7395,28 @@ footer {
     }
 
     .gate-names {
-        font-size: 3.7rem;
+        font-size: 2.1rem;
         letter-spacing: 8px;
         margin-bottom: -0.7rem;
     }
 
+    .gate-name-rest {
+        letter-spacing: 5px;
+    }
+
+    .gate-names-line-1 {
+        transform: translateX(-140px);
+    }
+
+    .gate-kate-wrap {
+        display: inline-block;
+        transform: translateX(35px) translateY(-20px);
+    }
+
     .gate-names .gate-amp {
-        font-size: 3.7rem;
+        display: block;
+        margin-bottom: -0.3rem;
+        transform: translateX(-25px);
     }
 
     .gate-envelope {
@@ -5665,13 +7445,27 @@ footer {
     }
 
     .gate-names {
-        font-size: 3.4rem;
+        font-size: 2rem;
         letter-spacing: 6px;
         margin-bottom: -0.5rem;
     }
 
+    .gate-name-rest {
+        letter-spacing: 4px;
+    }
+
+    .gate-names-line-1 {
+        transform: translateX(-140px);
+    }
+
+    .gate-kate-wrap {
+        display: inline-block;
+        transform: translateX(50px) translateY(-20px);
+    }
+
     .gate-names .gate-amp {
-        font-size: 3.4rem;
+        display: block;
+        margin-bottom: -0.3rem;
     }
 
     .gate-envelope {
@@ -5700,12 +7494,27 @@ footer {
     }
 
     .gate-names {
-        font-size: 3rem;
+        font-size: 1.7rem;
         letter-spacing: 5px;
     }
 
+    .gate-name-rest {
+        letter-spacing: 3px;
+    }
+
+    .gate-names-line-1 {
+        transform: translateX(-125px);
+    }
+
+    .gate-kate-wrap {
+        display: inline-block;
+        transform: translateX(20px) translateY(-20px);
+    }
+
     .gate-names .gate-amp {
-        font-size: 3rem;
+        display: block;
+        margin-bottom: -0.3rem;
+        transform: translateX(-35px);
     }
 
     .gate-envelope {
@@ -5734,12 +7543,26 @@ footer {
     }
 
     .gate-names {
-        font-size: 2.9rem;
+        font-size: 1.6rem;
         letter-spacing: 5px;
     }
 
+    .gate-name-rest {
+        letter-spacing: 3px;
+    }
+
+    .gate-names-line-1 {
+        transform: translateX(-140px);
+    }
+
+    .gate-kate-wrap {
+        display: inline-block;
+        transform: translateX(50px) translateY(-20px);
+    }
+
     .gate-names .gate-amp {
-        font-size: 2.9rem;
+        display: block;
+        margin-bottom: -0.3rem;
     }
 
     .gate-envelope {
