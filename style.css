@@ -4447,6 +4447,10 @@ footer {
         transform: none !important;
     }
 
+    .entourage-name-cord2 {
+        transform: none !important;
+    }
+
     .registry-btn.registry-btn-desktop {
         display: none !important;
     }
@@ -5541,6 +5545,15 @@ footer {
 
 /* iPhone Pro Max Series */
 @media (max-width: 441px) {
+    .map-card-map {
+        top: 27% !important;
+    }
+
+    .map-card-cta {
+        font-size: 0.85rem !important;
+        bottom: 25% !important;
+    }
+
     .entourage-initial {
         font-size: 3.5rem !important;
     }
@@ -5632,6 +5645,10 @@ footer {
         width: 180px;
     }
 
+    .rsvp-card {
+        margin-top: 6rem;
+    }
+
      .registry-cardno {
         width: 350px !important;
         max-width: none !important;
@@ -5639,6 +5656,7 @@ footer {
     .registry-cardno-bpi {
         width: 90% !important;
         margin-top: 0.6rem !important;
+        top: 85% !important;
     }
 }
 
@@ -5891,7 +5909,7 @@ footer {
         max-width: none !important;
     }
     .registry-cardno-bpi {
-        width: 75% !important;
+        width: 90% !important;
         margin-top: 0.6rem !important;
     }
 
@@ -5934,6 +5952,10 @@ footer {
 
 /* Ultra small devices (360px and below) */
 @media (max-width: 360px) {
+    .registry-cardno-bpi {
+        width: 90% !important;
+    }
+
     .map-card-map {
         top: 45% !important;
     }
@@ -7066,7 +7088,7 @@ footer {
     }
 
     .registry-cardno-bpi {
-        width: 75% !important;
+        width: 90% !important;
 
     }
 }
@@ -7384,6 +7406,12 @@ footer {
     }
 }
 
+@media (max-width: 441px) {
+    .gate-names .gate-amp {
+        transform: translateX(-20px) translateY(10px);
+    }
+}
+
 @media (max-width: 395px) {
     .gate-eyebrow {
         font-size: 0.76rem;
@@ -7410,13 +7438,13 @@ footer {
 
     .gate-kate-wrap {
         display: inline-block;
-        transform: translateX(35px) translateY(-20px);
+        transform: translateX(45px) translateY(-20px);
     }
 
     .gate-names .gate-amp {
         display: block;
         margin-bottom: -0.3rem;
-        transform: translateX(-25px);
+        transform: translateX(-25px) translateY(10px);
     }
 
     .gate-envelope {
@@ -7508,13 +7536,13 @@ footer {
 
     .gate-kate-wrap {
         display: inline-block;
-        transform: translateX(20px) translateY(-20px);
+        transform: translateX(20px) translateY(0px);
     }
 
     .gate-names .gate-amp {
         display: block;
         margin-bottom: -0.3rem;
-        transform: translateX(-35px);
+        transform: translateX(-35px) translateY(20px);
     }
 
     .gate-envelope {
@@ -7552,12 +7580,12 @@ footer {
     }
 
     .gate-names-line-1 {
-        transform: translateX(-140px);
+        transform: translateX(-120px);
     }
 
     .gate-kate-wrap {
         display: inline-block;
-        transform: translateX(50px) translateY(-20px);
+        transform: translateX(20px) translateY(-5px);
     }
 
     .gate-names .gate-amp {
