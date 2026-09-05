@@ -2504,6 +2504,13 @@ footer {
 
     /* 4K and above */
 @media (max-width: 2561px) {
+        .registry-qr {
+            width: 1000px;
+            height: 1000px;
+            margin-top: 18rem;
+            transform: translateX(40px);
+        }
+
         .map-card-map {
             top: 33%;
         }
@@ -5645,8 +5652,12 @@ footer {
         width: 180px;
     }
 
-    .rsvp-card {
-        margin-top: 6rem;
+    .rsvp-step {
+        margin-top: 5rem !important;
+    }
+
+    .rsvp-main-title {
+        margin-top: 4rem !important;
     }
 
      .registry-cardno {
@@ -7223,6 +7234,58 @@ footer {
     width: 26px;
     height: 1px;
     background: #b7a06a;
+}
+
+@media (max-width: 2561px) {
+    .gate-eyebrow {
+        font-size: 1.15rem;
+        letter-spacing: 6px;
+    }
+
+    .gate-from {
+        font-size: 2.3rem;
+    }
+
+    .gate-names {
+        font-size: 4rem;
+        letter-spacing: 12px;
+        line-height: 1;
+        margin-bottom: -1.7rem;
+        transform: translateX(58px);
+    }
+
+    .gate-names-line-1 {
+        transform: translateX(-230px);
+    }
+
+    .gate-kate-wrap {
+        display: inline-block;
+        transform: translateX(90px) translateY(-47px);
+    }
+
+    .gate-names .gate-amp {
+        display: block;
+        font-size: 1.6em;
+        line-height: 1;
+        margin-right: 0;
+        margin-top: -2.5rem;
+        margin-bottom: -0.6rem;
+        transform: translateX(-20px);
+    }
+
+    .gate-envelope {
+        width: 800px;
+        max-width: 86vw;
+    }
+
+    .gate-cta {
+        font-size: 0.85rem;
+        gap: 1rem;
+    }
+
+    .gate-cta-line {
+        width: 30px;
+    }
 }
 
 @media (max-width: 2000px) {
