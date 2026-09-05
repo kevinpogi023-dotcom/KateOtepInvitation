@@ -5653,7 +5653,7 @@ footer {
     }
 
     .rsvp-step {
-        margin-top: 2rem !important;
+        margin-top: -1rem !important;
     }
 
     .rsvp-main-title {
@@ -5788,6 +5788,18 @@ footer {
 
     #attire .attire-title {
         padding-top: 0.8rem;
+    }
+
+    .rsvp-heading {
+        margin-top: -1rem !important;
+    }
+
+    .rsvp-step {
+        margin-top: -1rem !important;
+    }
+
+    .rsvp-main-title {
+        margin-top: 1rem !important;
     }
 
     .story-sunflower {
