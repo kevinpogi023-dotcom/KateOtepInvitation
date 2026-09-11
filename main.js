@@ -190,6 +190,61 @@ window.addEventListener('scroll', () => {
     });
 }, { passive: true });
 
+// Gift List Modal
+(() => {
+    const overlay = document.getElementById('giftModalOverlay');
+    const modal = document.getElementById('giftModal');
+    const closeBtn = document.getElementById('giftModalClose');
+    const scrollThumb = document.getElementById('giftModalScrollThumb');
+    const openBtns = [
+        document.getElementById('giftListBtnDesktop'),
+        document.getElementById('giftListBtnMobile')
+    ];
+
+    if (!overlay) return;
+
+    const updateScrollThumb = () => {
+        if (!modal || !scrollThumb) return;
+        const { scrollTop, scrollHeight, clientHeight } = modal;
+        if (scrollHeight <= clientHeight) {
+            scrollThumb.style.height = '0px';
+            return;
+        }
+        const trackHeight = clientHeight - 32; // matches track's top/bottom inset
+        const thumbHeight = 48;
+        const maxThumbTop = trackHeight - thumbHeight;
+        const thumbTop = (scrollTop / (scrollHeight - clientHeight)) * maxThumbTop;
+        scrollThumb.style.height = `${thumbHeight}px`;
+        scrollThumb.style.top = `${thumbTop}px`;
+    };
+
+    const openModal = (e) => {
+        if (e) e.preventDefault();
+        overlay.classList.add('active');
+        requestAnimationFrame(updateScrollThumb);
+    };
+
+    const closeModal = () => {
+        overlay.classList.remove('active');
+    };
+
+    openBtns.forEach(btn => btn && btn.addEventListener('click', openModal));
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && overlay.classList.contains('active')) closeModal();
+    });
+
+    if (modal) {
+        modal.addEventListener('scroll', updateScrollThumb, { passive: true });
+    }
+    window.addEventListener('resize', updateScrollThumb);
+})();
+
 // Add animation on scroll for elements
 const observerOptions = {
     threshold: 0.1,

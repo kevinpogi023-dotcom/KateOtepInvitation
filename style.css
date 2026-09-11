@@ -1821,6 +1821,277 @@ section {
     background: rgba(201, 168, 76, 0.15);
 }
 
+/* Gift List Modal */
+.gift-modal-overlay {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 15, 12, 0.75);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.gift-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.gift-modal {
+    background: #f9f3e3;
+    border: 1.5px solid #b8922a;
+    border-radius: 16px;
+    max-width: 850px;
+    width: 100%;
+    max-height: 85vh;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+.gift-modal-scroll {
+    max-height: 85vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #8e9f4f transparent;
+    padding: 2.5rem 2rem 3rem;
+}
+
+.gift-modal-scroll::-webkit-scrollbar {
+    width: 12px;
+}
+
+.gift-modal-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.gift-modal-scroll::-webkit-scrollbar-thumb {
+    background-color: #8e9f4f;
+    border-radius: 999px;
+    border: 3px solid #f9f3e3;
+}
+
+.gift-modal-scrollbar-track {
+    display: none;
+}
+
+.gift-modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1.2rem;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    line-height: 1;
+    color: #778d60;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.gift-modal-close:hover {
+    opacity: 0.6;
+}
+
+.gift-modal-title {
+    text-align: center;
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: #507253;
+    margin-bottom: 0.5rem;
+}
+
+.gift-modal-sprig {
+    display: flex;
+    justify-content: center;
+    color: #8e9f4f;
+    margin-bottom: 0.8rem;
+}
+
+.gift-modal-subtitle {
+    text-align: center;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: #7a5c1e;
+    margin-bottom: 1.8rem;
+}
+
+.gift-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem 1rem;
+}
+
+.gift-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-family: 'Quicksand', sans-serif;
+    background: #fffdf7;
+    border: 1px solid rgba(184, 146, 42, 0.25);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(80, 60, 20, 0.08);
+}
+
+.gift-card-img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    display: block;
+    -webkit-touch-callout: none;
+    -webkit-user-drag: none;
+    user-select: none;
+    pointer-events: none;
+}
+
+.gift-card-body {
+    width: 100%;
+    padding: 0.8rem 0.6rem 0.9rem;
+}
+
+.gift-card-name {
+    color: #2c2c2c;
+    font-weight: 600;
+    font-size: 0.85rem;
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.gift-card-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: #dfe8c8;
+    color: #5a7a52;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+}
+
+.gift-modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-top: 2rem;
+}
+
+.gift-footer-line {
+    width: 30px;
+    height: 1px;
+    background: #b8922a;
+}
+
+.gift-footer-text {
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    color: #778d60;
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    .gift-modal-overlay {
+        padding: 0;
+        align-items: flex-end;
+    }
+
+    .gift-modal {
+        max-width: 100%;
+        width: 100%;
+        max-height: 92vh;
+        border-radius: 20px 20px 0 0;
+        border-bottom: none;
+        transform: translateY(100%);
+        transition: transform 0.35s ease;
+    }
+
+    .gift-modal-overlay.active .gift-modal {
+        transform: translateY(0);
+    }
+
+    .gift-modal-scroll {
+        max-height: 92vh;
+        padding: 2rem 1.2rem 2.5rem;
+    }
+
+    .gift-modal::before {
+        content: '';
+        position: absolute;
+        top: 0.7rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 40px;
+        height: 4px;
+        border-radius: 999px;
+        background: rgba(184, 146, 42, 0.35);
+    }
+
+    .gift-modal-scrollbar-track {
+        display: block;
+        position: absolute;
+        top: 2rem;
+        bottom: 1rem;
+        right: 0.35rem;
+        width: 4px;
+        border-radius: 999px;
+        background: rgba(184, 146, 42, 0.15);
+        pointer-events: none;
+        z-index: 5;
+    }
+
+    .gift-modal-scrollbar-thumb {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        border-radius: 999px;
+        background: #8e9f4f;
+    }
+
+    .gift-modal-close {
+        top: 1.3rem;
+    }
+
+    .gift-modal-sprig {
+        align-items: center;
+        gap: 0.6rem;
+    }
+
+    .gift-modal-sprig::before,
+    .gift-modal-sprig::after {
+        content: '';
+        width: 26px;
+        height: 1px;
+        background: #b8922a;
+    }
+
+    .gift-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+}
+
 .cta-link {
     display: inline-block;
     color: var(--accent);
@@ -4485,6 +4756,7 @@ footer {
         margin: -52px auto 0 !important;
         width: fit-content;
         font-size: 0.7rem !important;
+        padding: 1.3rem 2rem !important;
         white-space: nowrap;
         z-index: 999;
     }

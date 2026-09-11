@@ -449,7 +449,7 @@
                 <span class="attire-initial">R</span><span class="attire-word">egistry</span>
             </h2>
             <p class="registry-desc">Your <strong>presence at our wedding is the greatest gift</strong>, and if you wish to give, we would truly appreciate cash gifts as we begin our new life together. If you'd prefer to give something else, please select from our gift list below.</p>
-            <a href="#" class="registry-btn registry-btn-desktop">View Gift List</a>
+            <a href="#" class="registry-btn registry-btn-desktop" id="giftListBtnDesktop">View Gift List</a>
         </div>
         <div class="registry-card-wrapper">
             <div class="registry-card-circle"></div>
@@ -464,10 +464,76 @@
                 <img src="images/standyellow.png" alt="" class="registry-cardno-flower">
                 <img src="images/cardno.png" alt="Card" class="registry-cardno">
                 <img src="images/righbpi.png" alt="BPI" class="registry-cardno-bpi">
-                <a href="#" class="registry-btn registry-btn-mobile">View Gift List</a>
+                <a href="#" class="registry-btn registry-btn-mobile" id="giftListBtnMobile">View Gift List</a>
             </div>
         </div>
     </section>
+
+    <!-- Gift List Modal -->
+    <div class="gift-modal-overlay" id="giftModalOverlay">
+        <div class="gift-modal">
+            <button type="button" class="gift-modal-close" id="giftModalClose" aria-label="Close">&times;</button>
+            <div class="gift-modal-scrollbar-track">
+                <div class="gift-modal-scrollbar-thumb" id="giftModalScrollThumb"></div>
+            </div>
+            <div class="gift-modal-scroll" id="giftModal">
+            <h3 class="gift-modal-title">View Gift List</h3>
+            <div class="gift-modal-sprig">
+                <svg width="30" height="14" viewBox="0 0 30 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 7C6 1 10 1 15 7C20 13 24 13 29 7" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+                    <path d="M15 7C15 4.5 14 2.5 12 1.3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+                    <path d="M15 7C15 4.5 16 2.5 18 1.3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <p class="gift-modal-subtitle">Your love and support mean the world to us.<br>Here are a few things we're hoping for as we begin this next chapter.</p>
+            <div class="gift-grid">
+                <div class="gift-card">
+                    <img src="images/flowers.png" alt="Fresh Flower Arrangement" class="gift-card-img">
+                    <div class="gift-card-body">
+                        <p class="gift-card-name">Fresh Flower Arrangement</p>
+                        <span class="gift-card-badge">&check; Reserved</span>
+                    </div>
+                </div>
+                <div class="gift-card">
+                    <img src="images/candlestick.png" alt="Scented Candle Set" class="gift-card-img">
+                    <div class="gift-card-body">
+                        <p class="gift-card-name">Scented Candle Set</p>
+                    </div>
+                </div>
+                <div class="gift-card">
+                    <img src="images/bag.png" alt="Leather Handbag" class="gift-card-img">
+                    <div class="gift-card-body">
+                        <p class="gift-card-name">Leather Handbag</p>
+                    </div>
+                </div>
+                <div class="gift-card">
+                    <img src="images/plates.png" alt="Dinnerware Set" class="gift-card-img">
+                    <div class="gift-card-body">
+                        <p class="gift-card-name">Dinnerware Set</p>
+                    </div>
+                </div>
+                <div class="gift-card">
+                    <img src="images/watch.png" alt="Classic Watch" class="gift-card-img">
+                    <div class="gift-card-body">
+                        <p class="gift-card-name">Classic Watch</p>
+                        <span class="gift-card-badge">&check; Reserved</span>
+                    </div>
+                </div>
+                <div class="gift-card">
+                    <img src="images/perfume.png" alt="Perfume" class="gift-card-img">
+                    <div class="gift-card-body">
+                        <p class="gift-card-name">Perfume</p>
+                    </div>
+                </div>
+            </div>
+            <div class="gift-modal-footer">
+                <span class="gift-footer-line"></span>
+                <span class="gift-footer-text">Grateful for you</span>
+                <span class="gift-footer-line"></span>
+            </div>
+            </div>
+        </div>
+    </div>
 
 <!-- RSVP Section -->
 <section id="rsvp" class="section-light rsvp-section">
