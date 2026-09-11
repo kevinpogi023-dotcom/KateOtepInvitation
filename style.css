@@ -317,11 +317,24 @@ body::-webkit-scrollbar {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 0;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -15%;
+    left: 0;
+    right: 0;
+    bottom: -15%;
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3) 0%, rgba(0, 0, 0, 0) 18%, rgba(0, 0, 0, 0.3) 35%, rgba(0, 0, 0, 0.3) 100%),
                 url('images/herobg.jpg') center/cover;
-    margin-bottom: 0;
     background-size: 100%, 115%;
     background-position: 0% 64%;
+    transform: translate3d(0, var(--parallax-y, 0px), 0);
+    will-change: transform;
+    z-index: 0;
 }
 
 .hero-content {
@@ -3834,8 +3847,11 @@ footer {
     
     /* Hero Section */
     .hero {
-        background-position: 90% 70%;
         height: 100vh;
+    }
+
+    .hero::before {
+        background-position: 90% 70%;
     }
     
     .couple-names {
@@ -4237,10 +4253,13 @@ footer {
 
     /* Hero Section */
     .hero {
-        background-size: 100%, 220% !important;
-        background-position: 0% 50%, 35% 65% !important;
         align-items: flex-start;
         padding-top: 25vh;
+    }
+
+    .hero::before {
+        background-size: 100%, 220% !important;
+        background-position: 0% 50%, 35% 65% !important;
     }
 
     .welcome-text {
@@ -6059,10 +6078,13 @@ footer {
 
     /* Hero Section */
     .hero {
-        background-size: 100%, 220% !important;
-        background-position: 0% 50%, 35% 65% !important;
         align-items: flex-start;
         padding-top: 25vh;
+    }
+
+    .hero::before {
+        background-size: 100%, 220% !important;
+        background-position: 0% 50%, 35% 65% !important;
     }
 
     .welcome-text {

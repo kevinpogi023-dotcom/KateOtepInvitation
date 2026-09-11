@@ -173,7 +173,7 @@ rsvpButtons.forEach(btn => {
     });
 });
 
-// Parallax effect for hero background
+// Parallax effect for hero background (GPU-composited via transform)
 const heroEl = document.querySelector('.hero');
 let parallaxTicking = false;
 
@@ -184,8 +184,7 @@ window.addEventListener('scroll', () => {
     requestAnimationFrame(() => {
         const scrolled = window.pageYOffset;
         if (scrolled <= heroEl.offsetHeight) {
-            const parallaxSpeed = 0.5;
-            heroEl.style.backgroundPosition = `0% calc(65% + ${scrolled * parallaxSpeed}px)`;
+            heroEl.style.setProperty('--parallax-y', `${scrolled * 0.3}px`);
         }
         parallaxTicking = false;
     });
