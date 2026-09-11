@@ -174,15 +174,22 @@ rsvpButtons.forEach(btn => {
 });
 
 // Parallax effect for hero background
+const heroEl = document.querySelector('.hero');
+let parallaxTicking = false;
+
 window.addEventListener('scroll', () => {
-    const hero = document.querySelector('.hero');
-    const scrolled = window.pageYOffset;
-    const parallaxSpeed = 0.5;
-    
-    if (hero) {
-        hero.style.backgroundPosition = `0% calc(65% + ${scrolled * parallaxSpeed}px)`;
-    }
-});
+    if (parallaxTicking || !heroEl) return;
+    parallaxTicking = true;
+
+    requestAnimationFrame(() => {
+        const scrolled = window.pageYOffset;
+        if (scrolled <= heroEl.offsetHeight) {
+            const parallaxSpeed = 0.5;
+            heroEl.style.backgroundPosition = `0% calc(65% + ${scrolled * parallaxSpeed}px)`;
+        }
+        parallaxTicking = false;
+    });
+}, { passive: true });
 
 // Add animation on scroll for elements
 const observerOptions = {
