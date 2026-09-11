@@ -1,9 +1,4 @@
 // ============================================
-// CONFIGURATION - UPDATE THIS URL ONLY
-// ============================================
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxH3XEZ13rd_YFBVOw5z4nCAqk8_u3MFedt2k3zGcOME2YgipjpjvccGxhQPIx6Lu02nw/exec';
-
-// ============================================
 // Invitation Gate - envelope landing screen
 // shown before the invitation. Clicking the
 // envelope plays an opening animation, fades
@@ -308,6 +303,8 @@ window.addEventListener('resize', () => {
 
 let foundGuests = [];
 let selectedGuest = null;
+let currentWeddingCode = 'OK27';
+let currentPartyId = null;
 
 document.addEventListener('DOMContentLoaded', function() {
     const continueBtn = document.getElementById('continueBtn');
@@ -333,34 +330,32 @@ document.addEventListener('DOMContentLoaded', function() {
         searchError.style.display = 'none';
         
         try {
-            const response = await fetch(GOOGLE_SCRIPT_URL, {
-                method: 'POST',
-                mode: 'cors',
-                cache: 'no-cache',
-                headers: {
-                    'Content-Type': 'text/plain',
-                },
-                redirect: 'follow',
-                body: JSON.stringify({
-                    action: 'search',
-                    name: name
-                })
+            const nameSearch = name.toLowerCase();
+            const searchWords = nameSearch.split(/\s+/).filter(Boolean);
+            const snapshot = await db.collection('parties')
+                .where('weddingCode', '==', currentWeddingCode)
+                .get();
+
+            const matches = [];
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                if (data.namesSearch && data.namesSearch.some(n => searchWords.every(word => n.includes(word)))) {
+                    matches.push({ id: doc.id, ...data });
+                }
             });
-            
-            const result = await response.json();
-            
-            console.log('Search result:', result);
-            
-            if (result.success && result.guests && result.guests.length > 0) {
-                foundGuests = result.guests;
-                console.log('Found guests:', foundGuests);
-                displayGuestList(result.guests);
-                
+
+            if (matches.length === 1) {
+                const matchedParty = matches[0];
+                currentPartyId = matchedParty.id;
+                foundGuests = matchedParty.members.map(m => ({ name: m.name }));
+                displayGuestList(foundGuests, matchedParty.rsvpResponses || []);
                 setTimeout(() => {
                     showStep(2);
                 }, 100);
+            } else if (matches.length > 1) {
+                showError('More than one guest matches that name. Please enter your full name (first and last) to narrow it down.');
             } else {
-                showError(result.message || 'Name not found');
+                showError('Name not found. Please check the spelling or contact the couple.');
             }
         } catch (error) {
             console.error('Search error:', error);
@@ -371,39 +366,28 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Step 2: Select guest from list and collect dietary info
+    // Step 2: Select guest from list
     selectBtn.addEventListener('click', function() {
         const guestResponses = [];
-        let allAnswered = true;
-        
+
         foundGuests.forEach((guest, index) => {
             const selectedRadio = document.querySelector(`input[name="guest-${index}-attendance"]:checked`);
-            
-            if (!selectedRadio) {
-                allAnswered = false;
-            } else {
-                const dietaryField = document.getElementById(`dietary-${index}`);
-                const hasDietaryRestrictions = selectedRadio.value === 'yes' && dietaryField;
-                
-                guestResponses.push({
-                    name: guest.name,
-                    attendance: selectedRadio.value,
-                    dietary: hasDietaryRestrictions ? (dietaryField.value.trim() || 'None') : 'None'
-                });
+            if (selectedRadio) {
+                guestResponses.push({ name: guest.name, attendance: selectedRadio.value });
             }
+            // Unselected members remain pending — they can search their own name later
         });
-        
-        if (!allAnswered) {
-            alert('Please select attendance for all guests');
+
+        if (guestResponses.length === 0) {
+            alert('Please select attendance for at least one person.');
             return;
         }
-        
-        // Store responses
+
         selectedGuest = {
             guests: guestResponses,
             primaryGuest: foundGuests[0]
         };
-        
+
         showStep(3);
     });
     
@@ -433,37 +417,42 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        const formData = {
-            action: 'submit',
-            selectedGuest: selectedGuest,  // Contains {guests: [{name, attendance, dietary},...], primaryGuest: {...}}
-            email: document.getElementById('email').value.trim()
-        };
-        
         const submitBtn = rsvpForm.querySelector('.rsvp-submit-btn');
         submitBtn.disabled = true;
         submitBtn.textContent = 'Submitting...';
-        
+
         try {
-            const response = await fetch(GOOGLE_SCRIPT_URL, {
-                method: 'POST',
-                mode: 'cors',
-                cache: 'no-cache',
-                headers: {
-                    'Content-Type': 'text/plain',
-                },
-                redirect: 'follow',
-                body: JSON.stringify(formData)
+            // Fetch existing responses to preserve unselected members
+            const partyDoc = await db.collection('parties').doc(currentPartyId).get();
+            const existingData = partyDoc.data();
+            const existing = existingData.rsvpResponses || [];
+
+            // Merge: new responses override existing ones, others stay
+            const merged = [...existing];
+            selectedGuest.guests.forEach(newR => {
+                const idx = merged.findIndex(r => r.name === newR.name);
+                if (idx >= 0) merged[idx] = newR;
+                else merged.push(newR);
             });
-            
-            const result = await response.json();
-            
-            if (result.success) {
-                alert(result.message);
-                resetForm();
-                showStep(1);
-            } else {
-                alert(result.message || 'Unable to submit RSVP');
-            }
+
+            // Party is fully submitted only when all members have responded
+            const allMembers = existingData.members || [];
+            const allResponded = allMembers.every(m => merged.some(r => r.name === m.name));
+
+            const guestEmail = document.getElementById('email').value.trim();
+            const dietary = document.getElementById('dietaryRestrictions').value.trim();
+
+            await db.collection('parties').doc(currentPartyId).update({
+                rsvpSubmitted: allResponded,
+                rsvpResponses: merged,
+                email: guestEmail,
+                dietary: dietary,
+                submittedAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            showRsvpSuccess();
+            resetForm();
+            showStep(1);
         } catch (error) {
             console.error('Submission error:', error);
             alert('Unable to submit RSVP. Please try again or contact the couple.');
@@ -474,102 +463,79 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Display guest list with dietary restrictions field
-function displayGuestList(guests) {
+// Display guest list with each guest's existing RSVP status
+function displayGuestList(guests, existingResponses = []) {
     const guestList = document.getElementById('guestList');
-    
+
     if (!guestList) {
         console.error('Guest list container not found');
         return;
     }
-    
+
     guestList.innerHTML = '';
-    
-    console.log('Displaying', guests.length, 'guests');
-    
+
     guests.forEach((guest, index) => {
-        // Create container for each guest
+        const existing = existingResponses.find(r => r.name === guest.name);
+        const status = existing?.attendance; // 'yes', 'no', or undefined (pending)
+
         const guestItem = document.createElement('div');
         guestItem.className = 'guest-attendance-item';
-        
-        // Guest name label
-        const nameLabel = document.createElement('label');
+
+        // Name + current status badge
+        const nameRow = document.createElement('div');
+        nameRow.className = 'guest-name-row';
+
+        const nameLabel = document.createElement('span');
         nameLabel.className = 'guest-name-label';
         nameLabel.textContent = guest.name;
-        if (guest.required) {
-            const asterisk = document.createElement('span');
-            asterisk.className = 'required';
-            asterisk.textContent = ' *';
-            nameLabel.appendChild(asterisk);
+
+        const badge = document.createElement('span');
+        if (status === 'yes') {
+            badge.className = 'rsvp-status-badge badge-attending';
+            badge.textContent = '✓ Attending';
+        } else if (status === 'no') {
+            badge.className = 'rsvp-status-badge badge-declined';
+            badge.textContent = '✗ Not Attending';
+        } else {
+            badge.className = 'rsvp-status-badge badge-pending';
+            badge.textContent = '· Pending';
         }
-        
-        // Radio buttons container
-        const radioContainer = document.createElement('div');
-        radioContainer.className = 'guest-radio-group';
-        
-        // Will Attend option
-        const attendLabel = document.createElement('label');
-        attendLabel.className = 'guest-radio-label';
-        const attendRadio = document.createElement('input');
-        attendRadio.type = 'radio';
-        attendRadio.name = `guest-${index}-attendance`;
-        attendRadio.value = 'yes';
-        attendRadio.dataset.guestIndex = index;
-        attendLabel.appendChild(attendRadio);
-        attendLabel.appendChild(document.createTextNode(' Will Attend'));
-        
-        // Will Not Attend option
-        const notAttendLabel = document.createElement('label');
-        notAttendLabel.className = 'guest-radio-label';
-        const notAttendRadio = document.createElement('input');
-        notAttendRadio.type = 'radio';
-        notAttendRadio.name = `guest-${index}-attendance`;
-        notAttendRadio.value = 'no';
-        notAttendRadio.dataset.guestIndex = index;
-        notAttendLabel.appendChild(notAttendRadio);
-        notAttendLabel.appendChild(document.createTextNode(' Will Not Attend'));
-        
-        radioContainer.appendChild(attendLabel);
-        radioContainer.appendChild(notAttendLabel);
-        
-        // Dietary restrictions field (initially hidden)
-        const dietaryContainer = document.createElement('div');
-        dietaryContainer.className = 'dietary-container';
-        dietaryContainer.style.display = 'none';
-        dietaryContainer.id = `dietary-container-${index}`;
-        
-        const dietaryLabel = document.createElement('label');
-        dietaryLabel.className = 'dietary-label';
-        dietaryLabel.textContent = 'Dietary Restrictions (optional)';
-        
-        const dietaryInput = document.createElement('input');
-        dietaryInput.type = 'text';
-        dietaryInput.id = `dietary-${index}`;
-        dietaryInput.className = 'dietary-input';
-        dietaryInput.placeholder = 'e.g., Vegetarian, No shellfish, Gluten-free';
-        
-        dietaryContainer.appendChild(dietaryLabel);
-        dietaryContainer.appendChild(dietaryInput);
-        
-        // Show/hide dietary field based on attendance selection
-        attendRadio.addEventListener('change', function() {
-            if (this.checked) {
-                dietaryContainer.style.display = 'block';
-            }
-        });
-        
-        notAttendRadio.addEventListener('change', function() {
-            if (this.checked) {
-                dietaryContainer.style.display = 'none';
-                dietaryInput.value = '';
-            }
-        });
-        
-        guestItem.appendChild(nameLabel);
-        guestItem.appendChild(radioContainer);
-        guestItem.appendChild(dietaryContainer);
+
+        nameRow.appendChild(nameLabel);
+        nameRow.appendChild(badge);
+        guestItem.appendChild(nameRow);
+
+        // Show radio buttons for pending and not-attending (can change mind), hide for attending
+        if (status !== 'yes') {
+            const radioContainer = document.createElement('div');
+            radioContainer.className = 'guest-radio-group';
+
+            const attendLabel = document.createElement('label');
+            attendLabel.className = 'guest-radio-label';
+            const attendRadio = document.createElement('input');
+            attendRadio.type = 'radio';
+            attendRadio.name = `guest-${index}-attendance`;
+            attendRadio.value = 'yes';
+            attendLabel.appendChild(attendRadio);
+            attendLabel.appendChild(document.createTextNode(' Will Attend'));
+
+            const notAttendLabel = document.createElement('label');
+            notAttendLabel.className = 'guest-radio-label';
+            const notAttendRadio = document.createElement('input');
+            notAttendRadio.type = 'radio';
+            notAttendRadio.name = `guest-${index}-attendance`;
+            notAttendRadio.value = 'no';
+            notAttendRadio.checked = status === 'no';
+            notAttendLabel.appendChild(notAttendRadio);
+            notAttendLabel.appendChild(document.createTextNode(' Will Not Attend'));
+
+            radioContainer.appendChild(attendLabel);
+            radioContainer.appendChild(notAttendLabel);
+            guestItem.appendChild(radioContainer);
+        }
+
         guestList.appendChild(guestItem);
-        
+
         // Add separator line except for last item
         if (index < guests.length - 1) {
             const separator = document.createElement('div');
@@ -577,8 +543,6 @@ function displayGuestList(guests) {
             guestList.appendChild(separator);
         }
     });
-    
-    console.log('Guest list populated with', guests.length, 'guests');
 }
 
 function showStep(stepNumber) {
@@ -623,6 +587,21 @@ function resetForm() {
     document.getElementById('rsvpForm').reset();
     foundGuests = [];
     selectedGuest = null;
+}
+
+// ============================================
+// RSVP Success Modal
+// ============================================
+function showRsvpSuccess() {
+    const modal = document.getElementById('rsvpSuccessModal');
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeRsvpSuccess() {
+    const modal = document.getElementById('rsvpSuccessModal');
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
 }
 
 // ============================================

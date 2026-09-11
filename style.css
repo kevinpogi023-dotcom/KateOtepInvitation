@@ -468,11 +468,16 @@ section {
     color: var(--text-light);
 }
 
+.hero-story-flower-anchor {
+    position: relative;
+    height: 0;
+}
+
 .story-yellowflower {
     position: absolute;
-    bottom: 0;
+    top: 0;
     right: 1%;
-    transform: translateY(50%);
+    transform: translateY(-50%);
     width: 320px;
     height: auto;
     z-index: 5;
@@ -2345,13 +2350,32 @@ section {
     padding: 1.5rem 0;
 }
 
+.guest-name-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+    gap: 0.5rem;
+}
+
 .guest-name-label {
-    display: block;
     font-size: 1.1rem;
     color: #4a4a4a;
-    margin-bottom: 1rem;
     font-weight: 500;
 }
+
+.rsvp-status-badge {
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.4rem 1rem;
+    border-radius: 999px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.badge-attending { background: #e8f5e9; color: #2e7d32; }
+.badge-declined  { background: #fce4ec; color: #c62828; }
+.badge-pending   { background: #f0efe4; color: #888; }
 
 .guest-radio-group {
     display: flex;
@@ -2373,56 +2397,6 @@ section {
     height: 18px;
     cursor: pointer;
     accent-color: #5a5a3d;
-}
-
-/* Dietary Restrictions Field - NEW */
-.dietary-container {
-    margin-top: 1rem;
-    padding-left: 0;
-    animation: slideDown 0.3s ease;
-}
-
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-        max-height: 0;
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-        max-height: 200px;
-    }
-}
-
-.dietary-label {
-    display: block;
-    font-size: 0.95rem;
-    color: #6a6a6a;
-    margin-bottom: 0.5rem;
-    font-weight: 400;
-}
-
-.dietary-input {
-    width: 100%;
-    padding: 0.8rem 1rem;
-    font-size: 0.95rem;
-    border: 1px solid #d0c5ba;
-    border-radius: 6px;
-    font-family: inherit;
-    background: white;
-    color: #333;
-    transition: border-color 0.3s ease;
-    box-sizing: border-box;
-}
-
-.dietary-input:focus {
-    outline: none;
-    border-color: #a89584;
-}
-
-.dietary-input::placeholder {
-    color: #999;
 }
 
 .guest-separator {
@@ -2606,6 +2580,91 @@ section {
 .rsvp-submit-btn:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+}
+
+/* RSVP Success Modal */
+.rsvp-success-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(15, 15, 12, 0.75);
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.rsvp-success-modal.active {
+    display: flex;
+}
+
+.rsvp-success-content {
+    background: #f9f3e3;
+    border: 1.5px solid #b8922a;
+    border-radius: 16px;
+    padding: 3rem 2.5rem 2.5rem;
+    max-width: 380px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+.rsvp-success-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(90, 90, 61, 0.1);
+    border: 2px solid #5a5a3d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.2rem;
+    font-size: 1.6rem;
+    color: #5a5a3d;
+}
+
+.rsvp-success-title {
+    font-family: 'Alex Brush', cursive;
+    font-size: 3rem;
+    color: #5a5a3d;
+    margin-bottom: 0.8rem;
+    line-height: 1;
+}
+
+.rsvp-success-msg {
+    font-size: 1.05rem;
+    color: #5a5a5a;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+.rsvp-success-names {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    color: #ffbb23;
+    opacity: 0.85;
+    text-transform: uppercase;
+    margin-bottom: 1.8rem;
+}
+
+.rsvp-success-btn {
+    background: #5a5a3d;
+    color: #fff;
+    border: none;
+    padding: 0.8rem 2.5rem;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.25s ease, transform 0.2s ease;
+}
+
+.rsvp-success-btn:hover {
+    background: #4a4a30;
+    transform: scale(1.04);
 }
 
 /* Step Transitions */
@@ -3161,9 +3220,17 @@ footer {
         .entourage-role-secondary {
             transform: translateX(50px);
         }
+
+        .story-yellowflower {
+            width: 400px;
+        }
     }
 
 @media (max-width: 1513px) {
+        .story-yellowflower {
+            width: 320px;
+        }
+
         .attire-upflower {
             width: 190px;
             top: 0.5rem;
