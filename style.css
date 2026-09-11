@@ -2443,7 +2443,7 @@ footer {
 }
 
 .faq-item.active .faq-answer {
-    grid-template-rows: 1fr;
+    max-height: 1000px;
     padding-bottom: 1.5rem;
 }
 
@@ -4161,9 +4161,7 @@ footer {
     footer {
         padding: 3rem 1.5rem 2rem;
         background: linear-gradient(to bottom, rgba(20,20,18,1) 0%, rgba(20,20,18,0.85) 15%, rgba(20,20,18,0) 55%) center bottom/100% auto no-repeat,
-                    url('images/faqscorrect.jpg') center bottom/auto 45% no-repeat,
-                    url('images/faqsblack1.jpg') center top/cover no-repeat !important;
-        min-height: 100vh !important;
+                    url('images/longfaqs.png') center top/contain no-repeat !important;
     }
 
     .footer-content h2 {
@@ -5074,11 +5072,9 @@ footer {
     footer {
         padding: 2rem 0.8rem 1.2rem;
         background: linear-gradient(to bottom, rgba(20,20,18,1) 0%, rgba(20,20,18,0.85) 15%, rgba(20,20,18,0) 55%) center bottom/100% auto no-repeat,
-                    url('images/faqscorrect.jpg') center bottom/auto 45% no-repeat,
-                    url('images/faqsblack1.jpg') center top/cover no-repeat !important;
+                    url('images/longfaqs.png') center top/contain no-repeat !important;
         background-color: #111 !important;
         text-align: left !important;
-        min-height: 100vh !important;
         margin-top: -3rem !important;
         position: relative !important;
     }
@@ -5098,12 +5094,12 @@ footer {
     }
 
     .faq-initial {
-        font-size: 1.2rem !important;
+        font-size: 1.9rem !important;
         margin-right: 0 !important;
     }
 
     .faq-word {
-        font-size: 0.7rem !important;
+        font-size: 1.15rem !important;
         letter-spacing: 1px !important;
     }
 
@@ -5506,9 +5502,8 @@ footer {
     footer {
         padding: 2.5rem 1rem 1.5rem;
         background: linear-gradient(to bottom, rgba(20,20,18,1) 0%, rgba(20,20,18,0.85) 15%, rgba(20,20,18,0) 55%) center bottom/100% auto no-repeat,
-                    url('images/faqscorrect.jpg') center bottom/auto 45% no-repeat,
-                    url('images/faqsblack1.jpg') center top/cover no-repeat !important;
-        min-height: 200vh !important;
+                    url('images/longfaqs.png') center top/105% auto no-repeat !important;
+        background-color: #111 !important;
     }
 
     .footer-content h2 {
@@ -5693,6 +5688,14 @@ footer {
 
 /* iPhone Series */
 @media (max-width: 395px) {
+    .faq-initial {
+        font-size: 1.6rem !important;
+    }
+
+    .faq-word {
+        font-size: 1rem !important;
+    }
+
     .entourage-initial {
         font-size: 3.1rem !important;
     }
@@ -5830,6 +5833,14 @@ footer {
 }
 
 @media (max-width: 376px) {
+    .faq-initial {
+        font-size: 1.45rem !important;
+    }
+
+    .faq-word {
+        font-size: 0.9rem !important;
+    }
+
  #party {
     min-height: unset;
  }
@@ -6838,10 +6849,8 @@ footer {
     footer {
         padding: 2rem 0.8rem 1.2rem;
         background: linear-gradient(to bottom, rgba(20,20,18,1) 0%, rgba(20,20,18,0.85) 15%, rgba(20,20,18,0) 55%) center bottom/100% auto no-repeat,
-                    url('images/faqscorrect.jpg') center bottom/auto 45% no-repeat,
-                    url('images/faqsblack1.jpg') center top/cover no-repeat !important;
+                    url('images/longfaqs.png') center top/108% auto no-repeat !important;
         background-color: #111 !important;
-        min-height: 100vh !important;
     }
 
     .footer-content {
@@ -6859,12 +6868,12 @@ footer {
     }
 
     .faq-initial {
-        font-size: 1.2rem !important;
+        font-size: 1.4rem !important;
         margin-right: 0 !important;
     }
 
     .faq-word {
-        font-size: 0.7rem !important;
+        font-size: 0.9rem !important;
         letter-spacing: 1px !important;
     }
 
@@ -6975,6 +6984,20 @@ footer {
 
 /* Ultra small devices (320px and below) */
 @media (max-width: 320px) {
+    footer {
+        background: linear-gradient(to bottom, rgba(20,20,18,1) 0%, rgba(20,20,18,0.85) 15%, rgba(20,20,18,0) 55%) center bottom/100% auto no-repeat,
+                    url('images/longfaqs.png') center top/120% auto no-repeat !important;
+        background-color: #111 !important;
+    }
+
+    .faq-initial {
+        font-size: 1.1rem !important;
+    }
+
+    .faq-word {
+        font-size: 0.7rem !important;
+    }
+
     #attire .attire-title {
         padding-top: 0.6rem !important;
     }
