@@ -211,7 +211,7 @@ window.addEventListener('scroll', () => {
             return;
         }
         const trackHeight = clientHeight - 32; // matches track's top/bottom inset
-        const thumbHeight = 48;
+        const thumbHeight = 90;
         const maxThumbTop = trackHeight - thumbHeight;
         const thumbTop = (scrollTop / (scrollHeight - clientHeight)) * maxThumbTop;
         scrollThumb.style.height = `${thumbHeight}px`;
@@ -220,6 +220,7 @@ window.addEventListener('scroll', () => {
 
     const openModal = (e) => {
         if (e) e.preventDefault();
+        if (modal) modal.scrollTop = 0;
         overlay.classList.add('active');
         requestAnimationFrame(updateScrollThumb);
     };
