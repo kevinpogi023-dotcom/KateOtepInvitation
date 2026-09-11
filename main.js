@@ -230,7 +230,13 @@ window.addEventListener('scroll', () => {
     };
 
     openBtns.forEach(btn => btn && btn.addEventListener('click', openModal));
-    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeModal);
+        closeBtn.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            closeModal();
+        });
+    }
 
     overlay.addEventListener('click', (e) => {
         if (e.target === overlay) closeModal();

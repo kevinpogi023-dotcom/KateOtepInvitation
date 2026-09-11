@@ -1861,7 +1861,6 @@ section {
 .gift-modal-scroll {
     max-height: 85vh;
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
     scrollbar-width: thin;
     scrollbar-color: #8e9f4f transparent;
@@ -1888,14 +1887,23 @@ section {
 
 .gift-modal-close {
     position: absolute;
-    top: 1rem;
-    right: 1.2rem;
+    top: 0.4rem;
+    right: 0.4rem;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: none;
     border: none;
     font-size: 2rem;
     line-height: 1;
     color: #778d60;
     cursor: pointer;
+    z-index: 10;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    isolation: isolate;
     transition: opacity 0.2s ease;
 }
 
@@ -2071,7 +2079,7 @@ section {
     }
 
     .gift-modal-close {
-        top: 1.3rem;
+        top: 0.8rem;
     }
 
     .gift-modal-sprig {
