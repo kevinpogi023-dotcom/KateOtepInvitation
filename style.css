@@ -2463,21 +2463,6 @@ section {
     transform: translateY(-2px);
 }
 
-.rsvp-search-again {
-    text-align: center;
-    margin-top: 1.5rem;
-}
-
-.rsvp-search-again a {
-    color: #5a5a3d;
-    text-decoration: underline;
-    font-size: 0.95rem;
-}
-
-.rsvp-search-again a:hover {
-    color: #4a4a30;
-}
-
 /* Step 3 - Confirmation Form */
 .rsvp-confirm-title {
     text-align: center;
@@ -4128,6 +4113,11 @@ footer {
     .rsvp-card {
         padding: 2rem 1.5rem;
     }
+
+    #step2 .rsvp-card,
+    #step3 .rsvp-card {
+        margin-bottom: 2.5rem;
+    }
     
     .guest-radio-group {
         flex-direction: column;
@@ -5363,9 +5353,13 @@ footer {
     }
 
     .rsvp-card {
-        padding: 0.8rem !important;
-        max-width: 330px !important;
+        padding: 1.5rem 1.2rem !important;
         border-radius: 6px !important;
+    }
+
+    #step2 .rsvp-card,
+    #step3 .rsvp-card {
+        margin-bottom: 2.5rem !important;
     }
 
     .rsvp-instruction {
@@ -5387,11 +5381,12 @@ footer {
 
     .rsvp-continue-btn,
     .rsvp-select-btn,
-    .rsvp-submit-btn {
-        padding: 0.4rem 0.8rem !important;
-        font-size: 0.55rem !important;
+    .rsvp-submit-btn,
+    .rsvp-back-btn {
+        padding: 0.75rem 1rem !important;
+        font-size: 0.9rem !important;
         margin-top: 0.2rem !important;
-        border-radius: 2px !important;
+        border-radius: 6px !important;
     }
 
     .rsvp-card {
@@ -5781,6 +5776,7 @@ footer {
     /* RSVP Section */
     .rsvp-section {
         padding: 3rem 1rem;
+        justify-content: flex-start;
     }
 
     .rsvp-main-title {
@@ -5790,6 +5786,11 @@ footer {
 
     .rsvp-card {
         padding: 2rem 1.5rem;
+    }
+
+    #step2 .rsvp-card,
+    #step3 .rsvp-card {
+        margin-bottom: 2.5rem;
     }
 
     .rsvp-instruction {
@@ -5810,7 +5811,8 @@ footer {
 
     .rsvp-continue-btn,
     .rsvp-select-btn,
-    .rsvp-submit-btn {
+    .rsvp-submit-btn,
+    .rsvp-back-btn {
         padding: 0.9rem 1.5rem;
         font-size: 1rem;
     }
@@ -6347,9 +6349,13 @@ footer {
     }
 
     .rsvp-card {
-        padding: 0.8rem !important;
-        max-width: 310px !important;
+        padding: 1.5rem 1.2rem !important;
         border-radius: 6px !important;
+    }
+
+    #step2 .rsvp-card,
+    #step3 .rsvp-card {
+        margin-bottom: 2.5rem !important;
     }
     .rsvp-upflower {
         width: 190px;
@@ -7143,9 +7149,13 @@ footer {
     }
 
     .rsvp-card {
-        padding: 0.8rem !important;
-        max-width: 290px !important;
+        padding: 1.5rem 1.2rem !important;
         border-radius: 6px !important;
+    }
+
+    #step2 .rsvp-card,
+    #step3 .rsvp-card {
+        margin-bottom: 2.5rem !important;
     }
 
     .rsvp-instruction {
@@ -7167,11 +7177,12 @@ footer {
 
     .rsvp-continue-btn,
     .rsvp-select-btn,
-    .rsvp-submit-btn {
-        padding: 0.4rem 0.8rem !important;
-        font-size: 0.55rem !important;
+    .rsvp-submit-btn,
+    .rsvp-back-btn {
+        padding: 0.75rem 1rem !important;
+        font-size: 0.9rem !important;
         margin-top: 0.2rem !important;
-        border-radius: 2px !important;
+        border-radius: 6px !important;
     }
 
     .rsvp-card {

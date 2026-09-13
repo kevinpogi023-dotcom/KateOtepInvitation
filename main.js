@@ -309,7 +309,6 @@ let currentPartyId = null;
 document.addEventListener('DOMContentLoaded', function() {
     const continueBtn = document.getElementById('continueBtn');
     const selectBtn = document.getElementById('selectBtn');
-    const searchAgainLink = document.getElementById('searchAgainLink');
     const rsvpForm = document.getElementById('rsvpForm');
     const searchName = document.getElementById('searchName');
     const searchError = document.getElementById('searchError');
@@ -391,13 +390,6 @@ document.addEventListener('DOMContentLoaded', function() {
         showStep(3);
     });
     
-    // Search again link
-    searchAgainLink.addEventListener('click', function(e) {
-        e.preventDefault();
-        resetForm();
-        showStep(1);
-    });
-
     // Back buttons
     backBtn2.addEventListener('click', function() {
         resetForm();
