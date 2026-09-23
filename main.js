@@ -7,10 +7,38 @@
 (function() {
     const gate = document.getElementById('invitation-gate');
     const envelope = document.getElementById('openInvitation');
+    const saveTheDate = document.getElementById('save-the-date');
     if (!gate || !envelope) return;
 
     document.body.style.overflow = 'hidden';
     let opened = false;
+
+    function playSaveTheDate() {
+        if (!saveTheDate) return;
+        const screens = saveTheDate.querySelectorAll('.std-screen');
+        const perScreen = 3800;
+
+        saveTheDate.style.display = 'flex';
+        saveTheDate.classList.add('active');
+
+        screens.forEach(function(screen, i) {
+            setTimeout(function() {
+                screen.classList.add('active');
+            }, i * perScreen + 150);
+
+            setTimeout(function() {
+                screen.classList.remove('active');
+            }, i * perScreen + perScreen - 250);
+        });
+
+        setTimeout(function() {
+            saveTheDate.classList.add('fading-out');
+        }, screens.length * perScreen);
+
+        setTimeout(function() {
+            saveTheDate.style.display = 'none';
+        }, screens.length * perScreen + 600);
+    }
 
     function openInvitation() {
         if (opened) return;
@@ -20,6 +48,7 @@
 
         setTimeout(function() {
             gate.classList.add('gate-hidden');
+            playSaveTheDate();
         }, 450);
 
         setTimeout(function() {
