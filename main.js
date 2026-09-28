@@ -15,29 +15,37 @@
 
     function playSaveTheDate() {
         if (!saveTheDate) return;
-        const screens = saveTheDate.querySelectorAll('.std-screen');
-        const perScreen = 3800;
+        const video = document.getElementById('transitionVideo');
 
         saveTheDate.style.display = 'flex';
         saveTheDate.classList.add('active');
 
-        screens.forEach(function(screen, i) {
-            setTimeout(function() {
-                screen.classList.add('active');
-            }, i * perScreen + 150);
-
-            setTimeout(function() {
-                screen.classList.remove('active');
-            }, i * perScreen + perScreen - 250);
-        });
-
-        setTimeout(function() {
+        function finish() {
             saveTheDate.classList.add('fading-out');
-        }, screens.length * perScreen);
+            setTimeout(function() {
+                saveTheDate.style.display = 'none';
+            }, 600);
+        }
 
-        setTimeout(function() {
-            saveTheDate.style.display = 'none';
-        }, screens.length * perScreen + 600);
+        if (video) {
+            const isDesktop = window.matchMedia('(min-width: 769px)').matches;
+            const src = isDesktop ? 'videos/desktop.mp4' : 'videos/mobile.mp4';
+            if (!video.src || video.src.indexOf(src) === -1) {
+                video.src = src;
+                video.load();
+            }
+            video.currentTime = 0;
+            const playPromise = video.play();
+            if (playPromise && playPromise.catch) {
+                playPromise.catch(function() {
+                    // Autoplay was blocked - fall back to a fixed delay
+                    setTimeout(finish, 4000);
+                });
+            }
+            video.addEventListener('ended', finish, { once: true });
+        } else {
+            setTimeout(finish, 4000);
+        }
     }
 
     function openInvitation() {
