@@ -11,7 +11,7 @@
     if (!gate || !envelope) return;
 
     // Set to true to play the save-the-date video after the envelope opens.
-    const PLAY_TRANSITION_VIDEO = false;
+    const PLAY_TRANSITION_VIDEO = true;
 
     document.body.style.overflow = 'hidden';
     let opened = false;
