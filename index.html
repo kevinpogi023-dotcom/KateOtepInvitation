@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;500;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Dancing+Script:wght@400;500;600;700&family=EB+Garamond:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=20260930u">
+    <link rel="stylesheet" href="style.css?v=20261003w">
     <link rel="icon" type="image/png" href="images/gatelogo.png">
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -113,7 +113,7 @@
                 <span>Add to Calendar</span>
             </button>
             <div class="add-to-calendar-menu" id="addToCalendarMenu" hidden>
-                <a href="#" target="_blank" rel="noopener" class="add-to-calendar-option" id="addToCalendarGoogle">Google Calendar</a>
+                <a href="https://calendar.google.com/calendar/r/eventedit?text=Joseph%20%26%20Kate%27s%20Wedding&amp;dates=20270206T073000Z/20270206T150000Z&amp;details=Wedding%20Ceremony%203%3A30%20PM%2C%20Cocktail%20Hour%206%3A00%20PM%2C%20Dinner%20Reception%207%3A00%20PM%2C%20After%20Party%209%3A00%20PM%20-%20all%20at%20Fernwood%20Gardens%2C%20Antipolo%20(ceremony%20at%20the%20Diocesan%20Shrine%20and%20Parish%20of%20Saint%20Pio%20of%20Pietrelcina).&amp;location=Diocesan%20Shrine%20and%20Parish%20of%20Saint%20Pio%20of%20Pietrelcina%2C%20Antipolo%20City" class="add-to-calendar-option" id="addToCalendarGoogle">Google Calendar</a>
                 <a href="joseph-kate-wedding.ics" class="add-to-calendar-option" id="addToCalendarIcs">Apple Calendar / Outlook</a>
             </div>
         </div>
@@ -219,7 +219,7 @@
             </div>
 
             <div class="sched-card-wrapper">
-                <a href="#" class="map-card-link">
+                <a href="#" class="map-card-link" id="mapCardLink">
                     <div class="map-card">
                         <img src="images/correctcard.png" alt="Map card" class="sched-card">
                         <img src="images/maps.png" alt="Venue map" class="map-card-map">
@@ -548,6 +548,69 @@
         </div>
     </div>
 
+    <!-- Venue Map Modal -->
+    <div class="map-modal-overlay" id="mapModalOverlay">
+        <div class="map-modal" role="dialog" aria-modal="true" aria-labelledby="mapModalTitle">
+            <button type="button" class="map-modal-close" id="mapModalClose" aria-label="Close">&times;</button>
+            <img src="images/upflower.png" alt="" class="map-modal-flower map-modal-flower-left">
+            <img src="images/upflower.png" alt="" class="map-modal-flower map-modal-flower-right">
+
+            <h4 class="map-modal-title" id="mapModalTitle">Venue Details</h4>
+            <div class="map-modal-divider">
+                <span></span>
+                <img src="images/yellowflower.png" alt="">
+                <span></span>
+            </div>
+            <p class="map-modal-subtitle">Choose your location to view the map</p>
+
+            <div class="map-modal-grid">
+                <div class="map-modal-venue">
+                    <img src="images/venue-church.png" alt="Watercolor illustration of the church" class="map-modal-art">
+                    <p class="map-modal-label">Church</p>
+                    <p class="map-modal-name">Diocesan Shrine and Parish of Saint Pio of Pietrelcina</p>
+                    <p class="map-modal-address">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"/></svg>
+                        106 Sumulong Hwy, Antipolo, Rizal
+                    </p>
+                    <p class="map-modal-time">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 6c-.2-.6-.8-1-1.4-1H6.5c-.7 0-1.2.4-1.4 1L3 12v8c0 .6.4 1 1 1h1c.6 0 1-.4 1-1v-1h12v1c0 .6.4 1 1 1h1c.6 0 1-.4 1-1v-8l-2.1-6zM6.5 16c-.8 0-1.5-.7-1.5-1.5S5.7 13 6.5 13s1.5.7 1.5 1.5S7.3 16 6.5 16zm11 0c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+                        3:30 PM
+                    </p>
+                    <a class="map-modal-btn" href="https://www.google.com/maps?q=Diocesan+Shrine+and+Parish+of+Saint+Pio+of+Pietrelcina+(formerly+known+as+San+Pedro+Calungsod+Parish),+106+Sumulong+Hwy,+Antipolo,+1870+Rizal&amp;ftid=0x3397b8dd687da045:0x9498561f5b04038f">
+                        View Church Map
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                </div>
+
+                <div class="map-modal-separator" aria-hidden="true">
+                    <span></span>
+                    <img src="images/upflower.png" alt="">
+                    <span></span>
+                </div>
+
+                <div class="map-modal-venue">
+                    <img src="images/venue-reception.png" alt="Watercolor illustration of Fernwood Gardens" class="map-modal-art">
+                    <p class="map-modal-label">Reception</p>
+                    <p class="map-modal-name">Fernwood Gardens</p>
+                    <p class="map-modal-address">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"/></svg>
+                        Antipolo, Rizal
+                    </p>
+                    <p class="map-modal-time">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 6c-.2-.6-.8-1-1.4-1H6.5c-.7 0-1.2.4-1.4 1L3 12v8c0 .6.4 1 1 1h1c.6 0 1-.4 1-1v-1h12v1c0 .6.4 1 1 1h1c.6 0 1-.4 1-1v-8l-2.1-6zM6.5 16c-.8 0-1.5-.7-1.5-1.5S5.7 13 6.5 13s1.5.7 1.5 1.5S7.3 16 6.5 16zm11 0c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+                        6:00 PM
+                    </p>
+                    <a class="map-modal-btn" href="https://www.google.com/maps/place/Fernwood+Gardens+Antipolo/@14.5729263,121.1730121,852m/data=!3m2!1e3!4b1!4m6!3m5!1s0x3397c14cbb752cf9:0xcda710c11b252e16!8m2!3d14.5729263!4d121.1730121!16s%2Fg%2F11f5q0g4r2!18m1!1e1">
+                        View Reception Map
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                </div>
+            </div>
+
+            <svg class="map-modal-mountains" width="180" height="44" viewBox="0 0 180 44" fill="none" aria-hidden="true"><path d="M2 42 L46 26 L62 32 L92 8 L108 20 L118 14 L140 30 L178 42" stroke="#6b7d52" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/><path d="M92 8 L98 22 M92 8 L86 18 M118 14 L122 24" stroke="#6b7d52" stroke-width="1" stroke-linecap="round"/></svg>
+        </div>
+    </div>
+
 <!-- RSVP Section -->
 <section id="rsvp" class="section-light rsvp-section">
     <img src="images/rightflower.png" alt="" class="rsvp-downflower">
@@ -713,6 +776,6 @@
         </div>
     </footer>
 
-    <script src="main.js?v=20260930u"></script>
+    <script src="main.js?v=20261003w"></script>
 </body>
 </html>

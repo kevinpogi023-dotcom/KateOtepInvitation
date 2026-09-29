@@ -11,7 +11,7 @@
     if (!gate || !envelope) return;
 
     // Set to true to play the save-the-date video after the envelope opens.
-    const PLAY_TRANSITION_VIDEO = true;
+    const PLAY_TRANSITION_VIDEO = false;
 
     document.body.style.overflow = 'hidden';
     let opened = false;
@@ -76,7 +76,7 @@
 // never load on small screens. Desktop is untouched
 // since this only runs when the mobile breakpoint matches.
 // ============================================
-if (window.matchMedia('(max-width: 767px)').matches) {
+if (window.matchMedia('(max-width: 769px)').matches) {
     document.addEventListener('DOMContentLoaded', function() {
         const selectors = [
             '.attire-photo-men-1',
@@ -135,12 +135,15 @@ if (window.matchMedia('(max-width: 767px)').matches) {
             women2.appendChild(caption);
         }
 
-        // Move the white and yellow flowers into the hero section on mobile
-        const hero = document.querySelector('#hero');
-        const yellowFlower = document.querySelector('.story-yellowflower');
-        const whiteFlower = document.querySelector('.story-whiteflower');
-        if (hero && yellowFlower) hero.appendChild(yellowFlower);
-        if (hero && whiteFlower) hero.appendChild(whiteFlower);
+        // Move the white and yellow flowers into the hero section on phones
+        // (tablets 600-769px keep them in place)
+        if (window.matchMedia('(max-width: 599px)').matches) {
+            const hero = document.querySelector('#hero');
+            const yellowFlower = document.querySelector('.story-yellowflower');
+            const whiteFlower = document.querySelector('.story-whiteflower');
+            if (hero && yellowFlower) hero.appendChild(yellowFlower);
+            if (hero && whiteFlower) hero.appendChild(whiteFlower);
+        }
     });
 }
 
@@ -860,24 +863,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const wrap = document.getElementById('addToCalendarWrap');
     const btn = document.getElementById('addToCalendarBtn');
     const menu = document.getElementById('addToCalendarMenu');
-    const googleLink = document.getElementById('addToCalendarGoogle');
-    const icsBtn = document.getElementById('addToCalendarIcs');
     if (!wrap || !btn || !menu) return;
 
-    // Wedding ceremony: Saturday, Feb 6 2027, 3:30 PM PHT (UTC+8)
-    // through the end of the after party at 11:00 PM PHT.
-    const EVENT_TITLE = "Joseph & Kate's Wedding";
-    const EVENT_LOCATION = 'Diocesan Shrine and Parish of Saint Pio of Pietrelcina, Antipolo City';
-    const EVENT_DESCRIPTION = 'Wedding Ceremony 3:30 PM, Cocktail Hour 6:00 PM, Dinner Reception 7:00 PM, After Party 9:00 PM - all at Fernwood Gardens, Antipolo (ceremony at the Diocesan Shrine and Parish of Saint Pio of Pietrelcina).';
-    const DTSTART = '20270206T073000Z'; // 3:30 PM PHT
-    const DTEND = '20270206T150000Z';   // 11:00 PM PHT
-
-    googleLink.href = 'https://calendar.google.com/calendar/r/eventedit'
-        + '?text=' + encodeURIComponent(EVENT_TITLE)
-        + '&dates=' + DTSTART + '/' + DTEND
-        + '&details=' + encodeURIComponent(EVENT_DESCRIPTION)
-        + '&location=' + encodeURIComponent(EVENT_LOCATION);
-
+    // The Google Calendar and .ics links live in Index.html so they work
+    // even if other scripts fail; this only toggles the menu.
     function closeMenu() {
         menu.hidden = true;
     }
@@ -887,15 +876,38 @@ document.addEventListener('DOMContentLoaded', function() {
         menu.hidden = !menu.hidden;
     });
 
-    if (icsBtn) {
-        icsBtn.addEventListener('click', closeMenu);
-    }
-
-    if (googleLink) {
-        googleLink.addEventListener('click', closeMenu);
-    }
-
     document.addEventListener('click', function(e) {
         if (!wrap.contains(e.target)) closeMenu();
+    });
+})();
+
+// ============================================
+// Venue Map Modal - opened from the "Click the
+// map" card in the Wedding Schedule section
+// ============================================
+(function() {
+    const trigger = document.getElementById('mapCardLink');
+    const overlay = document.getElementById('mapModalOverlay');
+    const closeBtn = document.getElementById('mapModalClose');
+    if (!trigger || !overlay) return;
+
+    function openModal(e) {
+        e.preventDefault();
+        overlay.classList.add('active');
+    }
+
+    function closeModal() {
+        overlay.classList.remove('active');
+    }
+
+    trigger.addEventListener('click', openModal);
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+    overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) closeModal();
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && overlay.classList.contains('active')) closeModal();
     });
 })();
