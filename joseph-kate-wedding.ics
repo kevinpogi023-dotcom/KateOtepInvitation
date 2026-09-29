@@ -1,0 +1,18 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Joseph and Kate//Wedding Invitation//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:joseph-kate-wedding-2027@atekateweddinginvitation
+DTSTAMP:20260930T000000Z
+DTSTART:20270206T073000Z
+DTEND:20270206T150000Z
+SUMMARY:Joseph & Kate's Wedding
+DESCRIPTION:Wedding Ceremony 3:30 PM\, Cocktail Hour 6:00 PM\, Dinner Recep
+ tion 7:00 PM\, After Party 9:00 PM - all at Fernwood Gardens\, Antipolo (c
+ eremony at the Diocesan Shrine and Parish of Saint Pio of Pietrelcina).
+LOCATION:Diocesan Shrine and Parish of Saint Pio of Pietrelcina\, Antipolo 
+ City
+END:VEVENT
+END:VCALENDAR

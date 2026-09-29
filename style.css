@@ -6096,13 +6096,13 @@ footer {
     .name-rest { font-size: 1.9rem !important; }
 
     .wedding-date {
-        font-size: 1.2rem !important;
-        margin-top: 24rem !important;
+        font-size: 1.08rem !important;
+        margin-top: 23rem !important;
         letter-spacing: 3px;
     }
 
     .wedding-location {
-        font-size: 1.2rem !important;
+        font-size: 1.08rem !important;
     }
 
     .add-to-calendar-wrap {
@@ -6110,8 +6110,13 @@ footer {
     }
 
     .add-to-calendar-btn {
-        font-size: 0.68rem;
-        padding: 0.55rem 1.1rem;
+        font-size: 0.62rem;
+        padding: 0.5rem 1rem;
+    }
+
+    .add-to-calendar-btn svg {
+        width: 14px;
+        height: 14px;
     }
 
     /* Story Section */
@@ -6558,13 +6563,15 @@ footer {
 @media (max-width: 395px) {
     /* Hero title - 395px */
     .welcome-text { font-size: 0.88rem !important; }
-    .wedding-date { margin-top: 20.5rem !important; }
+    .wedding-date { margin-top: 19.5rem !important; }
+    .add-to-calendar-btn { font-size: 0.58rem; padding: 0.45rem 0.9rem; }
+    .add-to-calendar-btn svg { width: 13px; height: 13px; }
     .couple-line:first-child { margin-right: 8.1rem; }
     .couple-line:last-child { margin-left: 8.65rem; }
     .couple-amp { font-size: 2.85rem !important; margin-left: 1.7rem; }
     .name-initial { font-size: 2.35rem !important; }
     .name-rest { font-size: 1.7rem !important; }
-    .wedding-date, .wedding-location { font-size: 1.1rem !important; }
+    .wedding-date, .wedding-location { font-size: 1rem !important; }
 
     .faq-initial {
         font-size: 1.6rem !important;
@@ -6713,12 +6720,13 @@ footer {
 @media (max-width: 376px) {
     /* Hero title - 376px */
     .welcome-text { font-size: 0.85rem !important; }
+    .add-to-calendar-btn { font-size: 0.56rem; }
     .couple-line:first-child { margin-right: 7.65rem; }
     .couple-line:last-child { margin-left: 8.2rem; }
     .couple-amp { font-size: 2.7rem !important; margin-left: 1.6rem; }
     .name-initial { font-size: 2.2rem !important; }
     .name-rest { font-size: 1.6rem !important; }
-    .wedding-date, .wedding-location { font-size: 1.05rem !important; }
+    .wedding-date, .wedding-location { font-size: 0.95rem !important; }
 
     .faq-initial {
         font-size: 1.45rem !important;
@@ -7005,18 +7013,22 @@ footer {
 
     .wedding-date {
         transform: none !important;
-        font-size: 1rem !important;
+        font-size: 0.9rem !important;
         letter-spacing: 1px !important;
         text-align: center;
         white-space: nowrap;
-        margin-top: 20.5rem !important;
+        margin-top: 19.5rem !important;
     }
 
     .wedding-location {
         transform: none !important;
-        font-size: 1rem !important;
+        font-size: 0.9rem !important;
         text-align: center;
         margin-top: 0.3rem;
+    }
+
+    .add-to-calendar-btn {
+        font-size: 0.54rem;
     }
 
     /* Story Section */

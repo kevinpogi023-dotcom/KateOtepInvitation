@@ -872,38 +872,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const DTSTART = '20270206T073000Z'; // 3:30 PM PHT
     const DTEND = '20270206T150000Z';   // 11:00 PM PHT
 
-    googleLink.href = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
-        + '&text=' + encodeURIComponent(EVENT_TITLE)
+    googleLink.href = 'https://calendar.google.com/calendar/r/eventedit'
+        + '?text=' + encodeURIComponent(EVENT_TITLE)
         + '&dates=' + DTSTART + '/' + DTEND
         + '&details=' + encodeURIComponent(EVENT_DESCRIPTION)
         + '&location=' + encodeURIComponent(EVENT_LOCATION);
-
-    function downloadIcs() {
-        const ics = [
-            'BEGIN:VCALENDAR',
-            'VERSION:2.0',
-            'BEGIN:VEVENT',
-            'UID:joseph-kate-wedding-2027@atekateweddinginvitation',
-            'DTSTAMP:' + DTSTART,
-            'DTSTART:' + DTSTART,
-            'DTEND:' + DTEND,
-            'SUMMARY:' + EVENT_TITLE,
-            'DESCRIPTION:' + EVENT_DESCRIPTION,
-            'LOCATION:' + EVENT_LOCATION,
-            'END:VEVENT',
-            'END:VCALENDAR'
-        ].join('\r\n');
-
-        const blob = new Blob([ics], { type: 'text/calendar' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'joseph-kate-wedding.ics';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-    }
 
     function closeMenu() {
         menu.hidden = true;
@@ -915,10 +888,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     if (icsBtn) {
-        icsBtn.addEventListener('click', function() {
-            downloadIcs();
-            closeMenu();
-        });
+        icsBtn.addEventListener('click', closeMenu);
     }
 
     if (googleLink) {
