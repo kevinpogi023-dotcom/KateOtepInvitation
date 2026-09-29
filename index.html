@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;500;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Dancing+Script:wght@400;500;600;700&family=EB+Garamond:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=20260911">
+    <link rel="stylesheet" href="style.css?v=20260930s">
     <link rel="icon" type="image/png" href="images/gatelogo.png">
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -107,9 +107,16 @@
         </h1>
         <p class="wedding-date">Saturday, February 6 2027</p>
         <p class="wedding-location">Antipolo City</p>
-    </div>
-    <div class="scroll-indicator">
-        <div class="scroll-dot"></div>
+        <div class="add-to-calendar-wrap" id="addToCalendarWrap">
+            <button type="button" class="add-to-calendar-btn" id="addToCalendarBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M3 9.5H21" stroke="currentColor" stroke-width="1.8"/><path d="M8 3V6.5M16 3V6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <span>Add to Calendar</span>
+            </button>
+            <div class="add-to-calendar-menu" id="addToCalendarMenu" hidden>
+                <a href="#" target="_blank" rel="noopener" class="add-to-calendar-option" id="addToCalendarGoogle">Google Calendar</a>
+                <button type="button" class="add-to-calendar-option" id="addToCalendarIcs">Apple / Outlook (.ics)</button>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -514,51 +521,29 @@
                 </svg>
             </div>
             <p class="gift-modal-subtitle">Your love and support mean the world to us.<br>Here are a few things we're hoping for as we begin this next chapter.</p>
-            <div class="gift-grid">
-                <div class="gift-card">
-                    <img src="images/flowers.png" alt="Fresh Flower Arrangement" class="gift-card-img">
-                    <div class="gift-card-body">
-                        <p class="gift-card-name">Fresh Flower Arrangement</p>
-                        <span class="gift-card-badge">&check; Reserved</span>
-                    </div>
-                </div>
-                <div class="gift-card">
-                    <img src="images/candlestick.png" alt="Scented Candle Set" class="gift-card-img">
-                    <div class="gift-card-body">
-                        <p class="gift-card-name">Scented Candle Set</p>
-                    </div>
-                </div>
-                <div class="gift-card">
-                    <img src="images/bag.png" alt="Leather Handbag" class="gift-card-img">
-                    <div class="gift-card-body">
-                        <p class="gift-card-name">Leather Handbag</p>
-                    </div>
-                </div>
-                <div class="gift-card">
-                    <img src="images/plates.png" alt="Dinnerware Set" class="gift-card-img">
-                    <div class="gift-card-body">
-                        <p class="gift-card-name">Dinnerware Set</p>
-                    </div>
-                </div>
-                <div class="gift-card">
-                    <img src="images/watch.png" alt="Classic Watch" class="gift-card-img">
-                    <div class="gift-card-body">
-                        <p class="gift-card-name">Classic Watch</p>
-                        <span class="gift-card-badge">&check; Reserved</span>
-                    </div>
-                </div>
-                <div class="gift-card">
-                    <img src="images/perfume.png" alt="Perfume" class="gift-card-img">
-                    <div class="gift-card-body">
-                        <p class="gift-card-name">Perfume</p>
-                    </div>
-                </div>
-            </div>
+            <div class="gift-grid" id="giftGrid"></div>
             <div class="gift-modal-footer">
                 <span class="gift-footer-line"></span>
                 <span class="gift-footer-text">Grateful for you</span>
                 <span class="gift-footer-line"></span>
             </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reserve Gift Modal -->
+    <div class="reserve-modal-overlay" id="reserveModalOverlay">
+        <div class="reserve-modal">
+            <button type="button" class="reserve-modal-close" id="reserveModalClose" aria-label="Close">&times;</button>
+            <h4 class="reserve-modal-title">Reserve this gift?</h4>
+            <p class="reserve-modal-subtitle">This lets other guests know you're planning to purchase it.</p>
+            <label class="reserve-modal-label" for="reserveNameInput">Your Name <span class="required">*</span></label>
+            <input type="text" id="reserveNameInput" class="reserve-modal-input" placeholder="e.g. Maria Santos">
+            <label class="reserve-modal-label" for="reserveEmailInput">Email (optional)</label>
+            <input type="email" id="reserveEmailInput" class="reserve-modal-input" placeholder="e.g. maria@email.com">
+            <div class="reserve-modal-actions">
+                <button type="button" class="reserve-modal-cancel" id="reserveModalCancel">Cancel</button>
+                <button type="button" class="reserve-modal-confirm" id="reserveModalConfirm">Reserve Gift</button>
             </div>
         </div>
     </div>
@@ -728,6 +713,6 @@
         </div>
     </footer>
 
-    <script src="main.js?v=20260911"></script>
+    <script src="main.js?v=20260930s"></script>
 </body>
 </html>

@@ -10,11 +10,14 @@
     const saveTheDate = document.getElementById('save-the-date');
     if (!gate || !envelope) return;
 
+    // Set to true to play the save-the-date video after the envelope opens.
+    const PLAY_TRANSITION_VIDEO = true;
+
     document.body.style.overflow = 'hidden';
     let opened = false;
 
     function playSaveTheDate() {
-        if (!saveTheDate) return;
+        if (!PLAY_TRANSITION_VIDEO || !saveTheDate) return;
         const video = document.getElementById('transitionVideo');
 
         saveTheDate.style.display = 'flex';
@@ -28,7 +31,7 @@
         }
 
         if (video) {
-            const isDesktop = window.matchMedia('(min-width: 769px)').matches;
+            const isDesktop = window.matchMedia('(min-width: 770px)').matches;
             const src = isDesktop ? 'videos/desktop.mp4' : 'videos/mobile.mp4';
             if (!video.src || video.src.indexOf(src) === -1) {
                 video.src = src;
@@ -284,6 +287,207 @@ window.addEventListener('scroll', () => {
     window.addEventListener('resize', updateScrollThumb);
 })();
 
+// ============================================
+// Gift Reservations - connected to a Google Sheet
+// via a Google Apps Script Web App. The sheet has
+// columns: Item | Reserved | ReservedBy | Email.
+// See gift-reservations-setup.md for the Apps
+// Script code and deployment steps.
+// ============================================
+(() => {
+    const GIFT_SCRIPT_URL = 'PASTE_YOUR_DEPLOYED_APPS_SCRIPT_URL_HERE';
+    const grid = document.getElementById('giftGrid');
+    if (!grid) return;
+
+    const GIFT_ITEMS = [
+        { name: 'Portable Power Station', img: 'images/portable.png', url: 'https://ph.ecoflow.com/products/delta-3-portable-power-station?variant=53798337380662' },
+        { name: 'Coffee Machine', img: 'images/coffeemaker.png', url: '#' },
+        { name: 'Oven Toaster / Airfryer', img: 'images/oventoaster.png', url: 'https://shopee.ph/Eureka-20L-Air-Fryer-Oven-High-Capacity-Electric-Toaster-Bake-Grill-EEAO-20L-i.1461663903.28334659912' },
+        { name: 'Rice Cooker', img: 'images/ricecooker.png', url: '#' },
+        { name: 'Microwave', img: 'images/microwave.png', url: 'https://shopee.ph/Midea-20L-Inverter-Quattro-Series-Mechanical-Microwave-Oven-(Black)-i.129365759.25314855728' },
+        { name: 'Blender', img: 'images/blender.png', url: 'https://shopee.ph/PHILIPS-Blender-HR2041-10-4-Star-Blade-1-Speed-Setting-and-Pulse-Smoothie-Juicer-1L-450W-i.296368531.10092029415' },
+        { name: 'Vacuum Cleaner', img: 'images/vacuum.png', url: 'https://shopee.ph/Deerma-VC20-Plus-Vacuum-Cleaner-Handheld-Cordless-Stick-Aspirator-Lightweight-Vacuum-5500Pa-i.330250330.5062121543' },
+        { name: 'Robot Vacuum', img: 'images/robotvacuum.png', url: 'https://shopee.ph/-BESTSELLER-eufy-by-Anker-Omni-C20-Robot-Vacuum-Mop-All-in-One-Station-7000Pa-Suction-i.251064806.41060236254' },
+        { name: 'Air Purifier', img: 'images/airpurifier.png', url: 'https://shopee.ph/Levoit-Core-P350-Pet-Care-Air-Purifier-Effective-33-m%C2%B2-H13-True-HEPA-Filter-i.512761824.14987528183' },
+        { name: 'Humidifier', img: 'images/humidifier.png', url: 'https://shopee.ph/Deerma-PX310W-Humidifier-Essential-Oil-Diffuser-Aromatherapy-Diffuser-3-Speed-Timing-300ML-i.330250330.25934694381' },
+        { name: 'Charging Station', img: 'images/chargingstation.png', url: 'https://shopee.ph/UGREEN-200W-GaN-Charger-8-in-1-Desktop-Laptop-Fast-Charging-Stand-For-iPhone-16-15-Pro-Max-Macbook-Air-Xiaomi-Samsung-Tablets-i.98350209.44450804183' },
+        { name: 'Indoor Camera', img: 'images/indoorcamera.png', url: 'https://shopee.ph/IMOU-Ranger-Dual-Pro-Dual-Lens-CCTV-Wireless-Security-Indoor-Camera-Connect-Cellphone-WiFi-Audio-i.1357126550.43150148436' },
+        { name: 'Cat Automatic Dry Food Machine', img: 'images/dryfoodmachine.png', url: 'https://shopee.ph/Rojeco-2L-Automatic-Cat-Feeder-Button-WIFI-Version-Dog-Food-Dispenser-Smart-Control-Timed-Feeder-i.549150104.17998285051' },
+        { name: 'Cat Automatic Wet Food Machine', img: 'images/catautomoatic.png', url: 'https://shopee.ph/ROJECO-Automatic-Wet-Food-Feeder-for-Pets-With-Ice-box-6-Meal-Feeder-with-Programmable-Timer-For-Cats-and-Dogs-i.549150104.29663558229' },
+        { name: 'Cat Water Fountain', img: 'images/catwater fountain.png', url: 'https://shopee.ph/product/549150104/28456000237' },
+        { name: 'Extension Cord', img: 'images/extensioncord.png', url: 'https://shopee.ph/Deli-Universal-Hole-Vertical-Socket-4-8-12-Group-1A2C-1.6-3M-Extension-Cord-ET764-i.332268558.26237053153' },
+        { name: 'Rechargeable Battery', img: 'images/rechargablebatt.png', url: 'https://shopee.ph/imuto-Rechargeable-AA-AAA-Battery-Li-ion-with-Charger-8-Pcs-1.5V-3000-1300mwh-Camera-Batteries-i.1407241126.28631254458' },
+        { name: 'Philips Oneturn Iron Steamer', img: 'images/ironsteamer.png', url: '#' }
+    ];
+
+    const VIEW_ICON = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 14L14.5 9.5M9 6H5a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-4M14 4h6v6M20 4l-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    const RESERVE_ICON = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 12v9H4v-9M2 7h20v5H2V7zM12 22V7M12 7C10 2 6 2 6 5s3 2 6 2zM12 7c2-5 6-5 6-2s-3 2-6 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+    GIFT_ITEMS.forEach(function(item) {
+        const card = document.createElement('div');
+        card.className = 'gift-card';
+        card.dataset.gift = item.name;
+        card.innerHTML =
+            '<div class="gift-card-img-wrap">' +
+                '<img src="' + item.img + '" alt="' + item.name + '" class="gift-card-img">' +
+                '<span class="gift-card-reserved-stamp">Reserved</span>' +
+            '</div>' +
+            '<div class="gift-card-body">' +
+                '<p class="gift-card-name">' + item.name + '</p>' +
+                '<span class="gift-card-badge" hidden>&check; Reserved</span>' +
+                '<div class="gift-card-actions">' +
+                    '<a href="' + item.url + '" class="gift-card-view-btn" target="_blank" rel="noopener">' + VIEW_ICON + '<span class="gift-card-btn-label"> View Gift</span></a>' +
+                    '<button type="button" class="gift-card-reserve-btn">' + RESERVE_ICON + '<span class="gift-card-btn-label"> Reserve Gift</span></button>' +
+                '</div>' +
+            '</div>';
+        grid.appendChild(card);
+    });
+
+    const cards = Array.from(grid.querySelectorAll('.gift-card'));
+    let pendingCard = null;
+
+    const reserveOverlay = document.getElementById('reserveModalOverlay');
+    const reserveClose = document.getElementById('reserveModalClose');
+    const reserveCancel = document.getElementById('reserveModalCancel');
+    const reserveConfirm = document.getElementById('reserveModalConfirm');
+    const reserveNameInput = document.getElementById('reserveNameInput');
+    const reserveEmailInput = document.getElementById('reserveEmailInput');
+
+    function renderReserved(card, reservedBy) {
+        card.classList.add('is-reserved');
+        const badge = card.querySelector('.gift-card-badge');
+        if (badge) {
+            badge.hidden = false;
+            badge.textContent = reservedBy ? ('✓ Reserved by ' + reservedBy) : '✓ Reserved';
+        }
+        // .gift-card-actions stays visible - CSS hides just the Reserve
+        // Gift button for .is-reserved cards, leaving View Gift visible.
+    }
+
+    function loadGiftStatus() {
+        if (!GIFT_SCRIPT_URL || GIFT_SCRIPT_URL.indexOf('PASTE_YOUR') === 0) {
+            console.warn('Gift list is not connected to a spreadsheet yet - set GIFT_SCRIPT_URL in main.js.');
+            return;
+        }
+        fetch(GIFT_SCRIPT_URL + '?action=list')
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                // data is expected as: { "Item Name": { reserved: true, reservedBy: "Name" }, ... }
+                cards.forEach(function(card) {
+                    const giftName = card.dataset.gift;
+                    const info = data[giftName];
+                    if (info && info.reserved) {
+                        renderReserved(card, info.reservedBy);
+                    }
+                });
+            })
+            .catch(function(err) {
+                console.error('Could not load gift reservation status:', err);
+            });
+    }
+
+    function openReserveModal(card) {
+        pendingCard = card;
+        if (reserveNameInput) reserveNameInput.value = '';
+        if (reserveEmailInput) reserveEmailInput.value = '';
+        if (reserveConfirm) {
+            reserveConfirm.disabled = false;
+            reserveConfirm.textContent = 'Reserve Gift';
+        }
+        if (reserveOverlay) reserveOverlay.classList.add('active');
+        if (reserveNameInput) reserveNameInput.focus();
+    }
+
+    function closeReserveModal() {
+        pendingCard = null;
+        if (reserveOverlay) reserveOverlay.classList.remove('active');
+    }
+
+    grid.addEventListener('click', function(e) {
+        const reserveBtn = e.target.closest('.gift-card-reserve-btn');
+        if (reserveBtn) {
+            openReserveModal(reserveBtn.closest('.gift-card'));
+        }
+    });
+
+    if (reserveClose) reserveClose.addEventListener('click', closeReserveModal);
+    if (reserveCancel) reserveCancel.addEventListener('click', closeReserveModal);
+    if (reserveOverlay) {
+        reserveOverlay.addEventListener('click', function(e) {
+            if (e.target === reserveOverlay) closeReserveModal();
+        });
+    }
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && reserveOverlay && reserveOverlay.classList.contains('active')) {
+            closeReserveModal();
+        }
+    });
+
+    if (reserveConfirm) {
+        reserveConfirm.addEventListener('click', function() {
+            if (!pendingCard) return;
+            const giftName = pendingCard.dataset.gift;
+            const name = reserveNameInput ? reserveNameInput.value.trim() : '';
+            const email = reserveEmailInput ? reserveEmailInput.value.trim() : '';
+
+            if (!name) {
+                reserveNameInput.focus();
+                return;
+            }
+
+            if (!GIFT_SCRIPT_URL || GIFT_SCRIPT_URL.indexOf('PASTE_YOUR') === 0) {
+                // TEST MODE: no spreadsheet connected yet, so just preview the
+                // reserved look locally (not saved, resets on page refresh).
+                renderReserved(pendingCard, name);
+                closeReserveModal();
+                return;
+            }
+
+            const card = pendingCard;
+            reserveConfirm.disabled = true;
+            reserveConfirm.textContent = 'Saving...';
+
+            fetch(GIFT_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
+                headers: { 'Content-Type': 'text/plain' },
+                redirect: 'follow',
+                body: JSON.stringify({ action: 'reserve', item: giftName, name: name, email: email })
+            })
+                .then(function(res) { return res.json(); })
+                .then(function(result) {
+                    if (result.success) {
+                        renderReserved(card, name);
+                        closeReserveModal();
+                    } else {
+                        alert(result.message || 'That gift may have just been reserved by someone else - please refresh and check.');
+                        reserveConfirm.disabled = false;
+                        reserveConfirm.textContent = 'Reserve Gift';
+                    }
+                })
+                .catch(function(err) {
+                    console.error('Could not save gift reservation:', err);
+                    alert('Unable to reserve this gift right now. Please try again.');
+                    reserveConfirm.disabled = false;
+                    reserveConfirm.textContent = 'Reserve Gift';
+                });
+        });
+    }
+
+    const giftListBtns = [
+        document.getElementById('giftListBtnDesktop'),
+        document.getElementById('giftListBtnMobile')
+    ];
+    giftListBtns.forEach(function(btn) {
+        if (btn) btn.addEventListener('click', function() {
+            // Refetch every time the modal opens (not just once) so a gift
+            // someone else just reserved shows up-to-date instead of stale.
+            loadGiftStatus();
+        });
+    });
+})();
+
 // Add animation on scroll for elements
 const observerOptions = {
     threshold: 0.1,
@@ -322,7 +526,7 @@ document.addEventListener('click', (e) => {
 
 // Close mobile menu on window resize
 window.addEventListener('resize', () => {
-    if (window.innerWidth > 768) {
+    if (window.innerWidth > 769) {
         const mobileMenu = document.querySelector('.mobile-menu');
         const burger = document.querySelector('.burger-menu');
         
@@ -647,3 +851,81 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// ============================================
+// Add to Calendar - hero button (replaces the
+// old scroll-down indicator)
+// ============================================
+(function() {
+    const wrap = document.getElementById('addToCalendarWrap');
+    const btn = document.getElementById('addToCalendarBtn');
+    const menu = document.getElementById('addToCalendarMenu');
+    const googleLink = document.getElementById('addToCalendarGoogle');
+    const icsBtn = document.getElementById('addToCalendarIcs');
+    if (!wrap || !btn || !menu) return;
+
+    // Wedding ceremony: Saturday, Feb 6 2027, 3:30 PM PHT (UTC+8)
+    // through the end of the after party at 11:00 PM PHT.
+    const EVENT_TITLE = "Joseph & Kate's Wedding";
+    const EVENT_LOCATION = 'Diocesan Shrine and Parish of Saint Pio of Pietrelcina, Antipolo City';
+    const EVENT_DESCRIPTION = 'Wedding Ceremony 3:30 PM, Cocktail Hour 6:00 PM, Dinner Reception 7:00 PM, After Party 9:00 PM - all at Fernwood Gardens, Antipolo (ceremony at the Diocesan Shrine and Parish of Saint Pio of Pietrelcina).';
+    const DTSTART = '20270206T073000Z'; // 3:30 PM PHT
+    const DTEND = '20270206T150000Z';   // 11:00 PM PHT
+
+    googleLink.href = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+        + '&text=' + encodeURIComponent(EVENT_TITLE)
+        + '&dates=' + DTSTART + '/' + DTEND
+        + '&details=' + encodeURIComponent(EVENT_DESCRIPTION)
+        + '&location=' + encodeURIComponent(EVENT_LOCATION);
+
+    function downloadIcs() {
+        const ics = [
+            'BEGIN:VCALENDAR',
+            'VERSION:2.0',
+            'BEGIN:VEVENT',
+            'UID:joseph-kate-wedding-2027@atekateweddinginvitation',
+            'DTSTAMP:' + DTSTART,
+            'DTSTART:' + DTSTART,
+            'DTEND:' + DTEND,
+            'SUMMARY:' + EVENT_TITLE,
+            'DESCRIPTION:' + EVENT_DESCRIPTION,
+            'LOCATION:' + EVENT_LOCATION,
+            'END:VEVENT',
+            'END:VCALENDAR'
+        ].join('\r\n');
+
+        const blob = new Blob([ics], { type: 'text/calendar' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'joseph-kate-wedding.ics';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    function closeMenu() {
+        menu.hidden = true;
+    }
+
+    btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        menu.hidden = !menu.hidden;
+    });
+
+    if (icsBtn) {
+        icsBtn.addEventListener('click', function() {
+            downloadIcs();
+            closeMenu();
+        });
+    }
+
+    if (googleLink) {
+        googleLink.addEventListener('click', closeMenu);
+    }
+
+    document.addEventListener('click', function(e) {
+        if (!wrap.contains(e.target)) closeMenu();
+    });
+})();

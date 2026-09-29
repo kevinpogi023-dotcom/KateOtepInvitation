@@ -435,34 +435,82 @@ body::-webkit-scrollbar {
     transform: translateY(9rem);
 }
 
-.scroll-indicator {
+.add-to-calendar-wrap {
     position: absolute;
-    bottom: 3rem;
+    /* wedding-location sits at translateY(9rem) on desktop, so anchor
+       below its visual position (hero-content's flow-bottom + 9rem),
+       plus a gap so it doesn't touch the text */
+    top: calc(100% + 9rem + 2rem);
     left: 50%;
     transform: translateX(-50%);
     z-index: 1;
 }
 
-.scroll-dot {
-    width: 30px;
-    height: 50px;
-    border: 2px solid var(--text-light);
-    border-radius: 20px;
-    position: relative;
-    opacity: 0.7;
+.add-to-calendar-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: transparent;
+    border: 1.5px solid #f0dfa0;
+    color: #f0dfa0;
+    font-family: 'Garamond', serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0.75rem 1.6rem;
+    border-radius: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.3s ease;
 }
 
-.scroll-dot::before {
-    content: '';
+.add-to-calendar-btn:hover {
+    background: #f0dfa0;
+    color: #7a5c1e;
+}
+
+.add-to-calendar-menu {
     position: absolute;
-    top: 8px;
+    bottom: calc(100% + 0.6rem);
     left: 50%;
     transform: translateX(-50%);
-    width: 6px;
-    height: 6px;
-    background: var(--text-light);
-    border-radius: 50%;
-    animation: scroll 2s infinite;
+    display: flex;
+    flex-direction: column;
+    background: #fffdf7;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    min-width: 190px;
+}
+
+.add-to-calendar-menu[hidden] {
+    display: none;
+}
+
+.add-to-calendar-option {
+    display: block;
+    width: 100%;
+    background: none;
+    border: none;
+    color: #2c2c2c;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-align: left;
+    text-decoration: none;
+    padding: 0.7rem 1rem;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: background 0.2s ease;
+}
+
+.add-to-calendar-option:not(:last-child) {
+    border-bottom: 1px solid rgba(44, 44, 44, 0.1);
+}
+
+.add-to-calendar-option:hover {
+    background: #f2f1ec;
 }
 
 /* Section Styles */
@@ -1006,7 +1054,7 @@ section {
     padding-top: 0;
 }
 
-    @media (min-width: 769px) {
+    @media (min-width: 770px) {
     .party-img-container:nth-child(6) {
         display: none;
     }
@@ -1401,7 +1449,7 @@ section {
 }
 
 
-@media (min-width: 769px) {
+@media (min-width: 770px) {
     .story-title-break,
     .rsvp-title-break {
         display: none;
@@ -1969,6 +2017,11 @@ section {
     box-shadow: 0 4px 12px rgba(80, 60, 20, 0.08);
 }
 
+.gift-card-img-wrap {
+    position: relative;
+    width: 100%;
+}
+
 .gift-card-img {
     width: 100%;
     aspect-ratio: 4 / 3;
@@ -1978,6 +2031,29 @@ section {
     -webkit-user-drag: none;
     user-select: none;
     pointer-events: none;
+}
+
+.gift-card-reserved-stamp {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-8deg);
+    background: rgba(90, 122, 82, 0.92);
+    color: #fff;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 0.35rem 1rem;
+    border-radius: 4px;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.gift-card.is-reserved .gift-card-reserved-stamp {
+    display: block;
 }
 
 .gift-card-body {
@@ -2000,15 +2076,254 @@ section {
 .gift-card-badge {
     display: inline-flex;
     align-items: center;
-    gap: 0.25rem;
-    background: #dfe8c8;
+    justify-content: center;
+    gap: 0.3rem;
+    width: 100%;
+    background: #fff;
     color: #5a7a52;
-    font-size: 0.7rem;
-    font-weight: 600;
+    border: 1.5px solid #8fae6f;
+    font-size: 0.72rem;
+    font-weight: 700;
     letter-spacing: 0.5px;
     text-transform: uppercase;
-    padding: 0.25rem 0.7rem;
+    padding: 0.5rem 0.7rem;
     border-radius: 999px;
+    box-sizing: border-box;
+}
+
+.gift-card-badge[hidden] {
+    display: none;
+}
+
+/* Reserved state - fades the whole card gray */
+.gift-card.is-reserved {
+    background: #f2f1ec;
+}
+
+.gift-card.is-reserved .gift-card-img {
+    filter: grayscale(1);
+    opacity: 0.55;
+}
+
+.gift-card.is-reserved .gift-card-name {
+    color: #9a9a90;
+}
+
+/* Reserved: keep View Gift, hide only Reserve Gift */
+.gift-card.is-reserved .gift-card-reserve-btn {
+    display: none;
+}
+
+.gift-card-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.6rem;
+}
+
+.gift-card-actions[hidden] {
+    display: none;
+}
+
+.gift-card-view-btn,
+.gift-card-reserve-btn {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+    padding: 0.55rem 0.5rem;
+    border-radius: 999px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease;
+    white-space: nowrap;
+}
+
+.gift-card-view-btn {
+    background: none;
+    border: 1.5px solid #8fae6f;
+    color: #5a7a52;
+}
+
+.gift-card-view-btn:hover {
+    background: #eef3e6;
+}
+
+.gift-card-reserve-btn {
+    background: #5a7a52;
+    border: 1.5px solid #5a7a52;
+    color: #fff;
+}
+
+.gift-card-reserve-btn:hover {
+    background: #46613f;
+}
+
+.gift-card-reserve-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Mobile: Reserve Gift becomes an icon-only circle,
+   View Gift expands to take the remaining width */
+@media (max-width: 769px) {
+    .gift-card-reserve-btn {
+        flex: 0 0 auto;
+        width: 34px;
+        height: 34px;
+        padding: 0;
+        border-radius: 50%;
+    }
+
+    .gift-card-reserve-btn .gift-card-btn-label {
+        display: none;
+    }
+
+    .gift-card-view-btn {
+        flex: 1;
+    }
+}
+
+/* Reserve Gift Modal */
+.reserve-modal-overlay {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 15, 12, 0.75);
+    z-index: 21000;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.reserve-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.reserve-modal {
+    position: relative;
+    background: #fffdf7;
+    border: 1.5px solid #b8922a;
+    border-radius: 16px;
+    max-width: 360px;
+    width: 100%;
+    padding: 2rem 1.75rem 1.75rem;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    font-family: 'Quicksand', sans-serif;
+}
+
+.reserve-modal-close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.7rem;
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    line-height: 1;
+    color: #778d60;
+    cursor: pointer;
+}
+
+.reserve-modal-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    color: #2c2c2c;
+    margin-bottom: 0.5rem;
+}
+
+.reserve-modal-subtitle {
+    font-size: 0.8rem;
+    color: #6a6a60;
+    line-height: 1.5;
+    margin-bottom: 1.2rem;
+}
+
+.reserve-modal-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #2c2c2c;
+    margin-bottom: 0.35rem;
+}
+
+.reserve-modal-label .required {
+    color: #c0504d;
+}
+
+.reserve-modal-input {
+    display: block;
+    width: 100%;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.85rem;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid rgba(184, 146, 42, 0.4);
+    border-radius: 8px;
+    background: #fff;
+    color: #2c2c2c;
+    box-sizing: border-box;
+    margin-bottom: 1rem;
+}
+
+.reserve-modal-input:focus {
+    outline: none;
+    border-color: #b8922a;
+}
+
+.reserve-modal-actions {
+    display: flex;
+    gap: 0.7rem;
+    margin-top: 0.5rem;
+}
+
+.reserve-modal-cancel,
+.reserve-modal-confirm {
+    flex: 1;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.65rem 0.5rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.reserve-modal-cancel {
+    background: none;
+    border: 1.5px solid #cfcabf;
+    color: #6a6a60;
+}
+
+.reserve-modal-cancel:hover {
+    background: #f2f1ec;
+}
+
+.reserve-modal-confirm {
+    background: #5a7a52;
+    border: 1.5px solid #5a7a52;
+    color: #fff;
+}
+
+.reserve-modal-confirm:hover {
+    background: #46613f;
+}
+
+.reserve-modal-confirm:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 .gift-modal-footer {
@@ -2033,7 +2348,7 @@ section {
     font-style: italic;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 769px) {
     .gift-modal-overlay {
         padding: 0;
         align-items: flex-end;
@@ -2155,7 +2470,7 @@ section {
 }
 
 
-@media (min-width: 769px) {
+@media (min-width: 770px) {
     .rsvp-downflower {
         position: absolute;
         bottom: -50px;
@@ -2830,22 +3145,6 @@ footer {
     }
 }
 
-@keyframes scroll {
-    0% {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-    }
-    50% {
-        opacity: 0.5;
-        transform: translateX(-50%) translateY(15px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-    }
-}
-
-   
 
     /* 4K and above */
 @media (max-width: 2561px) {
@@ -3219,6 +3518,51 @@ footer {
         }
     }
 
+/* Hero title - 1920px screens only */
+@media (min-width: 1514px) and (max-width: 1921px) {
+    .welcome-text {
+        font-size: 2.2rem;
+        transform: translateY(-6.5rem);
+    }
+
+    /* Name offsets scaled up with the larger letters so the "&"
+       doesn't overlap JOSEPH */
+    .couple-names {
+        width: 950px;
+        transform: translateY(-5.5rem) translateX(-7rem);
+    }
+
+    .couple-line:first-child {
+        padding-left: 250px;
+    }
+
+    .couple-amp {
+        font-size: 8.5rem;
+        padding-left: 560px;
+    }
+
+    .couple-line:last-child {
+        padding-left: 655px;
+    }
+
+    .name-initial {
+        font-size: 5.5rem;
+    }
+
+    .name-rest {
+        font-size: 4.5rem;
+    }
+
+    .wedding-date,
+    .wedding-location {
+        transform: translateY(15rem);
+    }
+
+    .add-to-calendar-wrap {
+        top: calc(100% + 15rem + 2.5rem);
+    }
+}
+
 @media (max-width: 1513px) {
         .story-yellowflower {
             width: 320px;
@@ -3460,6 +3804,49 @@ footer {
         }
 }
 
+/* Hero title - 1512px screens only */
+@media (min-width: 1442px) and (max-width: 1513px) {
+    .welcome-text {
+        font-size: 1.9rem;
+        transform: translateY(-3.5rem);
+    }
+
+    .couple-names {
+        width: 900px;
+        transform: translateY(-2.5rem) translateX(-8rem);
+    }
+
+    .couple-line:first-child {
+        padding-left: 270px;
+    }
+
+    .couple-amp {
+        font-size: 7.2rem;
+        padding-left: 545px;
+    }
+
+    .couple-line:last-child {
+        padding-left: 630px;
+    }
+
+    .name-initial {
+        font-size: 4.8rem;
+    }
+
+    .name-rest {
+        font-size: 3.8rem;
+    }
+
+    .wedding-date,
+    .wedding-location {
+        transform: translateY(15rem);
+    }
+
+    .add-to-calendar-wrap {
+        top: calc(100% + 15rem + 0.5rem);
+    }
+}
+
 @media (max-width: 1441px) {
         .rsvp-downflower,
         .rsvp-upflower {
@@ -3699,6 +4086,49 @@ footer {
         .entourage-role-secondary {
             transform: translateX(30px);
         }
+}
+
+/* Hero title - 1440px screens only */
+@media (min-width: 1368px) and (max-width: 1441px) {
+    .welcome-text {
+        font-size: 1.9rem;
+        transform: translateY(-4.5rem);
+    }
+
+    .couple-names {
+        width: 900px;
+        transform: translateY(-2.75rem) translateX(-6.5rem);
+    }
+
+    .couple-line:first-child {
+        padding-left: 270px;
+    }
+
+    .couple-amp {
+        font-size: 7.2rem;
+        padding-left: 545px;
+    }
+
+    .couple-line:last-child {
+        padding-left: 630px;
+    }
+
+    .name-initial {
+        font-size: 4.8rem;
+    }
+
+    .name-rest {
+        font-size: 3.8rem;
+    }
+
+    .wedding-date,
+    .wedding-location {
+        transform: translateY(10rem);
+    }
+
+    .add-to-calendar-wrap {
+        top: calc(100% + 10rem + 2rem);
+    }
 }
 
 @media (max-width: 1367px) {
@@ -3946,6 +4376,44 @@ footer {
 }
 
 /* Responsive */
+/* Hero title - 1366px screens only */
+@media (min-width: 1201px) and (max-width: 1367px) {
+    .welcome-text {
+        font-size: 1.9rem;
+        transform: translateY(-4.5rem);
+    }
+
+    .couple-names {
+        width: 900px;
+        transform: translateY(-2.75rem) translateX(-6.5rem);
+    }
+
+    .couple-line:first-child {
+        padding-left: 270px;
+    }
+
+    .couple-amp {
+        font-size: 7.2rem;
+        padding-left: 545px;
+    }
+
+    .couple-line:last-child {
+        padding-left: 630px;
+    }
+
+    .name-initial {
+        font-size: 4.8rem;
+    }
+
+    .name-rest {
+        font-size: 3.8rem;
+    }
+
+    .add-to-calendar-wrap {
+        top: calc(100% + 9rem + 1rem);
+    }
+}
+
 @media (max-width: 1200px) {
     /* Large tablet/small desktop adjustments */
     
@@ -4113,7 +4581,7 @@ footer {
 }
 
 /* Mobile Responsive */
-@media (max-width: 768px) {
+@media (max-width: 769px) {
     .rsvp-main-title {
         font-size: 2rem;
     }
@@ -4135,8 +4603,6 @@ footer {
     .rsvp-section {
         padding: 4rem 1rem;
     }
-}
-@media (max-width: 768px) {
 
      :root {
         --navbar-height: 71px;  /* ADD THIS at the top of the 768px media query */
@@ -4214,8 +4680,10 @@ footer {
         letter-spacing: 5px;
     }
     
-    .scroll-indicator {
-        bottom: 2rem;
+    .add-to-calendar-wrap {
+        /* wedding-location has transform: none at this width, so no
+           extra offset is needed beyond hero-content's flow-bottom */
+        top: calc(100% + 1.5rem);
     }
 
     /* Story Section */
@@ -4547,9 +5015,7 @@ footer {
         font-size: 1rem;
         line-height: 1.6;
     }
-}
 
-@media (max-width: 768px) {
     .story-columns-desktop {
         display: none !important;
     }
@@ -4608,8 +5074,8 @@ footer {
     }
 
     .welcome-text {
-        transform: none !important;
-        font-size: 0.8rem !important;
+        transform: translateY(-4rem) !important;
+        font-size: 1.65rem !important;
         letter-spacing: 0.5px;
         text-align: center;
         padding: 0 1rem;
@@ -4618,8 +5084,9 @@ footer {
     }
 
     .couple-names {
+        margin-top: 0.5rem !important;
         width: 100% !important;
-        transform: none !important;
+        transform: translateY(-1rem) !important;
         align-items: center !important;
         padding: 0 !important;
         letter-spacing: 0.5px;
@@ -4630,39 +5097,39 @@ footer {
         justify-content: center !important;
         margin-top: 2   rem;
         font-size: 1.5rem;
-        margin-right: 6.5rem;
+        margin-right: 14rem;
     }
 
     .couple-line:last-child {
         padding-left: 0 !important;
         justify-content: center !important;
-        margin-left: 7.8rem;
+        margin-left: 15rem;
     }
 
     .couple-amp {
         padding-left: 0 !important;
-        font-size: 1.5rem !important;
+        font-size: 5rem !important;
         transform: none !important;
         margin-top: .3rem;
-        margin-left: 1.8rem;
+        margin-left: 3rem;
         
     }
 
-    .name-initial { font-size: 1.8rem !important; }
-    .name-rest { font-size: 1.3rem !important; }
+    .name-initial { font-size: 4.1rem !important; }
+    .name-rest { font-size: 3rem !important; }
 
     .wedding-date {
         transform: none !important;
-        font-size: 0.9rem !important;
+        font-size: 1.4rem !important;
         letter-spacing: 1px !important;
         text-align: center;
         white-space: nowrap;
-        margin-top: 19rem !important;
+        margin-top: 20.5rem !important;
     }
 
     .wedding-location {
         transform: none !important;
-        font-size: 0.9rem !important;
+        font-size: 1.4rem !important;
         text-align: center;
         margin-top: 0.3rem;
     }
@@ -5197,7 +5664,8 @@ footer {
         overflow: hidden !important;
     }
 
-    #hero .story-yellowflower {
+    #hero .story-yellowflower,
+    .hero-story-flower-anchor .story-yellowflower {
         display: none !important;
     }
 
@@ -5601,26 +6069,49 @@ footer {
     .couple-names {
         font-size: 2.5rem;
         letter-spacing: 1px;
-    }
-    
-    .welcome-text {
-        font-size: 1rem;
-        padding: 0 1rem;
-        letter-spacing: 1px;
+        transform: translateY(4.25rem) !important;
     }
 
+    .welcome-text {
+        font-size: 0.95rem !important;
+        padding: 0 1rem;
+        letter-spacing: 1px;
+        transform: translateY(3.25rem) !important;
+    }
+
+    .couple-line:first-child {
+        margin-right: 9rem;
+    }
+
+    .couple-line:last-child {
+        margin-left: 9.6rem;
+    }
+
+    .couple-amp {
+        font-size: 3.15rem !important;
+        margin-left: 1.9rem;
+    }
+
+    .name-initial { font-size: 2.6rem !important; }
+    .name-rest { font-size: 1.9rem !important; }
+
     .wedding-date {
-        font-size: 1.2rem;
+        font-size: 1.2rem !important;
+        margin-top: 24rem !important;
         letter-spacing: 3px;
     }
 
-    .scroll-indicator {
-        bottom: 1.5rem;
+    .wedding-location {
+        font-size: 1.2rem !important;
     }
 
-    .scroll-dot {
-        width: 25px;
-        height: 45px;
+    .add-to-calendar-wrap {
+        top: calc(100% + 1rem);
+    }
+
+    .add-to-calendar-btn {
+        font-size: 0.68rem;
+        padding: 0.55rem 1.1rem;
     }
 
     /* Story Section */
@@ -6065,6 +6556,16 @@ footer {
 
 /* iPhone Series */
 @media (max-width: 395px) {
+    /* Hero title - 395px */
+    .welcome-text { font-size: 0.88rem !important; }
+    .wedding-date { margin-top: 20.5rem !important; }
+    .couple-line:first-child { margin-right: 8.1rem; }
+    .couple-line:last-child { margin-left: 8.65rem; }
+    .couple-amp { font-size: 2.85rem !important; margin-left: 1.7rem; }
+    .name-initial { font-size: 2.35rem !important; }
+    .name-rest { font-size: 1.7rem !important; }
+    .wedding-date, .wedding-location { font-size: 1.1rem !important; }
+
     .faq-initial {
         font-size: 1.6rem !important;
     }
@@ -6210,6 +6711,15 @@ footer {
 }
 
 @media (max-width: 376px) {
+    /* Hero title - 376px */
+    .welcome-text { font-size: 0.85rem !important; }
+    .couple-line:first-child { margin-right: 7.65rem; }
+    .couple-line:last-child { margin-left: 8.2rem; }
+    .couple-amp { font-size: 2.7rem !important; margin-left: 1.6rem; }
+    .name-initial { font-size: 2.2rem !important; }
+    .name-rest { font-size: 1.6rem !important; }
+    .wedding-date, .wedding-location { font-size: 1.05rem !important; }
+
     .faq-initial {
         font-size: 1.45rem !important;
     }
@@ -6450,7 +6960,7 @@ footer {
     }
 
     .welcome-text {
-        transform: none !important;
+        transform: translateY(3.25rem) !important;
         font-size: 0.8rem !important;
         letter-spacing: 0.5px;
         text-align: center;
@@ -6461,7 +6971,7 @@ footer {
 
     .couple-names {
         width: 100% !important;
-        transform: none !important;
+        transform: translateY(4.25rem) !important;
         align-items: center !important;
         padding: 0 !important;
         letter-spacing: 0.5px;
@@ -6472,39 +6982,39 @@ footer {
         justify-content: center !important;
         margin-top: 2   rem;
         font-size: 1.5rem;
-        margin-right: 6.5rem;
+        margin-right: 7.2rem;
     }
 
     .couple-line:last-child {
         padding-left: 0 !important;
         justify-content: center !important;
-        margin-left: 7.8rem;
+        margin-left: 7.75rem;
     }
 
     .couple-amp {
         padding-left: 0 !important;
-        font-size: 1.5rem !important;
+        font-size: 2.5rem !important;
         transform: none !important;
         margin-top: .3rem;
-        margin-left: 1.8rem;
+        margin-left: 1.55rem;
         
     }
 
-    .name-initial { font-size: 1.8rem !important; }
-    .name-rest { font-size: 1.3rem !important; }
+    .name-initial { font-size: 2.05rem !important; }
+    .name-rest { font-size: 1.55rem !important; }
 
     .wedding-date {
         transform: none !important;
-        font-size: 0.9rem !important;
+        font-size: 1rem !important;
         letter-spacing: 1px !important;
         text-align: center;
         white-space: nowrap;
-        margin-top: 19rem !important;
+        margin-top: 20.5rem !important;
     }
 
     .wedding-location {
         transform: none !important;
-        font-size: 0.9rem !important;
+        font-size: 1rem !important;
         text-align: center;
         margin-top: 0.3rem;
     }
@@ -7571,7 +8081,7 @@ footer {
     object-fit: cover;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 769px) {
     .std-video {
         object-fit: contain;
     }
@@ -7580,7 +8090,7 @@ footer {
 /* Ultra-wide desktop monitors (21:9 and wider) - the desktop
    video is 16:9, so covering an ultra-wide viewport would crop
    too much off the left/right. Show the full frame instead. */
-@media (min-width: 769px) and (min-aspect-ratio: 21/9) {
+@media (min-width: 770px) and (min-aspect-ratio: 21/9) {
     .std-video {
         object-fit: contain;
     }
@@ -7753,7 +8263,7 @@ footer {
 .gate-petal-7 { left: 71%; width: 13px; height: 10px; animation-duration: 13.5s; animation-delay: 5.1s; }
 .gate-petal-8 { left: 88%; width: 17px; height: 13px; animation-duration: 14.5s; animation-delay: 1.2s; }
 
-@media (max-width: 768px) {
+@media (max-width: 769px) {
     .gate-petal-desktop-only {
         display: none;
     }
@@ -8096,7 +8606,7 @@ footer {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 769px) {
     .gate-eyebrow {
         font-size: 0.9rem;
         letter-spacing: 4px;
