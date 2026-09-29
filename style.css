@@ -3369,8 +3369,8 @@ section {
 /* Footer */
 footer {
     background: linear-gradient(to right, rgba(0,0,0,0.5) 25%, rgba(5,10,5,0.9) 38%, rgba(5,10,5,0.9) 42%, transparent 55%),
-                url('images/added.png') left 45%/40% no-repeat,
-                url('images/faqs.JPG') right 30%/70% no-repeat;
+                url('compressedimages/added.png') left 45%/40% no-repeat,
+                url('compressedimages/faqs.JPG') right 30%/70% no-repeat;
     
     color: var(--text-light);
     padding: 1rem 2rem 0.5rem;
@@ -6820,14 +6820,14 @@ footer {
     .couple-names {
         font-size: 2.5rem;
         letter-spacing: 1px;
-        transform: translateY(4.25rem) !important;
+        transform: translateY(3.5rem) !important;
     }
 
     .welcome-text {
         font-size: 0.95rem !important;
         padding: 0 1rem;
         letter-spacing: 1px;
-        transform: translateY(3.25rem) !important;
+        transform: translateY(2.5rem) !important;
     }
 
     .couple-line:first-child {
@@ -7719,7 +7719,7 @@ footer {
     }
 
     .welcome-text {
-        transform: translateY(3.25rem) !important;
+        transform: translateY(2.5rem) !important;
         font-size: 0.8rem !important;
         letter-spacing: 0.5px;
         text-align: center;
@@ -7730,7 +7730,7 @@ footer {
 
     .couple-names {
         width: 100% !important;
-        transform: translateY(4.25rem) !important;
+        transform: translateY(3.5rem) !important;
         align-items: center !important;
         padding: 0 !important;
         letter-spacing: 0.5px;
