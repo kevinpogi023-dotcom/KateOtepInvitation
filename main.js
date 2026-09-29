@@ -8,7 +8,30 @@
     const gate = document.getElementById('invitation-gate');
     const envelope = document.getElementById('openInvitation');
     const saveTheDate = document.getElementById('save-the-date');
-    if (!gate || !envelope) return;
+
+    // Hero text fades in line by line once the invitation is revealed
+    // (uses the .reveal / .is-visible styles from the scroll reveal).
+    const heroText = document.querySelectorAll(
+        '#hero .welcome-text, #hero .couple-line, #hero .couple-amp, ' +
+        '#hero .wedding-date, #hero .wedding-location, #hero .add-to-calendar-wrap'
+    );
+    const animateHero = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let heroRevealed = false;
+    if (animateHero) heroText.forEach(function(el) { el.classList.add('reveal'); });
+
+    function revealHero() {
+        if (heroRevealed || !animateHero) return;
+        heroRevealed = true;
+        heroText.forEach(function(el, i) {
+            el.style.animationDelay = (i * 0.25) + 's';
+            el.classList.add('is-visible');
+        });
+    }
+
+    if (!gate || !envelope) {
+        revealHero();
+        return;
+    }
 
     // Set to true to play the save-the-date video after the envelope opens.
     const PLAY_TRANSITION_VIDEO = true;
@@ -24,6 +47,7 @@
         saveTheDate.classList.add('active');
 
         function finish() {
+            revealHero();
             saveTheDate.classList.add('fading-out');
             setTimeout(function() {
                 saveTheDate.style.display = 'none';
@@ -64,6 +88,8 @@
 
         setTimeout(function() {
             gate.style.display = 'none';
+            // With no transition video, reveal the hero text as the gate fades away.
+            if (!PLAY_TRANSITION_VIDEO || !saveTheDate) revealHero();
         }, 1150);
     }
 
@@ -911,3 +937,73 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.key === 'Escape' && overlay.classList.contains('active')) closeModal();
     });
 })();
+// ============================================
+// Scroll reveal - fade section content in as it
+// scrolls into view. Elements only get hidden
+// here, so without JS everything stays visible.
+// ============================================
+(function() {
+    if (!('IntersectionObserver' in window)) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const selectors = [
+        '#story .our-love-story-title',
+        '#story .story-started-title',
+        '#story .story-col',
+        '#story .story-carousel-outer',
+        '#event .big-day-title',
+        '#event .sched-item',
+        '#event .sched-card-wrapper',
+        '#party .entourage-title',
+        '#party .entourage-row',
+        '#party .entourage-role-parents',
+        '#party .entourage-role-sponsors-title',
+        '#party .entourage-role-secondary',
+        '#party .entourage-single',
+        '#party .entourage-divider',
+        '#party .entourage-bearers',
+        '#party .party-carousel-outer',
+        '#attire .attire-title',
+        '#attire .attire-desc',
+        '#attire .attire-subtitle',
+        '#attire .attire-swatches',
+        '#registry .registry-title',
+        '#registry .registry-desc',
+        '#registry .registry-btn-desktop',
+        '#registry .registry-cardno-inner',
+        '#rsvp .rsvp-heading',
+        '#rsvp .rsvp-main-title',
+        '#rsvp .rsvp-card',
+        '#faqs .faq-title',
+        '#faqs .faq-item'
+    ];
+
+    const targets = document.querySelectorAll(selectors.join(','));
+    if (!targets.length) return;
+
+    const observer = new IntersectionObserver(function(entries) {
+        let batch = 0;
+        entries.forEach(function(entry) {
+            if (!entry.isIntersecting) return;
+            // Stagger items that appear together so they cascade in.
+            entry.target.style.animationDelay = Math.min(batch * 0.12, 0.6) + 's';
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+            batch++;
+        });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    targets.forEach(function(el) {
+        el.classList.add('reveal');
+        observer.observe(el);
+    });
+})();
+
+// Once any reveal animation finishes, drop its classes so it can never
+// replay (e.g. when an RSVP step or layout is hidden and shown again).
+document.addEventListener('animationend', function(e) {
+    const el = e.target;
+    if (e.animationName !== 'revealUp' || !el.classList.contains('reveal')) return;
+    el.classList.remove('reveal', 'is-visible');
+    el.style.animationDelay = '';
+});
