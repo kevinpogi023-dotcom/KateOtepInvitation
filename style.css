@@ -1381,7 +1381,7 @@ section {
 .entourage-name {
     font-family: 'Quicksand', sans-serif;
     font-size: 2.2rem;
-    font-weight: 700;
+    font-weight: 400;
     color: #507253;
     margin-bottom: 0.15rem;
     text-align: center;
@@ -4965,8 +4965,8 @@ footer {
     }
 }
 
-/* iPad landscape and small laptop windows (901px-1024px) */
-@media (min-width: 901px) and (max-width: 1024px) {
+/* iPad landscape and small laptop windows (901px-1200px) */
+@media (min-width: 901px) and (max-width: 1200px) {
     .hero-navbar {
         padding: 1.2rem 1.5rem;
     }
@@ -5031,6 +5031,49 @@ footer {
 
     .faq-word {
         font-size: 2.4rem;
+    }
+
+
+    /* Entourage: even two-column layout (desktop offsets are too wide here) */
+    .party-entourage {
+        padding: 3rem 2rem !important;
+    }
+
+    .entourage-row,
+    .entourage-row-groom-bride,
+    .entourage-row-parents,
+    .entourage-row-sponsors,
+    .entourage-row-candle-veil,
+    .entourage-shift-left {
+        width: 94% !important;
+        gap: 0.4rem 2.5rem !important;
+        transform: none !important;
+    }
+
+    .entourage-row-groom-bride .entourage-col:first-child,
+    .entourage-row-groom-bride .entourage-role,
+    .entourage-row-groom-bride .entourage-name,
+    .entourage-row-parents .entourage-col,
+    .entourage-row-sponsors .entourage-col,
+    .entourage-row-candle-veil .entourage-col,
+    .entourage-shift-left .entourage-col,
+    .entourage-col-shift-right,
+    .entourage-role-secondary,
+    .entourage-name-cord2 {
+        transform: none !important;
+    }
+
+    .entourage-role,
+    .entourage-role-parents,
+    .entourage-role-sponsors-title,
+    .entourage-role-secondary {
+        font-size: 1.6rem !important;
+        letter-spacing: 4px !important;
+    }
+
+    .entourage-name {
+        font-size: 1.05rem !important;
+        letter-spacing: 1px !important;
     }
 }
 
@@ -9151,9 +9194,11 @@ footer {
     100% { opacity: 1; transform: translateY(0); }
 }
 
+/* Typewriter reveal. Uses clip-path on the text at its natural width, so Safari
+   can't clip it (the old width:0 -> 100% method cut text off on iPhone/iPad). */
 @keyframes gateTypeReveal {
-    from { width: 0; }
-    to   { width: 100%; }
+    from { clip-path: inset(-20% 100% -20% 0); }
+    to   { clip-path: inset(-20% -10% -20% -10%); }
 }
 
 .gate-logo {
@@ -9173,9 +9218,8 @@ footer {
     color: #7c8c4a;
     margin-bottom: 0.9rem;
     display: inline-block;
-    overflow: hidden;
     white-space: nowrap;
-    width: 0;
+    clip-path: inset(-20% 100% -20% 0);
     animation: gateTypeReveal 1.1s steps(22, end) 0.3s forwards;
 }
 
@@ -9186,9 +9230,8 @@ footer {
     color: #7c8c4a;
     margin-bottom: 0.4rem;
     display: inline-block;
-    overflow: hidden;
     white-space: nowrap;
-    width: 0;
+    clip-path: inset(-20% 100% -20% 0);
     animation: gateTypeReveal 0.5s steps(4, end) 1.6s forwards;
 }
 
@@ -9202,9 +9245,8 @@ footer {
     margin-bottom: 0.7rem;
     line-height: 1.3;
     display: inline-block;
-    overflow: hidden;
     white-space: nowrap;
-    width: 0;
+    clip-path: inset(-20% 100% -20% 0);
     animation: gateTypeReveal 1.3s steps(13, end) 2.2s forwards;
 }
 
@@ -9991,4 +10033,176 @@ html.scroll-locked body {
     overflow: hidden !important;
     height: 100%;
     overscroll-behavior: none;
+}
+
+
+/* Entourage bearers: names scale with their column so they never overlap */
+@media (min-width: 901px) and (max-width: 1799px) {
+    .entourage-bearers .entourage-name {
+        font-size: calc(1.75vw - 2px) !important;
+        letter-spacing: 1px !important;
+    }
+}
+
+/* Entourage Candle/Veil: longest names fit their half of the row on small phones */
+@media (max-width: 399px) {
+    .entourage-row-candle-veil .entourage-name {
+        font-size: 2.75vw !important;
+        letter-spacing: 0 !important;
+    }
+}
+
+
+/* ============================================
+   iPhone / iPad Safari fixes
+   ============================================ */
+
+/* Phones & tablets: the hero fits the visible screen. Safari's 100vh includes the
+   area behind its toolbar, which hid Add to Calendar; 100svh is the visible height.
+   The date block moves up by the toolbar height (0 in browsers without one). */
+@media (max-width: 900px) {
+    #hero.hero {
+        height: 100vh;
+        height: 100svh;
+    }
+
+    .wedding-date {
+        margin-top: calc(20.5rem - (100lvh - 100svh)) !important;
+    }
+}
+
+/* 396-480px was tuned on 430x932 phones: shorter phones (e.g. iPhone 16 Pro, 402x874)
+   move the date block up by the missing height so Add to Calendar keeps the same gap */
+@media (max-width: 480px) {
+    .wedding-date {
+        margin-top: calc(23rem - max(0px, 932px - 100svh)) !important;
+    }
+}
+
+@media (max-width: 395px) {
+    .wedding-date {
+        margin-top: calc(19.5rem - (100lvh - 100svh)) !important;
+    }
+}
+
+/* iPad portrait (770px-900px): FAQ uses the same tablet design as 600-769 */
+@media (min-width: 770px) and (max-width: 900px) {
+    #faqs {
+        padding: 3rem 2rem 1.5rem !important;
+        background: linear-gradient(to bottom, #111 0%, rgba(17, 17, 17, 0.92) 22%, rgba(17, 17, 17, 0.35) 42%, rgba(17, 17, 17, 0) 58%),
+                    url('images/longfaqs.png') center bottom / 100% auto no-repeat !important;
+        background-color: #111 !important;
+    }
+
+    .faq-title {
+        margin-bottom: 2.5rem !important;
+        padding: 1.5rem 0 0 0.5rem !important;
+    }
+
+    .faq-initial {
+        font-size: 2.8rem !important;
+    }
+
+    .faq-word {
+        font-size: 1.7rem !important;
+        letter-spacing: 1.5px !important;
+    }
+
+    .faq-question {
+        padding: 0.8rem 0 !important;
+        gap: 0.6rem !important;
+    }
+
+    .faq-question h4 {
+        font-size: 1rem !important;
+        letter-spacing: 1.5px !important;
+        line-height: 1.5 !important;
+    }
+
+    .faq-toggle {
+        font-size: 1.4rem !important;
+        min-width: 22px !important;
+    }
+
+    .faq-answer p {
+        font-size: 1rem !important;
+        line-height: 1.6 !important;
+        padding-left: calc(22px + 0.9rem) !important;
+    }
+
+    .footer-bottom {
+        font-size: 0.85rem !important;
+    }
+}
+
+/* ============================================
+   FAQ on iPad-sized screens (901px-1200px)
+   ============================================ */
+
+/* Landscape: photo sits on the right, questions on a dark panel to its left */
+@media (min-width: 901px) and (max-width: 1200px) and (orientation: landscape) {
+    footer#faqs {
+        background: linear-gradient(to right, #0d0f0b 0%, #0d0f0b 42%, rgba(13, 15, 11, 0.75) 52%, rgba(13, 15, 11, 0) 68%),
+                    url('compressedimages/faqs.JPG') right center / auto 100% no-repeat !important;
+        background-color: #0d0f0b !important;
+    }
+
+    #faqs .faq-question h4 {
+        font-size: 1rem;
+        letter-spacing: 2px;
+    }
+}
+
+/* Portrait (13" iPad): questions on top, photo filling the width below */
+@media (min-width: 901px) and (max-width: 1200px) and (orientation: portrait) {
+    footer#faqs {
+        background: linear-gradient(to bottom, #111 0%, rgba(17, 17, 17, 0.92) 22%, rgba(17, 17, 17, 0.35) 42%, rgba(17, 17, 17, 0) 58%),
+                    url('images/longfaqs.png') center bottom / 100% auto no-repeat !important;
+        background-color: #111 !important;
+        text-align: left;
+    }
+}
+
+/* ============================================
+   "The Entourage" title on phones matches "Wedding Schedule":
+   script first letter only, the rest in Cinzel small caps, same sizes
+   ============================================ */
+@media (max-width: 599px) {
+    .entourage-title .entourage-initial {
+        font-size: 1.6rem !important;
+        letter-spacing: 0.36rem !important;
+        margin-right: 0 !important;
+    }
+
+    .entourage-title .entourage-rest,
+    .entourage-title .entourage-initial ~ .entourage-initial {
+        font-family: 'Cinzel', serif !important;
+        font-size: 1.2rem !important;
+        letter-spacing: 1px !important;
+        text-transform: none !important;
+    }
+}
+
+@media (max-width: 441px) {
+    .entourage-title .entourage-initial { font-size: 1.7rem !important; letter-spacing: 0.465rem !important; }
+    .entourage-title .entourage-rest,
+    .entourage-title .entourage-initial ~ .entourage-initial { font-size: 1.55rem !important; }
+}
+
+@media (max-width: 395px) {
+    .entourage-title .entourage-initial { font-size: 2rem !important; letter-spacing: 0.405rem !important; }
+    .entourage-title .entourage-rest,
+    .entourage-title .entourage-initial ~ .entourage-initial { font-size: 1.5rem !important; }
+}
+
+@media (max-width: 376px) {
+    .entourage-title .entourage-initial { font-size: 2.5rem !important; letter-spacing: 0.42rem !important; }
+    .entourage-title .entourage-rest,
+    .entourage-title .entourage-initial ~ .entourage-initial { font-size: 1.5rem !important; }
+}
+
+@media (max-width: 360px) {
+    .entourage-title .entourage-initial { font-size: 1.7rem !important; letter-spacing: 0.51rem !important; }
+    .entourage-title .entourage-rest,
+    .entourage-title .entourage-initial ~ .entourage-initial { font-size: 1.35rem !important; }
 }

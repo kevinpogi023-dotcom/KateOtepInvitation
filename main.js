@@ -1156,8 +1156,8 @@ document.addEventListener('animationend', function(e) {
             const distance = frames[half].offsetLeft - frames[0].offsetLeft;
             if (distance <= 0) return;
             track.style.setProperty('--loop-distance', distance + 'px');
-            // Same pace on every screen: each photo takes 8s to scroll past.
-            track.style.animationDuration = (half * 8) + 's';
+            // Same pace on every screen: each photo takes 5s to scroll past.
+            track.style.animationDuration = (half * 5) + 's';
         });
     }
 
