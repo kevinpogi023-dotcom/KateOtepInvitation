@@ -1007,3 +1007,36 @@ document.addEventListener('animationend', function(e) {
     el.classList.remove('reveal', 'is-visible');
     el.style.animationDelay = '';
 });
+
+// ============================================
+// Photo carousels - seamless loop. Each track holds
+// the photos twice; it must slide exactly one full
+// set before restarting, or the loop visibly jumps.
+// (translateX(-50%) is relative to the visible strip,
+// not the photo row, so the distance is measured.)
+// ============================================
+(function() {
+    const tracks = document.querySelectorAll('.story-carousel-track, .party-carousel-track');
+    if (!tracks.length) return;
+
+    function measure() {
+        tracks.forEach(function(track) {
+            const frames = track.children;
+            const half = Math.floor(frames.length / 2);
+            if (!half) return;
+            const distance = frames[half].offsetLeft - frames[0].offsetLeft;
+            if (distance <= 0) return;
+            track.style.setProperty('--loop-distance', distance + 'px');
+            // Same pace on every screen: each photo takes 8s to scroll past.
+            track.style.animationDuration = (half * 8) + 's';
+        });
+    }
+
+    measure();
+    window.addEventListener('load', measure);
+    let timer;
+    window.addEventListener('resize', function() {
+        clearTimeout(timer);
+        timer = setTimeout(measure, 200);
+    });
+})();

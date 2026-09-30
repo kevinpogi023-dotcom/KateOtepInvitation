@@ -697,9 +697,10 @@ section {
         display: block;
     }
 
+    /* --loop-distance = width of one full set of photos (set by main.js) */
     @keyframes storyScroll {
         0%   { transform: translateX(0); }
-        100% { transform: translateX(-50%); }
+        100% { transform: translateX(calc(-1 * var(--loop-distance, 50%))); }
     }
 
     .story-text-center {
@@ -1141,7 +1142,7 @@ section {
 
 @keyframes partyScroll {
     0%   { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    100% { transform: translateX(calc(-1 * var(--loop-distance, 50%))); }
 }
 
 .party-entourage {
@@ -9636,16 +9637,25 @@ footer {
 /* ============================================
    Desktop: adapt to the browser window height.
    A 1920x1080 monitor only gives the page ~950px
-   of height (tabs, address bar, taskbar), so the
-   hero date block and the Dress Code are sized
-   from the window height, matching the tuned
-   layout exactly at each screen's full height.
-   --hero-drop = min(tuned drop, drop - (H0 - window height) / 2)
+   of height (tabs, address bar, taskbar). Each
+   size range matches its tuned layout at full
+   height (H0); in shorter windows:
+   - --hero-drop shrinks so the date block and
+     Add to Calendar stay the same distance from
+     the bottom of the screen
+   - --hero-lift moves the title down when it would
+     otherwise run into the menu (very short windows)
+   The Dress Code keeps at least its designed height.
    ============================================ */
 @media (min-width: 901px) {
     :root {
-        --hero-drop: min(9rem, max(3rem, calc(50vh - 240px)));
+        --hero-lift: max(0px, calc(352px - 50vh));
+        --hero-drop: max(0px, calc(min(9rem, 50vh - 240px) - 2 * var(--hero-lift)));
         --cal-gap: 2rem;
+    }
+
+    .hero-content {
+        transform: translateY(var(--hero-lift));
     }
 
     .wedding-date,
@@ -9659,18 +9669,25 @@ footer {
 }
 
 @media (min-width: 1201px) and (max-width: 1367px) {
-    :root { --cal-gap: 1rem; }
+    :root {
+        --hero-lift: max(0px, calc(345px - 50vh));
+        --cal-gap: 1rem;
+    }
 }
 
 @media (min-width: 1368px) and (max-width: 1441px) {
-    :root { --hero-drop: min(10rem, max(3rem, calc(50vh - 290px))); }
+    :root {
+        --hero-lift: max(0px, calc(341px - 50vh));
+        --hero-drop: max(0px, calc(min(10rem, 50vh - 290px) - 2 * var(--hero-lift)));
+    }
 
     .attire-grid { min-height: max(100vh, 900px); }
 }
 
 @media (min-width: 1442px) and (max-width: 1799px) {
     :root {
-        --hero-drop: min(15rem, max(3rem, calc(50vh - 251px)));
+        --hero-lift: max(0px, calc(330px - 50vh));
+        --hero-drop: max(0px, calc(min(15rem, 50vh - 251px) - 2 * var(--hero-lift)));
         --cal-gap: 0.5rem;
     }
 
@@ -9679,7 +9696,8 @@ footer {
 
 @media (min-width: 1800px) and (max-width: 1921px) {
     :root {
-        --hero-drop: min(15rem, max(3rem, calc(50vh - 300px)));
+        --hero-lift: max(0px, calc(390px - 50vh));
+        --hero-drop: max(0px, calc(min(15rem, 50vh - 300px) - 2 * var(--hero-lift)));
         --cal-gap: 2.5rem;
     }
 
