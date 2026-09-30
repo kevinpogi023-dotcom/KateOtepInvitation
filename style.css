@@ -10206,3 +10206,58 @@ html.scroll-locked body {
     .entourage-title .entourage-rest,
     .entourage-title .entourage-initial ~ .entourage-initial { font-size: 1.35rem !important; }
 }
+
+/* ============================================
+   Navbar on tablets / iPad portrait (600px-900px): the phone navbar
+   scaled up so the menu icon, J&K logo and RSVP button aren't tiny
+   ============================================ */
+@media (min-width: 600px) and (max-width: 900px) {
+    .hero-navbar {
+        padding: 1rem 1.5rem !important;
+    }
+
+    .burger-menu {
+        transform: scale(1.45);
+        transform-origin: left center;
+    }
+
+    .mobile-logo {
+        transform: scale(1.4);
+    }
+
+    .hero-navbar .rsvp-btn {
+        font-size: 0.95rem !important;
+        padding: 0.55rem 1.2rem !important;
+        letter-spacing: 1.5px !important;
+    }
+}
+
+/* ============================================
+   Popups on iPhone/iPad Safari: size them to the *visible* screen (dvh),
+   which follows Safari's toolbar. With plain vh the gift list was taller
+   than the screen until the toolbar collapsed from scrolling.
+   ============================================ */
+.gift-modal,
+.gift-modal-scroll {
+    max-height: 85vh;
+    max-height: 85dvh;
+}
+
+.map-modal {
+    max-height: 92vh;
+    max-height: 92dvh;
+}
+
+@media (max-width: 900px) {
+    .gift-modal,
+    .gift-modal-scroll {
+        max-height: 92vh;
+        max-height: 92dvh;
+    }
+}
+
+/* Page behind a popup doesn't scroll */
+html.modal-open,
+html.modal-open body {
+    overflow: hidden;
+}

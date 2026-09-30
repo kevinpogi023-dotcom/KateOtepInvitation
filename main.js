@@ -93,6 +93,10 @@
                 video.load();
             }
             video.currentTime = 0;
+            // Play the save-the-date video at 1.25x speed
+            video.defaultPlaybackRate = 1.25;
+            video.playbackRate = 1.25;
+            video.addEventListener('play', function() { video.playbackRate = 1.25; });
             const playPromise = video.play();
             if (playPromise && playPromise.catch) {
                 playPromise.catch(function() {
@@ -319,11 +323,13 @@ window.addEventListener('scroll', () => {
         if (e) e.preventDefault();
         if (modal) modal.scrollTop = 0;
         overlay.classList.add('active');
+        document.documentElement.classList.add('modal-open');
         requestAnimationFrame(updateScrollThumb);
     };
 
     const closeModal = () => {
         overlay.classList.remove('active');
+        document.documentElement.classList.remove('modal-open');
     };
 
     openBtns.forEach(btn => btn && btn.addEventListener('click', openModal));
@@ -362,7 +368,7 @@ window.addEventListener('scroll', () => {
     if (!grid) return;
 
     const GIFT_ITEMS = [
-        { name: 'Portable Power Station', img: 'images/portable.png', url: 'https://ph.ecoflow.com/products/delta-3-portable-power-station?variant=53798337380662' },
+        { name: 'Portable Power Station', img: 'images/portable.png', url: 'https://ph.ecoflow.com/products/delta-3-portable-power-station?variant=52064529219894#&gid=1&pid=1' },
         { name: 'Coffee Machine', img: 'compressedimages/coffeemaker.png', url: '#' },
         { name: 'Oven Toaster / Airfryer', img: 'images/oventoaster.png', url: 'https://shopee.ph/Eureka-20L-Air-Fryer-Oven-High-Capacity-Electric-Toaster-Bake-Grill-EEAO-20L-i.1461663903.28334659912' },
         { name: 'Rice Cooker', img: 'images/ricecooker.png', url: '#' },
@@ -1049,10 +1055,12 @@ document.addEventListener('DOMContentLoaded', function() {
     function openModal(e) {
         e.preventDefault();
         overlay.classList.add('active');
+        document.documentElement.classList.add('modal-open');
     }
 
     function closeModal() {
         overlay.classList.remove('active');
+        document.documentElement.classList.remove('modal-open');
     }
 
     trigger.addEventListener('click', openModal);
