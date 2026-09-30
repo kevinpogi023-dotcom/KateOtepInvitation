@@ -9857,7 +9857,7 @@ footer {
     pointer-events: none;
 }
 
-.music-toggle.label-hidden:hover .music-toggle-label {
+.music-toggle.label-hidden:not(.is-playing):hover .music-toggle-label {
     opacity: 1;
     transform: none;
 }
@@ -10057,17 +10057,12 @@ html.scroll-locked body {
    iPhone / iPad Safari fixes
    ============================================ */
 
-/* Phones & tablets: the hero fits the visible screen. Safari's 100vh includes the
-   area behind its toolbar, which hid Add to Calendar; 100svh is the visible height.
-   The date block moves up by the toolbar height (0 in browsers without one). */
+/* Phones & tablets: the hero photo stays full height (it runs behind Safari's
+   floating toolbar), and the date block moves up by the toolbar height
+   (100lvh - 100svh, which is 0 in browsers without one) so Add to Calendar stays visible. */
 @media (max-width: 900px) {
-    #hero.hero {
-        height: 100vh;
-        height: 100svh;
-    }
-
     .wedding-date {
-        margin-top: calc(20.5rem - (100lvh - 100svh)) !important;
+        margin-top: calc(20.5rem - 0.4 * (100lvh - 100svh)) !important;
     }
 }
 
@@ -10075,13 +10070,13 @@ html.scroll-locked body {
    move the date block up by the missing height so Add to Calendar keeps the same gap */
 @media (max-width: 480px) {
     .wedding-date {
-        margin-top: calc(23rem - max(0px, 932px - 100svh)) !important;
+        margin-top: calc(23rem - max(0px, 932px - 100svh) + 0.6 * (100lvh - 100svh)) !important;
     }
 }
 
 @media (max-width: 395px) {
     .wedding-date {
-        margin-top: calc(19.5rem - (100lvh - 100svh)) !important;
+        margin-top: calc(19.5rem - 0.4 * (100lvh - 100svh)) !important;
     }
 }
 
@@ -10164,50 +10159,6 @@ html.scroll-locked body {
 }
 
 /* ============================================
-   "The Entourage" title on phones matches "Wedding Schedule":
-   script first letter only, the rest in Cinzel small caps, same sizes
-   ============================================ */
-@media (max-width: 599px) {
-    .entourage-title .entourage-initial {
-        font-size: 1.6rem !important;
-        letter-spacing: 0.36rem !important;
-        margin-right: 0 !important;
-    }
-
-    .entourage-title .entourage-rest,
-    .entourage-title .entourage-initial ~ .entourage-initial {
-        font-family: 'Cinzel', serif !important;
-        font-size: 1.2rem !important;
-        letter-spacing: 1px !important;
-        text-transform: none !important;
-    }
-}
-
-@media (max-width: 441px) {
-    .entourage-title .entourage-initial { font-size: 1.7rem !important; letter-spacing: 0.465rem !important; }
-    .entourage-title .entourage-rest,
-    .entourage-title .entourage-initial ~ .entourage-initial { font-size: 1.55rem !important; }
-}
-
-@media (max-width: 395px) {
-    .entourage-title .entourage-initial { font-size: 2rem !important; letter-spacing: 0.405rem !important; }
-    .entourage-title .entourage-rest,
-    .entourage-title .entourage-initial ~ .entourage-initial { font-size: 1.5rem !important; }
-}
-
-@media (max-width: 376px) {
-    .entourage-title .entourage-initial { font-size: 2.5rem !important; letter-spacing: 0.42rem !important; }
-    .entourage-title .entourage-rest,
-    .entourage-title .entourage-initial ~ .entourage-initial { font-size: 1.5rem !important; }
-}
-
-@media (max-width: 360px) {
-    .entourage-title .entourage-initial { font-size: 1.7rem !important; letter-spacing: 0.51rem !important; }
-    .entourage-title .entourage-rest,
-    .entourage-title .entourage-initial ~ .entourage-initial { font-size: 1.35rem !important; }
-}
-
-/* ============================================
    Navbar on tablets / iPad portrait (600px-900px): the phone navbar
    scaled up so the menu icon, J&K logo and RSVP button aren't tiny
    ============================================ */
@@ -10260,4 +10211,52 @@ html.scroll-locked body {
 html.modal-open,
 html.modal-open body {
     overflow: hidden;
+}
+
+/* ============================================
+   "Wedding Schedule" title on phones: as big as "The Entourage" title
+   (same letter sizes, tighter spacing), shrinking slightly only where
+   the longer title would otherwise run off the screen
+   ============================================ */
+@media (max-width: 599px) {
+    .big-day-title {
+        word-spacing: normal !important;
+    }
+
+    .big-day-title .ols-initial {
+        font-size: min(3.1rem, 12.4vw) !important;
+        letter-spacing: 0.02em !important;
+    }
+
+    .big-day-title .ols-rest {
+        font-size: min(1.8rem, 7.3vw) !important;
+        letter-spacing: 1px !important;
+    }
+}
+
+@media (max-width: 441px) {
+    .big-day-title .ols-initial { font-size: min(3.5rem, 12.4vw) !important; }
+    .big-day-title .ols-rest { font-size: min(2.05rem, 7.3vw) !important; }
+}
+
+@media (max-width: 395px) {
+    .big-day-title .ols-initial { font-size: min(3.1rem, 12.4vw) !important; }
+    .big-day-title .ols-rest { font-size: min(1.8rem, 7.3vw) !important; }
+}
+
+@media (max-width: 360px) {
+    .big-day-title .ols-initial { font-size: 2.2rem !important; }
+    .big-day-title .ols-rest { font-size: 1.25rem !important; }
+}
+
+
+/* Phones & tablets: when the browser's bars take up screen space (Chrome/Safari
+   on iPhone), move the title up too. The whole hero content rises by 60% of
+   the bars' height; the date rules above add that back so the date block
+   still rises by the full bar height and Add to Calendar stays visible.
+   (100lvh - 100svh is 0 where there are no bars, so nothing changes there.) */
+@media (max-width: 900px) {
+    .hero {
+        padding-top: calc(25vh - 0.6 * (100lvh - 100svh));
+    }
 }

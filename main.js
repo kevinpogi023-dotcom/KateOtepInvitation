@@ -20,8 +20,12 @@
     if (animateHero) heroText.forEach(function(el) { el.classList.add('reveal'); });
 
     function revealHero() {
-        if (heroRevealed || !animateHero) return;
+        if (heroRevealed) return;
         heroRevealed = true;
+        // Let other features (e.g. the music hint) know the invitation is now showing
+        document.documentElement.classList.add('invitation-revealed');
+        document.dispatchEvent(new CustomEvent('invitation:revealed'));
+        if (!animateHero) return;
         heroText.forEach(function(el, i) {
             el.style.animationDelay = (i * 0.25) + 's';
             el.classList.add('is-visible');
@@ -1185,40 +1189,48 @@ document.addEventListener('animationend', function(e) {
     const audio = document.getElementById('bgMusic');
     const btn = document.getElementById('musicToggle');
     if (!audio || !btn) return;
-    const label = btn.querySelector('.music-toggle-label');
     let hideTimer;
 
     audio.volume = 0.6;
 
-    // Show the label briefly as a hint, then tuck it away (hover shows it again)
-    function flashLabel(ms) {
+    // If the music file can't be loaded, hide the button instead of showing a dead one
+    function hideButton() {
+        btn.style.display = 'none';
+    }
+    audio.addEventListener('error', hideButton);
+    audio.querySelectorAll('source').forEach(function(s) { s.addEventListener('error', hideButton); });
+
+    // 'Tap to turn on music' shows once, a moment after the invitation is revealed, then fades away
+    function showHint() {
+        if (!audio.paused) return;
         clearTimeout(hideTimer);
         btn.classList.remove('label-hidden');
-        hideTimer = setTimeout(function() { btn.classList.add('label-hidden'); }, ms);
+        hideTimer = setTimeout(function() { btn.classList.add('label-hidden'); }, 3500);
+    }
+    if (document.documentElement.classList.contains('invitation-revealed')) {
+        setTimeout(showHint, 1200);
+    } else {
+        document.addEventListener('invitation:revealed', function() { setTimeout(showHint, 1200); }, { once: true });
     }
 
     function setPlaying(playing) {
         btn.classList.toggle('is-playing', playing);
         btn.setAttribute('aria-pressed', playing ? 'true' : 'false');
         btn.setAttribute('aria-label', playing ? 'Pause music' : 'Play music');
-        label.textContent = playing ? 'Tap to pause music' : 'Tap to play music';
-        flashLabel(3000);
-    }
-
-    // First hint: once the invitation is visible (after the envelope opens, if there is one)
-    const gate = document.getElementById('invitation-gate');
-    const envelope = document.getElementById('openInvitation');
-    if (gate && envelope && getComputedStyle(gate).display !== 'none') {
-        // the gate takes ~1.2s to fade, so this leaves the hint up for ~3s
-        envelope.addEventListener('click', function() { flashLabel(4200); }, { once: true });
-    } else {
-        flashLabel(3000);
+        if (playing) {
+            clearTimeout(hideTimer);
+            btn.classList.add('label-hidden');
+        }
     }
 
     btn.addEventListener('click', function() {
         if (audio.paused) {
             const p = audio.play();
-            if (p && p.catch) p.catch(function(err) { console.warn('Music could not play:', err); setPlaying(false); });
+            if (p && p.catch) p.catch(function(err) {
+                console.warn('Music could not play:', err);
+                if (err && err.name === 'NotSupportedError') hideButton();
+                setPlaying(false);
+            });
         } else {
             audio.pause();
         }
