@@ -9845,3 +9845,140 @@ footer {
         animation: none;
     }
 }
+
+/* ============================================
+   Tablet (600px-769px): RSVP + FAQ
+   - RSVP uses the desktop layout (heading, subtitle,
+     then the card), a little smaller than the
+     smallest desktop (1024px)
+   - FAQ uses the mobile layout (questions, then the
+     photo), a little bigger than the largest phone
+   ============================================ */
+@media (min-width: 600px) and (max-width: 769px) {
+    /* RSVP */
+    #rsvp {
+        min-height: max(100vh, 1200px) !important;
+        padding: 5rem 2.5rem 11rem !important;
+        justify-content: center !important;
+    }
+
+    .rsvp-container {
+        display: block !important;
+        max-width: 620px !important;
+        margin: 0 auto !important;
+    }
+
+    .rsvp-heading,
+    .rsvp-main-title,
+    .rsvp-step {
+        order: 0 !important;
+    }
+
+    .rsvp-heading {
+        margin-bottom: 0.4rem !important;
+    }
+
+    .rsvp-initial {
+        font-size: 7rem !important;
+        margin-right: 1rem !important;
+    }
+
+    .rsvp-word {
+        font-size: 5.25rem !important;
+    }
+
+    .rsvp-main-title {
+        font-size: min(1.75rem, 3.5vw) !important;
+        letter-spacing: 2.5px !important;
+        max-width: none !important;
+        margin: 0 0 1.4rem !important;
+    }
+
+    .rsvp-title-break {
+        display: none !important;
+    }
+
+    .rsvp-card {
+        position: relative;
+        z-index: 2;
+        padding: 2.6rem 2.2rem !important;
+        margin: 0 !important;
+    }
+
+    .rsvp-instruction {
+        font-size: 1rem !important;
+        line-height: 1.7 !important;
+        margin-bottom: 1.3rem !important;
+    }
+
+    .rsvp-input {
+        padding: 0.9rem 1.3rem !important;
+        font-size: 1rem !important;
+        margin: 1.6rem 0 0.4rem !important;
+    }
+
+    .rsvp-example {
+        font-size: 0.85rem !important;
+        margin-bottom: 1.6rem !important;
+    }
+
+    .rsvp-continue-btn {
+        font-size: 1rem !important;
+        padding: 0.9rem 1.8rem !important;
+        margin: 0 !important;
+    }
+
+    .rsvp-downflower,
+    .rsvp-upflower {
+        width: min(300px, 36vw) !important;
+    }
+
+    /* FAQ */
+    #faqs {
+        padding: 3rem 2rem 1.5rem !important;
+        /* photo fills the full width, anchored to the bottom; top fades to dark for the questions */
+        background: linear-gradient(to bottom, #111 0%, rgba(17, 17, 17, 0.92) 22%, rgba(17, 17, 17, 0.35) 42%, rgba(17, 17, 17, 0) 58%),
+                    url('images/longfaqs.png') center bottom / 100% auto no-repeat !important;
+        background-color: #111 !important;
+    }
+
+    .faq-title {
+        margin-bottom: 2.5rem !important;
+        padding: 1.5rem 0 0 0.5rem !important;
+    }
+
+    .faq-initial {
+        font-size: 2.6rem !important;
+    }
+
+    .faq-word {
+        font-size: 1.55rem !important;
+        letter-spacing: 1.5px !important;
+    }
+
+    .faq-question {
+        padding: 0.8rem 0 !important;
+        gap: 0.6rem !important;
+    }
+
+    .faq-question h4 {
+        font-size: 0.95rem !important;
+        letter-spacing: 1.5px !important;
+        line-height: 1.5 !important;
+    }
+
+    .faq-toggle {
+        font-size: 1.4rem !important;
+        min-width: 22px !important;
+    }
+
+    .faq-answer p {
+        font-size: 0.95rem !important;
+        line-height: 1.6 !important;
+        padding-left: calc(22px + 0.9rem) !important;
+    }
+
+    .footer-bottom {
+        font-size: 0.85rem !important;
+    }
+}
