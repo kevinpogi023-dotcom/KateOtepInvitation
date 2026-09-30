@@ -1054,7 +1054,7 @@ section {
     padding-top: 0;
 }
 
-    @media (min-width: 770px) {
+    @media (min-width: 901px) {
     .party-img-container:nth-child(6) {
         display: none;
     }
@@ -1449,7 +1449,7 @@ section {
 }
 
 
-@media (min-width: 770px) {
+@media (min-width: 901px) {
     .story-title-break,
     .rsvp-title-break {
         display: none;
@@ -2171,7 +2171,7 @@ section {
 
 /* Mobile: Reserve Gift becomes an icon-only circle,
    View Gift expands to take the remaining width */
-@media (max-width: 769px) {
+@media (max-width: 900px) {
     .gift-card-reserve-btn {
         flex: 0 0 auto;
         width: 34px;
@@ -2458,7 +2458,7 @@ section {
     margin: 1.4rem auto 0;
 }
 
-@media (max-width: 769px) {
+@media (max-width: 900px) {
     .map-modal-overlay {
         padding: 0.8rem;
     }
@@ -2695,7 +2695,7 @@ section {
     font-style: italic;
 }
 
-@media (max-width: 769px) {
+@media (max-width: 900px) {
     .gift-modal-overlay {
         padding: 0;
         align-items: flex-end;
@@ -2817,7 +2817,7 @@ section {
 }
 
 
-@media (min-width: 770px) {
+@media (min-width: 901px) {
     .rsvp-downflower {
         position: absolute;
         bottom: -50px;
@@ -3372,6 +3372,7 @@ footer {
                 url('compressedimages/added.png') left 45%/40% no-repeat,
                 url('compressedimages/faqs.JPG') right 30%/70% no-repeat;
     
+    background-color: #0d0f0b;
     color: var(--text-light);
     padding: 1rem 2rem 0.5rem;
     min-height: 120vh;
@@ -3875,7 +3876,7 @@ footer {
     }
 
 /* Hero title - 1920px screens only */
-@media (min-width: 1514px) and (max-width: 1921px) {
+@media (min-width: 1800px) and (max-width: 1921px) {
     .welcome-text {
         font-size: 2.2rem;
         transform: translateY(-6.5rem);
@@ -3919,7 +3920,7 @@ footer {
     }
 }
 
-@media (max-width: 1513px) {
+@media (max-width: 1799px) {
         .story-yellowflower {
             width: 320px;
         }
@@ -4160,8 +4161,8 @@ footer {
         }
 }
 
-/* Hero title - 1512px screens only */
-@media (min-width: 1442px) and (max-width: 1513px) {
+/* Hero title - 1442px-1799px screens (MacBook Pro 14/16, 1920 laptops at 125%) */
+@media (min-width: 1442px) and (max-width: 1799px) {
     .welcome-text {
         font-size: 1.9rem;
         transform: translateY(-3.5rem);
@@ -4202,6 +4203,7 @@ footer {
         top: calc(100% + 15rem + 0.5rem);
     }
 }
+
 
 @media (max-width: 1441px) {
         .rsvp-downflower,
@@ -4936,8 +4938,77 @@ footer {
     }
 }
 
+/* iPad landscape and small laptop windows (901px-1024px) */
+@media (min-width: 901px) and (max-width: 1024px) {
+    .hero-navbar {
+        padding: 1.2rem 1.5rem;
+    }
+
+    .hero-navbar .nav-center a {
+        font-size: 0.8rem;
+        margin: 0 0.6rem;
+    }
+
+    .nav-logo .logo-j,
+    .nav-logo .logo-k {
+        font-size: 24px;
+    }
+
+    .nav-logo .logo-oseph,
+    .nav-logo .logo-ate {
+        font-size: 18px;
+    }
+
+    .nav-logo .logo-amp {
+        font-size: 26px;
+    }
+
+    .sched-grid {
+        gap: 1.5rem;
+        padding: 0 1.5rem;
+        transform: translate(0, -5rem);
+    }
+
+    .sched-time {
+        font-size: 1.05rem;
+    }
+
+    .sched-name {
+        font-size: 1.05rem;
+        letter-spacing: 1px;
+    }
+
+    .sched-location {
+        font-size: 0.85rem;
+    }
+
+    .attire-grid {
+        grid-template-columns: repeat(3, 1fr) 4fr repeat(3, 1fr);
+    }
+
+    #attire .attire-title {
+        white-space: nowrap;
+    }
+
+    #attire .attire-title .attire-initial {
+        font-size: 3.8rem;
+    }
+
+    #attire .attire-title .attire-word {
+        font-size: 2.4rem;
+    }
+
+    .faq-initial {
+        font-size: 3.6rem;
+    }
+
+    .faq-word {
+        font-size: 2.4rem;
+    }
+}
+
 /* Mobile Responsive */
-@media (max-width: 769px) {
+@media (max-width: 900px) {
     .rsvp-main-title {
         font-size: 2rem;
     }
@@ -6397,8 +6468,8 @@ footer {
     }
 }
 
-/* Tablet only (600px-769px) - changes here do not affect 599px and below or 770px and above */
-@media (min-width: 600px) and (max-width: 769px) {
+/* Tablet only (600px-900px, incl. iPad portrait) - does not affect 599px and below or 901px and above */
+@media (min-width: 600px) and (max-width: 900px) {
     /* Red flower between the hero and Our Love Story (hidden on phones) */
     .hero-story-flower-anchor .story-yellowflower {
         display: block !important;
@@ -8853,7 +8924,7 @@ footer {
     object-fit: cover;
 }
 
-@media (max-width: 769px) {
+@media (max-width: 900px) {
     .std-video {
         object-fit: contain;
     }
@@ -8862,7 +8933,7 @@ footer {
 /* Ultra-wide desktop monitors (21:9 and wider) - the desktop
    video is 16:9, so covering an ultra-wide viewport would crop
    too much off the left/right. Show the full frame instead. */
-@media (min-width: 770px) and (min-aspect-ratio: 21/9) {
+@media (min-width: 901px) and (min-aspect-ratio: 21/9) {
     .std-video {
         object-fit: contain;
     }
@@ -9035,7 +9106,7 @@ footer {
 .gate-petal-7 { left: 71%; width: 13px; height: 10px; animation-duration: 13.5s; animation-delay: 5.1s; }
 .gate-petal-8 { left: 88%; width: 17px; height: 13px; animation-duration: 14.5s; animation-delay: 1.2s; }
 
-@media (max-width: 769px) {
+@media (max-width: 900px) {
     .gate-petal-desktop-only {
         display: none;
     }
@@ -9378,7 +9449,7 @@ footer {
     }
 }
 
-@media (max-width: 769px) {
+@media (max-width: 900px) {
     .gate-eyebrow {
         font-size: 0.9rem;
         letter-spacing: 4px;
@@ -9559,4 +9630,58 @@ footer {
         opacity: 1;
         animation: none;
     }
+}
+
+
+/* ============================================
+   Desktop: adapt to the browser window height.
+   A 1920x1080 monitor only gives the page ~950px
+   of height (tabs, address bar, taskbar), so the
+   hero date block and the Dress Code are sized
+   from the window height, matching the tuned
+   layout exactly at each screen's full height.
+   --hero-drop = min(tuned drop, drop - (H0 - window height) / 2)
+   ============================================ */
+@media (min-width: 901px) {
+    :root {
+        --hero-drop: min(9rem, max(3rem, calc(50vh - 240px)));
+        --cal-gap: 2rem;
+    }
+
+    .wedding-date,
+    .wedding-location {
+        transform: translateY(var(--hero-drop));
+    }
+
+    .add-to-calendar-wrap {
+        top: calc(100% + var(--hero-drop) + var(--cal-gap));
+    }
+}
+
+@media (min-width: 1201px) and (max-width: 1367px) {
+    :root { --cal-gap: 1rem; }
+}
+
+@media (min-width: 1368px) and (max-width: 1441px) {
+    :root { --hero-drop: min(10rem, max(3rem, calc(50vh - 290px))); }
+
+    .attire-grid { min-height: max(100vh, 900px); }
+}
+
+@media (min-width: 1442px) and (max-width: 1799px) {
+    :root {
+        --hero-drop: min(15rem, max(3rem, calc(50vh - 251px)));
+        --cal-gap: 0.5rem;
+    }
+
+    .attire-grid { min-height: max(100vh, 982px); }
+}
+
+@media (min-width: 1800px) and (max-width: 1921px) {
+    :root {
+        --hero-drop: min(15rem, max(3rem, calc(50vh - 300px)));
+        --cal-gap: 2.5rem;
+    }
+
+    .attire-grid { min-height: max(100vh, 1080px); }
 }

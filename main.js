@@ -55,7 +55,7 @@
         }
 
         if (video) {
-            const isDesktop = window.matchMedia('(min-width: 770px)').matches;
+            const isDesktop = window.matchMedia('(min-width: 901px)').matches;
             const src = isDesktop ? 'videos/desktop.mp4' : 'videos/mobile.mp4';
             if (!video.src || video.src.indexOf(src) === -1) {
                 video.src = src;
@@ -102,7 +102,7 @@
 // never load on small screens. Desktop is untouched
 // since this only runs when the mobile breakpoint matches.
 // ============================================
-if (window.matchMedia('(max-width: 769px)').matches) {
+if (window.matchMedia('(max-width: 900px)').matches) {
     document.addEventListener('DOMContentLoaded', function() {
         const selectors = [
             '.attire-photo-men-1',
@@ -162,7 +162,7 @@ if (window.matchMedia('(max-width: 769px)').matches) {
         }
 
         // Move the white and yellow flowers into the hero section on phones
-        // (tablets 600-769px keep them in place)
+        // (tablets 600-900px keep them in place)
         if (window.matchMedia('(max-width: 599px)').matches) {
             const hero = document.querySelector('#hero');
             const yellowFlower = document.querySelector('.story-yellowflower');
@@ -555,7 +555,7 @@ document.addEventListener('click', (e) => {
 
 // Close mobile menu on window resize
 window.addEventListener('resize', () => {
-    if (window.innerWidth > 769) {
+    if (window.innerWidth > 900) {
         const mobileMenu = document.querySelector('.mobile-menu');
         const burger = document.querySelector('.burger-menu');
         
