@@ -1136,3 +1136,53 @@ document.addEventListener('animationend', function(e) {
         timer = setTimeout(measure, 200);
     });
 })();
+
+// ============================================
+// Background music toggle
+// ============================================
+(function() {
+    const audio = document.getElementById('bgMusic');
+    const btn = document.getElementById('musicToggle');
+    if (!audio || !btn) return;
+    const label = btn.querySelector('.music-toggle-label');
+    let hideTimer;
+
+    audio.volume = 0.6;
+
+    // Show the label briefly as a hint, then tuck it away (hover shows it again)
+    function flashLabel(ms) {
+        clearTimeout(hideTimer);
+        btn.classList.remove('label-hidden');
+        hideTimer = setTimeout(function() { btn.classList.add('label-hidden'); }, ms);
+    }
+
+    function setPlaying(playing) {
+        btn.classList.toggle('is-playing', playing);
+        btn.setAttribute('aria-pressed', playing ? 'true' : 'false');
+        btn.setAttribute('aria-label', playing ? 'Pause music' : 'Play music');
+        label.textContent = playing ? 'Tap to pause music' : 'Tap to play music';
+        flashLabel(3000);
+    }
+
+    // First hint: once the invitation is visible (after the envelope opens, if there is one)
+    const gate = document.getElementById('invitation-gate');
+    const envelope = document.getElementById('openInvitation');
+    if (gate && envelope && getComputedStyle(gate).display !== 'none') {
+        // the gate takes ~1.2s to fade, so this leaves the hint up for ~3s
+        envelope.addEventListener('click', function() { flashLabel(4200); }, { once: true });
+    } else {
+        flashLabel(3000);
+    }
+
+    btn.addEventListener('click', function() {
+        if (audio.paused) {
+            const p = audio.play();
+            if (p && p.catch) p.catch(function(err) { console.warn('Music could not play:', err); setPlaying(false); });
+        } else {
+            audio.pause();
+        }
+    });
+
+    audio.addEventListener('play', function() { setPlaying(true); });
+    audio.addEventListener('pause', function() { setPlaying(false); });
+})();
