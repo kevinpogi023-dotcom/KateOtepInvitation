@@ -33,11 +33,37 @@
         return;
     }
 
+    // Shrink the whole gate (logo, names, envelope, 'Click to Open') when the
+    // browser window is too short for it, e.g. 1920 screens at 125% scaling.
+    const gateContent = gate.querySelector('.gate-content');
+    function fitGate() {
+        if (!gateContent) return;
+        const room = window.innerHeight - 24;
+        const scale = Math.min(1, room / gateContent.offsetHeight);
+        gate.style.setProperty('--gate-scale', scale.toFixed(3));
+    }
+    fitGate();
+    window.addEventListener('load', fitGate);
+    window.addEventListener('resize', fitGate);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitGate);
+
     // Set to true to play the save-the-date video after the envelope opens.
     const PLAY_TRANSITION_VIDEO = true;
 
-    document.body.style.overflow = 'hidden';
+    // Keep the page locked at the top while the gate and the video are showing,
+    // so the invitation always starts at the hero.
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+    document.documentElement.classList.add('scroll-locked');
     let opened = false;
+    let unlocked = false;
+
+    function unlockScroll() {
+        if (unlocked) return;
+        unlocked = true;
+        window.scrollTo(0, 0);
+        document.documentElement.classList.remove('scroll-locked');
+    }
 
     function playSaveTheDate() {
         if (!PLAY_TRANSITION_VIDEO || !saveTheDate) return;
@@ -46,7 +72,12 @@
         saveTheDate.style.display = 'flex';
         saveTheDate.classList.add('active');
 
+        let finished = false;
         function finish() {
+            if (finished) return;
+            finished = true;
+            window.scrollTo(0, 0);
+            unlockScroll();
             revealHero();
             saveTheDate.classList.add('fading-out');
             setTimeout(function() {
@@ -79,7 +110,6 @@
         if (opened) return;
         opened = true;
         envelope.classList.add('opening');
-        document.body.style.overflow = '';
 
         setTimeout(function() {
             gate.classList.add('gate-hidden');
@@ -88,8 +118,11 @@
 
         setTimeout(function() {
             gate.style.display = 'none';
-            // With no transition video, reveal the hero text as the gate fades away.
-            if (!PLAY_TRANSITION_VIDEO || !saveTheDate) revealHero();
+            // With no transition video, unlock and reveal the hero as the gate fades away.
+            if (!PLAY_TRANSITION_VIDEO || !saveTheDate) {
+                unlockScroll();
+                revealHero();
+            }
         }, 1150);
     }
 

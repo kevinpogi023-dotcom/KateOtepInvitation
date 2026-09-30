@@ -9090,6 +9090,8 @@ footer {
     max-width: 90vw;
     min-width: 0;
     transition: opacity 0.5s ease, transform 0.5s ease;
+    /* shrinks the whole gate on short windows (set by main.js) */
+    scale: var(--gate-scale, 1);
 }
 
 .gate-petals {
@@ -9981,4 +9983,12 @@ footer {
     .footer-bottom {
         font-size: 0.85rem !important;
     }
+}
+
+/* Page can't scroll while the envelope gate or the save-the-date video is showing */
+html.scroll-locked,
+html.scroll-locked body {
+    overflow: hidden !important;
+    height: 100%;
+    overscroll-behavior: none;
 }
