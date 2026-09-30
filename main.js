@@ -575,6 +575,8 @@ let foundGuests = [];
 let selectedGuest = null;
 let currentWeddingCode = 'OK27';
 let currentPartyId = null;
+let currentExistingResponses = [];
+let attendingForDietary = [];
 
 document.addEventListener('DOMContentLoaded', function() {
     const continueBtn = document.getElementById('continueBtn');
@@ -617,7 +619,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const matchedParty = matches[0];
                 currentPartyId = matchedParty.id;
                 foundGuests = matchedParty.members.map(m => ({ name: m.name }));
-                displayGuestList(foundGuests, matchedParty.rsvpResponses || []);
+                currentExistingResponses = matchedParty.rsvpResponses || [];
+                displayGuestList(foundGuests, currentExistingResponses);
                 setTimeout(() => {
                     showStep(2);
                 }, 100);
@@ -657,6 +660,20 @@ document.addEventListener('DOMContentLoaded', function() {
             primaryGuest: foundGuests[0]
         };
 
+        // Everyone attending: answered "Will Attend" now, or already attending from an earlier RSVP
+        attendingForDietary = foundGuests
+            .filter(g => {
+                const now = guestResponses.find(r => r.name === g.name);
+                if (now) return now.attendance === 'yes';
+                const before = currentExistingResponses.find(r => r.name === g.name);
+                return before && before.attendance === 'yes';
+            })
+            .map(g => {
+                const before = currentExistingResponses.find(r => r.name === g.name);
+                const saved = before && before.dietary && before.dietary !== 'None' ? before.dietary : '';
+                return { name: g.name, saved: saved };
+            });
+        setupDietaryFields(attendingForDietary);
         showStep(3);
     });
     
@@ -684,6 +701,8 @@ document.addEventListener('DOMContentLoaded', function() {
         submitBtn.textContent = 'Submitting...';
 
         try {
+            const dietaryByName = collectDietary(attendingForDietary);
+
             // Fetch existing responses to preserve unselected members
             const partyDoc = await db.collection('parties').doc(currentPartyId).get();
             const existingData = partyDoc.data();
@@ -697,12 +716,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 else merged.push(newR);
             });
 
+            // Save each attending guest's dietary restrictions on their own response (blank = "None")
+            merged.forEach((r, i) => {
+                if (r.attendance === 'yes' && r.name in dietaryByName) {
+                    merged[i] = { ...r, dietary: dietaryByName[r.name] || 'None' };
+                } else if (r.attendance !== 'yes' && 'dietary' in r) {
+                    const copy = { ...r };
+                    delete copy.dietary;
+                    merged[i] = copy;
+                }
+            });
+
             // Party is fully submitted only when all members have responded
             const allMembers = existingData.members || [];
             const allResponded = allMembers.every(m => merged.some(r => r.name === m.name));
 
             const guestEmail = document.getElementById('email').value.trim();
-            const dietary = document.getElementById('dietaryRestrictions').value.trim();
+            // Party-level summary of everyone's restrictions, e.g. "Kate: Vegetarian; Joseph: No shellfish"
+            const dietary = merged
+                .filter(r => r.attendance === 'yes' && r.dietary)
+                .map(r => r.name + ': ' + r.dietary)
+                .join('; ');
 
             await db.collection('parties').doc(currentPartyId).update({
                 rsvpSubmitted: allResponded,
@@ -807,6 +841,64 @@ function displayGuestList(guests, existingResponses = []) {
     });
 }
 
+// Step 3 dietary restrictions: one box for a single attending guest,
+// one box per person when 2+ guests are attending, hidden if nobody attends.
+const dietaryDrafts = {};
+
+function setupDietaryFields(attending) {
+    const single = document.getElementById('dietarySingle');
+    const perGuest = document.getElementById('dietaryPerGuest');
+    const container = document.getElementById('dietaryGuestFields');
+    const singleBox = document.getElementById('dietaryRestrictions');
+
+    // Remember anything already typed before rebuilding the boxes
+    container.querySelectorAll('textarea[data-guest]').forEach(t => {
+        dietaryDrafts[t.dataset.guest] = t.value;
+    });
+
+    if (attending.length >= 2) {
+        single.style.display = 'none';
+        perGuest.style.display = '';
+        container.innerHTML = '';
+        attending.forEach((person, i) => {
+            const wrap = document.createElement('div');
+            wrap.className = 'dietary-guest';
+
+            const label = document.createElement('label');
+            label.htmlFor = 'dietary-guest-' + i;
+            label.textContent = person.name;
+
+            const box = document.createElement('textarea');
+            box.id = 'dietary-guest-' + i;
+            box.rows = 2;
+            box.placeholder = 'e.g., Vegetarian, No shellfish, Gluten-free';
+            box.dataset.guest = person.name;
+            box.value = person.name in dietaryDrafts ? dietaryDrafts[person.name] : person.saved;
+
+            wrap.appendChild(label);
+            wrap.appendChild(box);
+            container.appendChild(wrap);
+        });
+    } else {
+        perGuest.style.display = 'none';
+        container.innerHTML = '';
+        single.style.display = attending.length === 1 ? '' : 'none';
+        if (attending.length === 1 && !singleBox.value) singleBox.value = attending[0].saved;
+    }
+}
+
+function collectDietary(attending) {
+    const byName = {};
+    if (attending.length >= 2) {
+        document.querySelectorAll('#dietaryGuestFields textarea[data-guest]').forEach(t => {
+            byName[t.dataset.guest] = t.value.trim();
+        });
+    } else if (attending.length === 1) {
+        byName[attending[0].name] = document.getElementById('dietaryRestrictions').value.trim();
+    }
+    return byName;
+}
+
 function showStep(stepNumber) {
     console.log('Showing step:', stepNumber);
     
@@ -847,8 +939,12 @@ function resetForm() {
     document.getElementById('searchName').value = '';
     document.getElementById('searchError').style.display = 'none';
     document.getElementById('rsvpForm').reset();
+    document.getElementById('dietaryGuestFields').innerHTML = '';
+    Object.keys(dietaryDrafts).forEach(k => delete dietaryDrafts[k]);
     foundGuests = [];
     selectedGuest = null;
+    currentExistingResponses = [];
+    attendingForDietary = [];
 }
 
 // ============================================

@@ -3159,6 +3159,32 @@ section {
     color: #d32f2f;
 }
 
+/* Per-guest dietary restrictions (2+ attending guests) */
+#step3 .dietary-group-title {
+    font-size: 1rem;
+    color: #4a4a4a;
+    margin-bottom: 0.3rem;
+}
+
+#step3 .dietary-group-hint {
+    font-size: 0.85rem;
+    color: #8a8078;
+    margin-bottom: 1rem;
+}
+
+#step3 .dietary-guest {
+    margin-bottom: 1rem;
+}
+
+#step3 .dietary-guest:last-child {
+    margin-bottom: 0;
+}
+
+#step3 .dietary-guest label {
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+}
+
 #step3 input[type="email"],
 #step3 textarea {
     width: 100%;
