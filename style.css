@@ -10375,3 +10375,10 @@ html.modal-open body {
 .registry-btn.registry-btn-mobile {
     text-decoration: none !important;
 }
+
+/* iPhone 16 Pro / 17 (402px wide): date, location and Add to Calendar a bit lower */
+@media (min-width: 396px) and (max-width: 410px) {
+    .wedding-date {
+        margin-top: calc(25.5rem - max(0px, 932px - 100svh) + 1.15 * (100lvh - 100svh)) !important;
+    }
+}
