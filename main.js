@@ -425,15 +425,10 @@ window.addEventListener('scroll', () => {
     const reserveNameInput = document.getElementById('reserveNameInput');
     const reserveEmailInput = document.getElementById('reserveEmailInput');
 
-    function renderReserved(card, reservedBy) {
+    function renderReserved(card) {
+        // Grayed card + "Reserved" stamp on the photo; no "Reserved by" badge,
+        // so guests' names aren't shown. CSS hides the Reserve Gift button.
         card.classList.add('is-reserved');
-        const badge = card.querySelector('.gift-card-badge');
-        if (badge) {
-            badge.hidden = false;
-            badge.textContent = reservedBy ? ('✓ Reserved by ' + reservedBy) : '✓ Reserved';
-        }
-        // .gift-card-actions stays visible - CSS hides just the Reserve
-        // Gift button for .is-reserved cards, leaving View Gift visible.
     }
 
     function loadGiftStatus() {
