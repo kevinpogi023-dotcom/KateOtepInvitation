@@ -10382,3 +10382,174 @@ html.modal-open body {
         margin-top: calc(25.5rem - max(0px, 932px - 100svh) + 1.15 * (100lvh - 100svh)) !important;
     }
 }
+
+/* ============================================
+   Access Code - shown before the invitation gate
+   ============================================ */
+#access-code {
+    position: fixed;
+    inset: 0;
+    z-index: 20001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: #f2ede2;
+    transition: opacity 0.7s ease;
+}
+
+html.code-ok #access-code:not(.access-code-hidden) {
+    display: none;
+}
+
+#access-code.access-code-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Hold the gate's entrance animations until the code is accepted */
+html:not(.code-ok) #invitation-gate,
+html:not(.code-ok) #invitation-gate * {
+    animation-play-state: paused !important;
+}
+
+.access-code-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    max-width: 340px;
+}
+
+.access-code-logo {
+    width: 90px;
+    height: auto;
+    margin-bottom: 1.2rem;
+}
+
+.access-code-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #7c8c4a;
+    margin-bottom: 0.6rem;
+}
+
+.access-code-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-style: italic;
+    color: #5d5a4e;
+    margin-bottom: 1.2rem;
+}
+
+.access-code-input {
+    width: 100%;
+    max-width: 220px;
+    padding: 0.7rem 1rem;
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    letter-spacing: 6px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #2c2c2c;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid #b7a06a;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.access-code-input:focus {
+    border-color: #7c8c4a;
+    box-shadow: 0 0 0 3px rgba(124, 140, 74, 0.15);
+}
+
+.access-code-error {
+    min-height: 1.3em;
+    margin: 0.6rem 0 0.4rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: #a4473a;
+}
+
+.access-code-btn {
+    padding: 0.6rem 2.2rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #ffffff;
+    background: #7c8c4a;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.access-code-btn:hover,
+.access-code-btn:focus-visible {
+    background: #67763b;
+}
+
+.access-code-box.shake {
+    animation: accessCodeShake 0.4s ease;
+}
+
+@keyframes accessCodeShake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-8px); }
+    40%, 80% { transform: translateX(8px); }
+}
+
+/* Venue paintings in the map modal are tall portraits:
+   crop to a landscape frame focused on the building */
+.map-modal-art {
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    object-position: 50% 78%;
+    /* Sky dissolves upward into the modal background, ground softens at the
+       bottom and the sides get a light fade, so there's no hard frame */
+    -webkit-mask-image:
+        linear-gradient(to bottom, transparent 0%, #000 40%, #000 85%, transparent 100%),
+        linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+        linear-gradient(to bottom, transparent 0%, #000 40%, #000 85%, transparent 100%),
+        linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
+    mask-composite: intersect;
+}
+
+/* RSVP step 2: hide the "We hope to celebrate with you!" title */
+.rsvp-container.rsvp-on-step2 .rsvp-main-title {
+    display: none;
+}
+
+/* Transparent cut-out paintings already blend on their own: no crop or fade */
+.map-modal-art.map-modal-art-cutout {
+    aspect-ratio: auto;
+    object-fit: contain;
+    -webkit-mask-image: none;
+    mask-image: none;
+}
+
+/* Reception painting: shown as-is, no edge fade */
+.map-modal-art.map-modal-art-nofade {
+    -webkit-mask-image: none;
+    mask-image: none;
+}
+
+/* Reception painting reads a bit taller than the church, so scale it down slightly */
+.map-modal-art.map-modal-art-reception {
+    max-width: 360px;
+}
+
+@media (max-width: 900px) {
+    .map-modal-art.map-modal-art-reception {
+        max-width: 255px;
+    }
+}

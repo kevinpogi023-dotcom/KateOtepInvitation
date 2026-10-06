@@ -1,4 +1,40 @@
 // ============================================
+// Access Code - simple code screen shown before
+// the invitation gate so only guests with the
+// code can view the invitation.
+// ============================================
+(function() {
+    const ACCESS_CODE = 'JK27';
+    const screen = document.getElementById('access-code');
+    const form = document.getElementById('accessCodeForm');
+    const input = document.getElementById('accessCodeInput');
+    const error = document.getElementById('accessCodeError');
+    const root = document.documentElement;
+
+    if (!screen) return;
+    setTimeout(function() { input.focus(); }, 300);
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (input.value.trim().toUpperCase() === ACCESS_CODE) {
+            input.blur();
+            screen.classList.add('access-code-hidden');
+            // Starts the gate's entrance animations, which wait behind the code screen
+            root.classList.add('code-ok');
+            setTimeout(function() { screen.style.display = 'none'; }, 700);
+        } else {
+            error.textContent = 'Incorrect code. Please try again.';
+            form.classList.remove('shake');
+            void form.offsetWidth;
+            form.classList.add('shake');
+            input.select();
+        }
+    });
+
+    input.addEventListener('input', function() { error.textContent = ''; });
+})();
+
+// ============================================
 // Invitation Gate - envelope landing screen
 // shown before the invitation. Clicking the
 // envelope plays an opening animation, fades
@@ -946,6 +982,10 @@ function showStep(stepNumber) {
         step.classList.remove('active');
     });
     
+    // The "We hope to celebrate with you!" title is hidden on step 2 (guest list)
+    const rsvpContainer = document.querySelector('.rsvp-container');
+    if (rsvpContainer) rsvpContainer.classList.toggle('rsvp-on-step2', stepNumber === 2);
+
     // Show the requested step
     const targetStep = document.getElementById(`step${stepNumber}`);
     if (targetStep) {

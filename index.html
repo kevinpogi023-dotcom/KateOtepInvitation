@@ -7,13 +7,24 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;500;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Dancing+Script:wght@400;500;600;700&family=EB+Garamond:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=20261007d">
+    <link rel="stylesheet" href="style.css?v=20261007r">
     <link rel="icon" type="image/png" href="images/gatelogo.png">
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <script src="firebase-init.js"></script>
 </head>
 <body>
+    <div id="access-code">
+        <form class="access-code-box" id="accessCodeForm" autocomplete="off" novalidate>
+            <img src="images/logojk.png" alt="" class="access-code-logo">
+            <p class="access-code-eyebrow">Private Invitation</p>
+            <label for="accessCodeInput" class="access-code-label">Please enter your invitation code</label>
+            <input type="text" id="accessCodeInput" class="access-code-input" autocapitalize="characters" spellcheck="false" maxlength="12" required>
+            <p class="access-code-error" id="accessCodeError" aria-live="polite"></p>
+            <button type="submit" class="access-code-btn">Enter</button>
+        </form>
+    </div>
+
     <div id="invitation-gate">
         <div class="gate-petals">
             <span class="gate-petal gate-petal-1"></span>
@@ -568,7 +579,7 @@
 
             <div class="map-modal-grid">
                 <div class="map-modal-venue">
-                    <img src="images/venue-church.png" alt="Watercolor illustration of the church" class="map-modal-art">
+                    <img src="compressedimages/church1.png" alt="Watercolor illustration of the church" loading="lazy" class="map-modal-art map-modal-art-cutout">
                     <p class="map-modal-label">Church</p>
                     <p class="map-modal-name">Diocesan Shrine and Parish of Saint Pio of Pietrelcina</p>
                     <p class="map-modal-address">
@@ -592,7 +603,7 @@
                 </div>
 
                 <div class="map-modal-venue">
-                    <img src="images/venue-reception.png" alt="Watercolor illustration of Fernwood Gardens" class="map-modal-art">
+                    <img src="compressedimages/reception.png" alt="Watercolor illustration of Fernwood Gardens" loading="lazy" class="map-modal-art map-modal-art-cutout map-modal-art-reception">
                     <p class="map-modal-label">Reception</p>
                     <p class="map-modal-name">Fernwood Gardens</p>
                     <p class="map-modal-address">
@@ -807,6 +818,6 @@
         <span class="music-toggle-label">Tap to turn on music</span>
     </button>
 
-    <script src="main.js?v=20261007d"></script>
+    <script src="main.js?v=20261007r"></script>
 </body>
 </html>
