@@ -122,6 +122,8 @@
             saveTheDate.classList.add('fading-out');
             setTimeout(function() {
                 saveTheDate.style.display = 'none';
+                // A tap can end it early, so stop the hidden video from playing on
+                if (video) video.pause();
             }, 600);
         }
 
@@ -134,9 +136,21 @@
             }
             video.currentTime = 0;
             // Play the save-the-date video at 1.25x speed
-            video.defaultPlaybackRate = 1.25;
-            video.playbackRate = 1.25;
-            video.addEventListener('play', function() { video.playbackRate = 1.25; });
+            const NORMAL_RATE = 1.25;
+            // A tap fast-forwards at this speed to the video's next part (see below),
+            // easing in at LANDING_RATE for the last LANDING_SECONDS.
+            const SKIP_RATE = 6;
+            const LANDING_RATE = 2;
+            const LANDING_SECONDS = 0.8;
+            let skipTo = null;
+            function skipRate() {
+                return skipTo - video.currentTime > LANDING_SECONDS ? SKIP_RATE : LANDING_RATE;
+            }
+            video.defaultPlaybackRate = NORMAL_RATE;
+            video.playbackRate = NORMAL_RATE;
+            video.addEventListener('play', function() {
+                video.playbackRate = skipTo === null ? NORMAL_RATE : skipRate();
+            });
             const playPromise = video.play();
             if (playPromise && playPromise.catch) {
                 playPromise.catch(function() {
@@ -145,6 +159,52 @@
                 });
             }
             video.addEventListener('ended', finish, { once: true });
+
+            // Tap the video to move on to its next part, like tapping through stories;
+            // a tap on the last part opens the invitation. Both videos share one
+            // timeline: "Save the Date", Joseph, and Kate, then the photo + date.
+            // It fast-forwards to the next part rather than seeking there: the videos
+            // only have a keyframe every 5s, so a seek stalls (and flashes) while the
+            // phone decodes its way up to the new spot.
+            // The last part is the exception: it starts just after the final keyframe,
+            // so seeking there is quick, and fast-forwarding past that keyframe can make
+            // Safari's WebKit jump to the end of the video.
+            const PART_STARTS = [4, 7.5, 10.5]; // seconds into the video
+            const LAST_KEYFRAME = 10;
+            function watchSkip() {
+                if (finished || skipTo === null) return;
+                if (video.currentTime >= skipTo) {
+                    skipTo = null;
+                    video.playbackRate = NORMAL_RATE;
+                    return;
+                }
+                if (video.playbackRate !== skipRate()) video.playbackRate = skipRate();
+                requestAnimationFrame(watchSkip);
+            }
+            saveTheDate.addEventListener('click', function() {
+                if (finished) return;
+                // Another tap while fast-forwarding moves on one more part
+                const from = skipTo === null ? video.currentTime + 0.1 : skipTo;
+                const next = PART_STARTS.find(function(t) { return t > from; });
+                if (next === undefined) {
+                    finish();
+                    return;
+                }
+                if (video.paused) {
+                    const resume = video.play();
+                    if (resume && resume.catch) resume.catch(function() {});
+                }
+                if (next > LAST_KEYFRAME) {
+                    skipTo = null;
+                    video.playbackRate = NORMAL_RATE;
+                    video.currentTime = next;
+                    return;
+                }
+                const watching = skipTo !== null;
+                skipTo = next;
+                video.playbackRate = skipRate();
+                if (!watching) requestAnimationFrame(watchSkip);
+            });
         } else {
             setTimeout(finish, 4000);
         }
@@ -982,10 +1042,6 @@ function showStep(stepNumber) {
         step.classList.remove('active');
     });
     
-    // The "We hope to celebrate with you!" title is hidden on step 2 (guest list)
-    const rsvpContainer = document.querySelector('.rsvp-container');
-    if (rsvpContainer) rsvpContainer.classList.toggle('rsvp-on-step2', stepNumber === 2);
-
     // Show the requested step
     const targetStep = document.getElementById(`step${stepNumber}`);
     if (targetStep) {

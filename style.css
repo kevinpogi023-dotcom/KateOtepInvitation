@@ -9011,6 +9011,10 @@ footer {
 
 #save-the-date.active {
     pointer-events: auto;
+    /* Tapping the video moves on to its next part (see main.js) */
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
 }
 
 #save-the-date.fading-out {
@@ -10376,10 +10380,65 @@ html.modal-open body {
     text-decoration: none !important;
 }
 
-/* iPhone 16 Pro / 17 (402px wide): date, location and Add to Calendar a bit lower */
+/* iPhone 16 Pro / 17 (402px wide) */
 @media (min-width: 396px) and (max-width: 410px) {
+    /* Date, location and Add to Calendar a bit lower */
     .wedding-date {
         margin-top: calc(25.5rem - max(0px, 932px - 100svh) + 1.15 * (100lvh - 100svh)) !important;
+    }
+}
+
+/* ============================================
+   Dress code header on phones (480px and below): every size gets the
+   same look as the iPhone 15.
+   - The "Women Shades" subtitle draws its own side lines, so they always
+     cross the middle of the text with the same gap (they used to be a
+     background on the box behind it and needed tuning per phone).
+   - The subtitle shrinks on narrow screens so each line stays at least
+     15% of the box wide, up to 0.8rem.
+   - The colour leaves sit close under it, and the wedding-colours caption
+     fits on one line with about 20px either side.
+   ============================================ */
+@media (max-width: 480px) {
+    .attire-center {
+        background-image: none !important;
+    }
+
+    .attire-subtitle {
+        display: flex !important;
+        align-items: center;
+        align-self: stretch;
+        margin-left: -1rem;    /* reach the box's side borders */
+        margin-right: -1rem;
+        white-space: nowrap;
+        font-size: min(0.8rem, calc(4.26vw - 4.31px)) !important;
+    }
+
+    /* 8px from the text via margins rather than flex `gap` (older iOS Safari lacks it) */
+    .attire-subtitle::before,
+    .attire-subtitle::after {
+        content: '';
+        flex: 1 1 0;
+        height: 1px;
+        background: rgba(182, 171, 123, 0.5);
+    }
+
+    .attire-subtitle::before {
+        margin-right: 8px;
+    }
+
+    .attire-subtitle::after {
+        margin-left: 8px;
+    }
+
+    .attire-swatches {
+        position: relative;
+        top: -6px;
+    }
+
+    .attire-women2-caption {
+        font-size: min(0.78rem, calc(3.84vw - 2.46px)) !important;
+        white-space: nowrap;
     }
 }
 
@@ -10524,11 +10583,6 @@ html:not(.code-ok) #invitation-gate * {
     mask-composite: intersect;
 }
 
-/* RSVP step 2: hide the "We hope to celebrate with you!" title */
-.rsvp-container.rsvp-on-step2 .rsvp-main-title {
-    display: none;
-}
-
 /* Transparent cut-out paintings already blend on their own: no crop or fade */
 .map-modal-art.map-modal-art-cutout {
     aspect-ratio: auto;
@@ -10551,5 +10605,183 @@ html:not(.code-ok) #invitation-gate * {
 @media (max-width: 900px) {
     .map-modal-art.map-modal-art-reception {
         max-width: 255px;
+    }
+}
+
+/* ============================================
+   RSVP on phones: keep the flowers clear of the title
+   - On phones the "We hope to celebrate with you!" title sits below the
+     card, and the flowers are pinned to the bottom of the section. When a
+     step is taller than the screen (the guest list on step 2), the title
+     slid down into the flowers. Bottom padding now always leaves room for
+     them: flower height (about 1.17 x its width) + its bottom offset.
+   - If the flower sizes change, update these to match.
+   - The step 2 and step 3 cards drop their extra bottom margin so the title
+     sits as close to the card as it does on step 1.
+   ============================================ */
+@media (max-width: 599px), (min-width: 770px) and (max-width: 900px) {
+    .rsvp-section {
+        padding-bottom: 340px !important;   /* 270px flowers */
+    }
+
+    #step2 .rsvp-card,
+    #step3 .rsvp-card {
+        margin-bottom: 0 !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .rsvp-section {
+        padding-bottom: 345px !important;   /* 270px flowers */
+    }
+}
+
+@media (max-width: 441px) {
+    .rsvp-section {
+        padding-bottom: 255px !important;   /* 180px flowers */
+    }
+}
+
+@media (max-width: 426px) {
+    .rsvp-section {
+        padding-bottom: 312px !important;   /* 230px flowers */
+    }
+}
+
+@media (max-width: 395px) {
+    .rsvp-section {
+        padding-bottom: 240px !important;   /* 170px flowers */
+    }
+}
+
+@media (max-width: 376px) {
+    .rsvp-section {
+        padding-bottom: 265px !important;   /* 190px flowers */
+    }
+}
+
+@media (max-width: 360px) {
+    .rsvp-section {
+        padding-bottom: 235px !important;   /* 165px flowers */
+    }
+}
+
+@media (max-width: 320px) {
+    .rsvp-section {
+        padding-bottom: 215px !important;   /* 148px flowers */
+    }
+}
+
+/* ============================================
+   Dress code photo strips on phones: taller figures
+   - The women are drawn at about one height, a little taller than before. The
+     men read shorter than the women in their gowns, so they're a bit taller
+     still. Individual figures are then nudged up or down by eye.
+   - The px caps keep a figure from outgrowing its 200px-tall box on wider
+     phones, and off-centre photos are shifted back to the middle of their box.
+   ============================================ */
+@media (max-width: 440px) {
+    .attire-photo-women-3 .attire-sub-box:nth-child(1) {   /* women1 */
+        background-size: min(125%, 80px);
+        background-position: 40% center;
+    }
+
+    .attire-photo-women-3 .attire-sub-box:nth-child(2) {   /* women2 */
+        background-size: min(120%, 77px);
+        background-position: 38% center;
+    }
+
+    .attire-photo-women-3 .attire-sub-box:nth-child(3) {   /* women3 */
+        background-size: min(120%, 77px);
+    }
+
+    .attire-extra-box-1 .attire-sub-box:nth-child(1) {     /* women4 */
+        background-size: min(175%, 113px);
+    }
+
+    .attire-extra-box-1 .attire-sub-box:nth-child(2) {     /* women5 */
+        background-size: min(116%, 75px);
+    }
+
+    .attire-extra-box-1 .attire-sub-box:nth-child(3) {     /* women6 */
+        background-size: min(102%, 65px);
+    }
+
+    .attire-photo-women-3 .attire-sub-box:nth-child(4) {   /* men1 */
+        background-size: min(117%, 75px);
+        background-position: -8% center;
+    }
+
+    .attire-photo-women-3 .attire-sub-box:nth-child(5) {   /* men2 */
+        background-size: min(113%, 73px);
+        background-position: 13% center;
+    }
+
+    .attire-photo-women-3 .attire-sub-box:nth-child(6) {   /* men3 */
+        background-size: min(126%, 81px);
+    }
+
+    .attire-extra-box-1 .attire-sub-box:nth-child(4) {     /* men4 */
+        background-size: min(124%, 79px);
+    }
+
+    .attire-extra-box-1 .attire-sub-box:nth-child(5) {     /* men5 */
+        background-size: min(118%, 77px);
+        background-position: 25% center;
+    }
+
+    .attire-extra-box-1 .attire-sub-box:nth-child(6) {     /* men6 */
+        background-size: min(120%, 77px);
+    }
+}
+
+/* ============================================
+   Mobile navbar logo: the JK monogram image, centred on the screen
+   (the burger and RSVP button either side aren't the same width)
+   ============================================ */
+.mobile-logo-img {
+    display: block;
+    width: 46px;
+    height: 46px;
+    object-fit: cover;   /* trims the empty space above and below the monogram */
+}
+
+@media (max-width: 900px) {
+    .mobile-logo {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        flex: none;
+        margin: 0 !important;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@media (min-width: 600px) and (max-width: 900px) {
+    .mobile-logo {
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+}
+
+/* ============================================
+   Dress code sits right under the entourage photo carousel: no leafy gap,
+   divider line or shadow between them, so it doesn't look like it's floating.
+   The dress code keeps its own top padding, so its box shows a top border.
+   ============================================ */
+.party-layout {
+    padding-bottom: 0 !important;
+}
+
+#attire {
+    border-top: none;
+    box-shadow: none;
+}
+
+/* Phones and tablets: the dress code box gets the same 12px space on every
+   side. No full-screen min-height, which left a big gap under the photos. */
+@media (max-width: 900px) {
+    #attire {
+        padding: 0.75rem;
+        min-height: 0;
     }
 }
