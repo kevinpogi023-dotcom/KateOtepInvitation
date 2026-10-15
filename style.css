@@ -10386,17 +10386,6 @@ html.modal-open body {
     .wedding-date {
         margin-top: calc(25.5rem - max(0px, 932px - 100svh) + 1.15 * (100lvh - 100svh)) !important;
     }
-
-    /* RSVP flowers the same size as on the iPhone 15, so the two sprigs
-       stay apart instead of meeting in the middle */
-    .rsvp-downflower,
-    .rsvp-upflower {
-        width: 170px;
-    }
-
-    .rsvp-upflower {
-        bottom: 40px;
-    }
 }
 
 /* ============================================
@@ -10641,51 +10630,26 @@ html:not(.code-ok) #invitation-gate * {
     }
 }
 
+/* 480px and below: every phone gets the iPhone 15 look. The flowers scale
+   with the screen (170px wide on the 393px iPhone 15), so the two middle
+   sprigs always stay apart, and the padding grows with them. */
 @media (max-width: 480px) {
-    .rsvp-section {
-        padding-bottom: 345px !important;   /* 270px flowers */
+    .rsvp-downflower,
+    .rsvp-upflower {
+        width: 43.26vw !important;
     }
-}
 
-@media (max-width: 441px) {
-    .rsvp-section {
-        padding-bottom: 255px !important;   /* 180px flowers */
+    .rsvp-downflower {
+        bottom: 35px;
     }
-}
 
-@media (max-width: 426px) {
-    .rsvp-section {
-        padding-bottom: 312px !important;   /* 230px flowers */
+    .rsvp-upflower {
+        left: 0;
+        bottom: 40px;
     }
-}
 
-@media (min-width: 396px) and (max-width: 410px) {
     .rsvp-section {
-        padding-bottom: 240px !important;   /* 170px flowers (iPhone 16 Pro) */
-    }
-}
-
-@media (max-width: 395px) {
-    .rsvp-section {
-        padding-bottom: 240px !important;   /* 170px flowers */
-    }
-}
-
-@media (max-width: 376px) {
-    .rsvp-section {
-        padding-bottom: 265px !important;   /* 190px flowers */
-    }
-}
-
-@media (max-width: 360px) {
-    .rsvp-section {
-        padding-bottom: 235px !important;   /* 165px flowers */
-    }
-}
-
-@media (max-width: 320px) {
-    .rsvp-section {
-        padding-bottom: 215px !important;   /* 148px flowers */
+        padding-bottom: calc(42px + 50.43vw) !important;   /* flower height + 40px offset */
     }
 }
 
