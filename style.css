@@ -10274,10 +10274,12 @@ html.modal-open body {
     }
 }
 
-/* RSVP title on phones and tablets: same text size as "The Entourage" title */
+/* RSVP title. Tablets: same text size as "The Entourage" title. Phones: 1.5x
+   that size, because "RSVP" is a short word and at the same letter size it
+   looked much smaller than the long section titles. */
 @media (max-width: 900px) {
-    .rsvp-initial { font-size: 3.1rem !important; }
-    .rsvp-word { font-size: 1.8rem !important; }
+    .rsvp-initial { font-size: 4.65rem !important; }
+    .rsvp-word { font-size: 2.7rem !important; }
 }
 
 @media (min-width: 600px) and (max-width: 900px) {
@@ -10286,18 +10288,18 @@ html.modal-open body {
 }
 
 @media (max-width: 441px) {
-    .rsvp-initial { font-size: 3.5rem !important; }
-    .rsvp-word { font-size: 2.05rem !important; }
+    .rsvp-initial { font-size: 5.25rem !important; }
+    .rsvp-word { font-size: 3.075rem !important; }
 }
 
 @media (max-width: 395px) {
-    .rsvp-initial { font-size: 3.1rem !important; }
-    .rsvp-word { font-size: 1.8rem !important; }
+    .rsvp-initial { font-size: 4.65rem !important; }
+    .rsvp-word { font-size: 2.7rem !important; }
 }
 
 @media (max-width: 360px) {
-    .rsvp-initial { font-size: 2.2rem !important; }
-    .rsvp-word { font-size: 1.25rem !important; }
+    .rsvp-initial { font-size: 3.3rem !important; }
+    .rsvp-word { font-size: 1.875rem !important; }
 }
 
 /* "View Gift List" button on phones and tablets: inside the card like before,
@@ -10609,47 +10611,43 @@ html:not(.code-ok) #invitation-gate * {
 }
 
 /* ============================================
-   RSVP on phones: keep the flowers clear of the title
-   - On phones the "We hope to celebrate with you!" title sits below the
-     card, and the flowers are pinned to the bottom of the section. When a
-     step is taller than the screen (the guest list on step 2), the title
-     slid down into the flowers. Bottom padding now always leaves room for
-     them: flower height (about 1.17 x its width) + its bottom offset.
-   - If the flower sizes change, update these to match.
+   RSVP on phones and portrait iPads
+   - Phones (599px and below): no corner flowers. A big faint lily drawing
+     on the paper background fills the section instead. The section isn't
+     stretched to the screen height, so every step ends the same distance
+     below the "We hope to celebrate with you!" title (which sits under the
+     card on phones).
+   - Portrait iPads (770-900px) keep the corner flowers pinned to the bottom
+     of the section. The bottom padding leaves room for them (flower height,
+     about 1.17 x its width, + its bottom offset) so a tall step never
+     slides the title into them.
    - The step 2 and step 3 cards drop their extra bottom margin so the title
      sits as close to the card as it does on step 1.
    ============================================ */
 @media (max-width: 599px), (min-width: 770px) and (max-width: 900px) {
-    .rsvp-section {
-        padding-bottom: 340px !important;   /* 270px flowers */
-    }
-
     #step2 .rsvp-card,
     #step3 .rsvp-card {
         margin-bottom: 0 !important;
     }
 }
 
-/* 480px and below: every phone gets the iPhone 15 look. The flowers scale
-   with the screen (170px wide on the 393px iPhone 15), so the two middle
-   sprigs always stay apart, and the padding grows with them. */
-@media (max-width: 480px) {
+@media (min-width: 770px) and (max-width: 900px) {
+    .rsvp-section {
+        padding-bottom: 340px !important;   /* 270px flowers */
+    }
+}
+
+@media (max-width: 599px) {
+    .rsvp-section {
+        min-height: 0 !important;
+        padding-bottom: 200px !important;
+        background: url('compressedimages/entourageflower%20(1).png') center / cover no-repeat,
+                    #efeadf url('compressedimages/entouragebg%20(1).jpg') center / cover no-repeat !important;
+    }
+
     .rsvp-downflower,
     .rsvp-upflower {
-        width: 43.26vw !important;
-    }
-
-    .rsvp-downflower {
-        bottom: 35px;
-    }
-
-    .rsvp-upflower {
-        left: 0;
-        bottom: 40px;
-    }
-
-    .rsvp-section {
-        padding-bottom: calc(42px + 50.43vw) !important;   /* flower height + 40px offset */
+        display: none !important;
     }
 }
 
@@ -10802,4 +10800,291 @@ html:not(.code-ok) #invitation-gate * {
 .story-photo-frame img,
 .party-photo-frame img {
     width: auto !important;
+}
+
+/* Phones (480px and below): both photo strips the same height, taller than
+   before (240px photos in the same 12px cream frame), with thinner green
+   lines. Landscape photos stay narrower than the screen, so each one is seen
+   whole as it passes. */
+@media (max-width: 480px) {
+    .story-carousel-track,
+    .party-carousel-track {
+        --photo-height: min(240px, calc((100vw - 30px) / 1.5));
+        gap: 2px;
+    }
+
+    .story-photo-frame img {
+        height: var(--photo-height) !important;
+    }
+
+    .party-photo-frame {
+        height: calc(var(--photo-height) + 24px) !important;
+        padding: 12px !important;
+    }
+
+    .story-carousel-wrapper,
+    .party-carousel-wrapper {
+        border-top-width: 2px;
+        border-bottom-width: 2px;
+    }
+}
+
+/* ============================================
+   FAQs title on phones: one smaller line, with only the F as a script
+   letter. The A and Q match the rest of the title (Cinzel capitals). Sizes
+   follow the screen width, so the title takes the same share of every phone.
+   ============================================ */
+@media (max-width: 599px) {
+    .faq-title .faq-initial:first-child {
+        font-size: 6.9vw !important;
+    }
+
+    .faq-word,
+    .faq-title .faq-initial:not(:first-child) {
+        font-family: 'Cinzel', serif !important;
+        font-size: 4.3vw !important;
+        letter-spacing: 1px !important;
+        text-transform: uppercase;
+    }
+}
+
+/* Dress code leaves on phones: the row spans the dress code box, so the
+   leaves spread out evenly instead of bunching in the middle */
+@media (max-width: 599px) {
+    .attire-swatches {
+        width: 100%;
+    }
+}
+
+/* Dress code colour names: centred under their leaves. Phones and tablets
+   (six leaves in a row) put each name on two lines; desktops (three leaves
+   a row, with room to spare) keep each name on one line. */
+.swatch-item span {
+    text-align: center;
+}
+
+@media (min-width: 901px) {
+    .swatch-break {
+        display: none;
+    }
+
+    /* Below about 1536px the column is too narrow for "Pumpkin Orange" at
+       full size, so the names (and the space between the columns) shrink
+       with the column just enough to stay on one line. Browsers without
+       container units keep the old wrapping. */
+    @supports (font-size: 1cqw) {
+        .attire-center-bottom {
+            container-type: inline-size;
+        }
+
+        .attire-swatches {
+            column-gap: min(2rem, 2.5cqw);
+        }
+
+        .attire-swatches .swatch-item span {
+            white-space: nowrap;
+            font-size: min(0.95rem, 3.7cqw);
+        }
+    }
+}
+
+/* Entourage section: plain paper texture background, filling the section */
+#party {
+    background-image: url('compressedimages/entouragebg%20(1).jpg') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+/* ============================================
+   Entourage: faint lily drawing behind the names, on the paper background.
+   - Tablets and desktops: the right half, from about the Principal Sponsors
+     down to the last names, cut off by the right edge.
+   - Phones: as wide as the screen from the top of the section, repeating
+     down the list.
+   ============================================ */
+.party-entourage {
+    position: relative;
+    isolation: isolate;
+}
+
+.party-entourage::before {
+    content: '';
+    position: absolute;
+    left: 45%;
+    right: 0;
+    top: 24%;
+    bottom: 0;
+    z-index: -1;
+    background: url('compressedimages/entourageflower%20(1).png') left top / auto 100% no-repeat;
+    pointer-events: none;
+}
+
+@media (max-width: 599px) {
+    .party-entourage::before {
+        left: 0;
+        top: 0;
+        background-size: 100% auto;
+        background-position: center top;
+        background-repeat: repeat-y;
+    }
+}
+
+/* RSVP on desktops: paper background with faint lilies, filling the section,
+   and no corner flowers (the background has its own) */
+@media (min-width: 901px) {
+    .rsvp-section {
+        background: #efeadf url('compressedimages/rsvpbgdesktop%20(1).png') center / cover no-repeat !important;
+    }
+
+    .rsvp-downflower,
+    .rsvp-upflower {
+        display: none !important;
+    }
+}
+
+/* Dress code: plain paper texture background, filling the section */
+#attire {
+    background: #efeadf url('compressedimages/dressbg%20(1).png') center / cover no-repeat !important;
+}
+
+/* Entourage: no diamond divider lines between the groups (the space they
+   take is kept, so the groups stay as far apart as before) */
+.entourage-divider {
+    visibility: hidden !important;
+}
+
+/* ============================================
+   Phones 396-441px wide (iPhone 16 Pro and 17, Pixel/Galaxy, Plus, Pro Max)
+   share text sizes made for the bigger 430-440px phones, so on the iPhone 16
+   Pro some text came out up to 17% bigger for its screen than on the iPhone
+   15. Each of those is capped at the iPhone 15's proportions (its size there
+   / 393px x 100vw), so every phone shows the same design. Nothing gets
+   bigger than it was.
+   ============================================ */
+@media (min-width: 396px) and (max-width: 441px) {
+    .welcome-text { font-size: min(0.95rem, 3.583vw) !important; }        /* 14.1px on the iPhone 15 */
+    .name-initial { font-size: min(2.6rem, 9.567vw) !important; }         /* 37.6px */
+    .name-rest { font-size: min(1.9rem, 6.921vw) !important; }            /* 27.2px */
+    .wedding-date,
+    .wedding-location { font-size: min(1.08rem, 4.071vw) !important; }    /* 16px */
+
+    .our-love-story-title .ols-initial:not(:first-child),
+    .our-love-story-title .ols-rest { font-size: min(1.65rem, 5.903vw) !important; }   /* 23.2px */
+    .story-col p { font-size: min(0.9rem, 3.053vw) !important; }          /* 12px */
+
+    .sched-time { font-size: min(0.95rem, 3.257vw) !important; }          /* 12.8px */
+    .sched-name { font-size: min(1rem, 3.461vw) !important; }             /* 13.6px */
+    .sched-location { font-size: min(0.85rem, 3.053vw) !important; }      /* 12px */
+
+    .entourage-initial { font-size: min(3.5rem, 12.621vw) !important; }   /* 49.6px */
+    .entourage-rest { font-size: min(2.05rem, 7.328vw) !important; }      /* 28.8px */
+
+    .rsvp-initial { font-size: min(5.25rem, 18.931vw) !important; }       /* 74.4px */
+    .rsvp-word { font-size: min(3.075rem, 10.992vw) !important; }         /* 43.2px */
+}
+
+/* ============================================
+   Dress code on desktops: "Women Shades - Plain or Floral Dresses" sits on
+   the line where the top and bottom rows of figure photos meet, at every
+   desktop size.
+   - The centre column has three rows: the title and text (pushed down to
+     the subtitle), the subtitle, and the colours (starting just under it).
+     The two outer rows are always the same height, so the subtitle's middle
+     is the column's middle, which is the line. When the content needs more
+     room, the section grows instead of the subtitle moving off the line.
+   - The gaps between the parts are the same as before.
+   - Phones and tablets ignore the two wrappers (display: contents), so their
+     stacked layout is unchanged.
+   ============================================ */
+@media (max-width: 900px) {
+    .attire-center-top,
+    .attire-center-middle,
+    .attire-center-bottom {
+        display: contents;
+    }
+}
+
+@media (min-width: 901px) {
+    .attire-center {
+        display: grid;
+        grid-template-rows: 1fr auto 1fr;
+        justify-items: center;
+    }
+
+    .attire-center-top,
+    .attire-center-bottom {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .attire-center-middle {
+        width: 100%;
+    }
+
+    .attire-center-top {
+        align-self: end;
+    }
+
+    .attire-center-bottom {
+        align-self: start;
+        padding-top: 1.2rem;    /* the gap the subtitle's bottom margin used to make */
+    }
+
+    #attire .attire-subtitle {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+}
+
+/* Butter Yellow leaf (compressedimages/butteryellow.png): the image has more
+   empty space around the leaf than the other five, so it's drawn about 20%
+   bigger and a little lower to match their size and line up with them.
+   (A transform, so the layout around it doesn't move.) */
+.attire-swatches .leaf-swatch-butter {
+    transform: translateY(7%) scale(1.2);
+}
+
+/* Dress code on desktops: "Women Shades - Plain or Floral Dresses" stays on
+   one line. Each desktop range keeps its own size, which only shrinks where
+   the column is too narrow for one line (about 901-1100px, 1368px, and a
+   touch at 1800px and up, where it filled the column exactly). The text is
+   about 16.4 x its size wide, plus about 38px of letter spacing.
+   Browsers without container units keep the old wrapping. */
+@media (min-width: 901px) {
+    @supports (font-size: 1cqw) {
+        .attire-center-middle {
+            container-type: inline-size;
+        }
+
+        #attire .attire-subtitle {
+            white-space: nowrap;
+        }
+    }
+}
+
+@media (min-width: 901px) and (max-width: 1367px) {
+    @supports (font-size: 1cqw) {
+        #attire .attire-subtitle { font-size: min(1.2rem, calc((100cqw - 50px) / 16.4)); }
+    }
+}
+
+@media (min-width: 1368px) and (max-width: 1441px) {
+    @supports (font-size: 1cqw) {
+        #attire .attire-subtitle { font-size: min(1.35rem, calc((100cqw - 50px) / 16.4)); }
+    }
+}
+
+@media (min-width: 1442px) and (max-width: 1799px) {
+    @supports (font-size: 1cqw) {
+        #attire .attire-subtitle { font-size: min(1.5rem, calc((100cqw - 50px) / 16.4)); }
+    }
+}
+
+@media (min-width: 1800px) {
+    @supports (font-size: 1cqw) {
+        #attire .attire-subtitle { font-size: min(1.8rem, calc((100cqw - 50px) / 16.4)); }
+    }
 }

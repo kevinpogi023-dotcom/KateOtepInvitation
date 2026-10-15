@@ -1272,8 +1272,8 @@ document.addEventListener('animationend', function(e) {
                 for (let i = 0; i < setSize; i++) track.appendChild(frames[i].cloneNode(true));
             }
             track.style.setProperty('--loop-distance', (setWidth * sets) + 'px');
-            // Same pace on every screen: each photo takes 2.5s to scroll past.
-            track.style.animationDuration = (setSize * sets * 2.5) + 's';
+            // Same pace on every screen: each photo takes 3.2s to scroll past.
+            track.style.animationDuration = (setSize * sets * 3.2) + 's';
         });
     }
 
