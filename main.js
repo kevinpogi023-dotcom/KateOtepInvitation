@@ -1260,7 +1260,12 @@ document.addEventListener('animationend', function(e) {
     });
 
     function measure() {
-        tracks.forEach(function(track) {
+        // The entourage strip goes first: its speed is the one Our Story copies
+        const ordered = Array.from(tracks).sort(function(a, b) {
+            return b.classList.contains('party-carousel-track') - a.classList.contains('party-carousel-track');
+        });
+        let partySpeed = 0; // px per second
+        ordered.forEach(function(track) {
             const frames = track.children;
             const setSize = Number(track.dataset.setSize);
             if (!setSize) return;
@@ -1271,9 +1276,18 @@ document.addEventListener('animationend', function(e) {
             while (frames.length < setSize * sets * 2) {
                 for (let i = 0; i < setSize; i++) track.appendChild(frames[i].cloneNode(true));
             }
-            track.style.setProperty('--loop-distance', (setWidth * sets) + 'px');
-            // Same pace on every screen: each photo takes 3.2s to scroll past.
-            track.style.animationDuration = (setSize * sets * 3.2) + 's';
+            const distance = setWidth * sets;
+            track.style.setProperty('--loop-distance', distance + 'px');
+            // Entourage: each photo takes 3.2s to scroll past. Our Story moves at
+            // the entourage's on-screen speed (its wide landscape photos would
+            // otherwise make it scroll faster).
+            let duration = setSize * sets * 3.2;
+            if (track.classList.contains('party-carousel-track')) {
+                partySpeed = distance / duration;
+            } else if (partySpeed) {
+                duration = distance / partySpeed;
+            }
+            track.style.animationDuration = duration + 's';
         });
     }
 
