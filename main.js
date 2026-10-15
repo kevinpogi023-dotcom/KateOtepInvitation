@@ -1246,21 +1246,34 @@ document.addEventListener('animationend', function(e) {
 // set before restarting, or the loop visibly jumps.
 // (translateX(-50%) is relative to the visible strip,
 // not the photo row, so the distance is measured.)
+// Frames follow their photos' shapes, so one set can
+// be narrower than a wide screen: the loop then slides
+// several sets, with extra copies added to cover it.
 // ============================================
 (function() {
     const tracks = document.querySelectorAll('.story-carousel-track, .party-carousel-track');
     if (!tracks.length) return;
 
+    // The HTML writes each set of photos out twice
+    tracks.forEach(function(track) {
+        track.dataset.setSize = Math.floor(track.children.length / 2);
+    });
+
     function measure() {
         tracks.forEach(function(track) {
             const frames = track.children;
-            const half = Math.floor(frames.length / 2);
-            if (!half) return;
-            const distance = frames[half].offsetLeft - frames[0].offsetLeft;
-            if (distance <= 0) return;
-            track.style.setProperty('--loop-distance', distance + 'px');
-            // Same pace on every screen: each photo takes 5s to scroll past.
-            track.style.animationDuration = (half * 5) + 's';
+            const setSize = Number(track.dataset.setSize);
+            if (!setSize) return;
+            const setWidth = frames[setSize].offsetLeft - frames[0].offsetLeft;
+            if (setWidth <= 0) return;
+            // Slide enough whole sets to cover the strip, and keep twice that many in the track
+            const sets = Math.max(1, Math.ceil(track.parentElement.clientWidth / setWidth));
+            while (frames.length < setSize * sets * 2) {
+                for (let i = 0; i < setSize; i++) track.appendChild(frames[i].cloneNode(true));
+            }
+            track.style.setProperty('--loop-distance', (setWidth * sets) + 'px');
+            // Same pace on every screen: each photo takes 2.5s to scroll past.
+            track.style.animationDuration = (setSize * sets * 2.5) + 's';
         });
     }
 

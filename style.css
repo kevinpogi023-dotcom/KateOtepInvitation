@@ -10386,6 +10386,17 @@ html.modal-open body {
     .wedding-date {
         margin-top: calc(25.5rem - max(0px, 932px - 100svh) + 1.15 * (100lvh - 100svh)) !important;
     }
+
+    /* RSVP flowers the same size as on the iPhone 15, so the two sprigs
+       stay apart instead of meeting in the middle */
+    .rsvp-downflower,
+    .rsvp-upflower {
+        width: 170px;
+    }
+
+    .rsvp-upflower {
+        bottom: 40px;
+    }
 }
 
 /* ============================================
@@ -10648,6 +10659,12 @@ html:not(.code-ok) #invitation-gate * {
     }
 }
 
+@media (min-width: 396px) and (max-width: 410px) {
+    .rsvp-section {
+        padding-bottom: 240px !important;   /* 170px flowers (iPhone 16 Pro) */
+    }
+}
+
 @media (max-width: 395px) {
     .rsvp-section {
         padding-bottom: 240px !important;   /* 170px flowers */
@@ -10704,7 +10721,7 @@ html:not(.code-ok) #invitation-gate * {
     }
 
     .attire-extra-box-1 .attire-sub-box:nth-child(3) {     /* women6 */
-        background-size: min(102%, 65px);
+        background-size: min(99%, 63px);
     }
 
     .attire-photo-women-3 .attire-sub-box:nth-child(4) {   /* men1 */
@@ -10726,12 +10743,32 @@ html:not(.code-ok) #invitation-gate * {
     }
 
     .attire-extra-box-1 .attire-sub-box:nth-child(5) {     /* men5 */
-        background-size: min(118%, 77px);
+        background-size: min(121.5%, 79px);
         background-position: 25% center;
     }
 
     .attire-extra-box-1 .attire-sub-box:nth-child(6) {     /* men6 */
         background-size: min(120%, 77px);
+    }
+}
+
+/* iPhone 15 / 15 Pro (393px wide; also 14 Pro and 16): men 4-6 a touch bigger,
+   women 6 a touch smaller */
+@media (min-width: 391px) and (max-width: 395px) {
+    .attire-extra-box-1 .attire-sub-box:nth-child(3) {     /* women6 */
+        background-size: 99%;
+    }
+
+    .attire-extra-box-1 .attire-sub-box:nth-child(4) {     /* men4 */
+        background-size: 126.5%;
+    }
+
+    .attire-extra-box-1 .attire-sub-box:nth-child(5) {     /* men5 */
+        background-size: 121.5%;
+    }
+
+    .attire-extra-box-1 .attire-sub-box:nth-child(6) {     /* men6 */
+        background-size: 123.5%;
     }
 }
 
@@ -10784,4 +10821,21 @@ html:not(.code-ok) #invitation-gate * {
         padding: 0.75rem;
         min-height: 0;
     }
+}
+
+/* ============================================
+   Photo carousels (Our Story and the entourage): every photo is shown
+   whole. Each frame takes its photo's shape at the strip's height
+   (portrait photos narrower, landscape wider) instead of cropping the
+   photo to a fixed-size box. The photos' width/height in the HTML let
+   the browser size the frames before the images have loaded.
+   ============================================ */
+.story-photo-frame,
+.party-photo-frame {
+    flex: 0 0 auto !important;
+}
+
+.story-photo-frame img,
+.party-photo-frame img {
+    width: auto !important;
 }
