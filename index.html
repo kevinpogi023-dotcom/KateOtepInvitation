@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;500;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Dancing+Script:wght@400;500;600;700&family=EB+Garamond:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=20261016a">
+    <link rel="stylesheet" href="style.css?v=20261021b">
     <link rel="icon" type="image/png" href="images/gatelogo.png">
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -360,14 +360,14 @@
                     <div class="entourage-col">
                         <h4 class="entourage-role">Matron of Honor</h4>
                         <p class="entourage-name">Pauline Alek L. Ramos</p>
-                        <h4 class="entourage-role" style="margin-top:0.8rem;">Bridesmaids</h4>
+                        <h4 class="entourage-role entourage-role-subgroup">Bridesmaids</h4>
                         <p class="entourage-name">Sandra Therese V. Ferrer</p>
                         <p class="entourage-name">Jan Pauline T. Isidro</p>
                         <p class="entourage-name">Irah Stephanie R. Landicho</p>
                         <p class="entourage-name">Jessa D. Llarena</p>
                         <p class="entourage-name">Jayde Nirvana Santos</p>
                         <p class="entourage-name">Tiffany Ryzelle M. Tadili</p>
-                        <h4 class="entourage-role" style="margin-top:0.8rem;">Bridesman</h4>
+                        <h4 class="entourage-role entourage-role-subgroup">Bridesman</h4>
                         <p class="entourage-name">Jarren Meg A. Buenaventura</p>
                     </div>
                 </div>
@@ -538,8 +538,7 @@
                     <path d="M15 7C15 4.5 16 2.5 18 1.3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
                 </svg>
             </div>
-            <p class="gift-modal-subtitle">Your love and support mean the world to us.<br>Here are a few things we're hoping for as we begin this next chapter.</p>
-            <p class="gift-modal-note">If you'd like to give one of these gifts, kindly tap the green <span class="gift-note-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 12v9H4v-9M2 7h20v5H2V7zM12 22V7M12 7C10 2 6 2 6 5s3 2 6 2zM12 7c2-5 6-5 6-2s-3 2-6 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span> gift button and enter your name. This reserves the gift for you, so no one else will choose the same one.</p>
+            <p class="gift-modal-note">If you'd like to give one of these gifts, kindly tap the green <strong>Reserve</strong> button and enter your name. This reserves the gift for you, so no one else will choose the same one.</p>
             <div class="gift-grid" id="giftGrid"></div>
             <div class="gift-modal-footer">
                 <span class="gift-footer-line"></span>
@@ -563,6 +562,21 @@
             <div class="reserve-modal-actions">
                 <button type="button" class="reserve-modal-cancel" id="reserveModalCancel">Cancel</button>
                 <button type="button" class="reserve-modal-confirm" id="reserveModalConfirm">Reserve Gift</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gift Thank You Modal -->
+    <div class="reserve-modal-overlay" id="thankYouModalOverlay">
+        <div class="reserve-modal thankyou-modal" role="dialog" aria-modal="true" aria-labelledby="thankYouModalTitle">
+            <button type="button" class="reserve-modal-close" id="thankYouModalClose" aria-label="Close">&times;</button>
+            <h4 class="reserve-modal-title" id="thankYouModalTitle">Thank You!</h4>
+            <p class="thankyou-modal-text">Dear <strong id="thankYouGuestName"></strong>,</p>
+            <p class="thankyou-modal-text">Thank you so much for your thoughtful gift of <strong id="thankYouGiftName"></strong>. We have noted your reservation, and we truly appreciate your kindness and generosity as we begin our new life together.</p>
+            <p class="thankyou-modal-text">We can't wait to celebrate with you!</p>
+            <p class="thankyou-modal-signoff">With love,<br>Joseph &amp; Kate</p>
+            <div class="reserve-modal-actions">
+                <button type="button" class="reserve-modal-confirm" id="thankYouModalDone">Close</button>
             </div>
         </div>
     </div>
@@ -595,10 +609,16 @@
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 6c-.2-.6-.8-1-1.4-1H6.5c-.7 0-1.2.4-1.4 1L3 12v8c0 .6.4 1 1 1h1c.6 0 1-.4 1-1v-1h12v1c0 .6.4 1 1 1h1c.6 0 1-.4 1-1v-8l-2.1-6zM6.5 16c-.8 0-1.5-.7-1.5-1.5S5.7 13 6.5 13s1.5.7 1.5 1.5S7.3 16 6.5 16zm11 0c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
                         3:30 PM
                     </p>
-                    <a class="map-modal-btn" href="https://www.google.com/maps?q=Diocesan+Shrine+and+Parish+of+Saint+Pio+of+Pietrelcina+(formerly+known+as+San+Pedro+Calungsod+Parish),+106+Sumulong+Hwy,+Antipolo,+1870+Rizal&amp;ftid=0x3397b8dd687da045:0x9498561f5b04038f">
-                        View Church Map
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </a>
+                    <div class="map-modal-actions">
+                        <a class="map-modal-btn" href="https://www.google.com/maps?q=Diocesan+Shrine+and+Parish+of+Saint+Pio+of+Pietrelcina+(formerly+known+as+San+Pedro+Calungsod+Parish),+106+Sumulong+Hwy,+Antipolo,+1870+Rizal&amp;ftid=0x3397b8dd687da045:0x9498561f5b04038f" target="_blank" rel="noopener" aria-label="Open the church in Google Maps">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"/></svg>
+                            Google Maps
+                        </a>
+                        <a class="map-modal-btn" href="https://waze.com/ul?ll=14.6184358,121.1487498&amp;navigate=yes" target="_blank" rel="noopener" aria-label="Open the church in Waze">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 3L3 10.5l7.2 2.3L12.5 20z"/></svg>
+                            Waze
+                        </a>
+                    </div>
                 </div>
 
                 <div class="map-modal-separator" aria-hidden="true">
@@ -619,10 +639,16 @@
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 6c-.2-.6-.8-1-1.4-1H6.5c-.7 0-1.2.4-1.4 1L3 12v8c0 .6.4 1 1 1h1c.6 0 1-.4 1-1v-1h12v1c0 .6.4 1 1 1h1c.6 0 1-.4 1-1v-8l-2.1-6zM6.5 16c-.8 0-1.5-.7-1.5-1.5S5.7 13 6.5 13s1.5.7 1.5 1.5S7.3 16 6.5 16zm11 0c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
                         6:00 PM
                     </p>
-                    <a class="map-modal-btn" href="https://www.google.com/maps/place/Fernwood+Gardens+Antipolo/@14.5729263,121.1730121,852m/data=!3m2!1e3!4b1!4m6!3m5!1s0x3397c14cbb752cf9:0xcda710c11b252e16!8m2!3d14.5729263!4d121.1730121!16s%2Fg%2F11f5q0g4r2!18m1!1e1">
-                        View Reception Map
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </a>
+                    <div class="map-modal-actions">
+                        <a class="map-modal-btn" href="https://www.google.com/maps/place/Fernwood+Gardens+Antipolo/@14.5729263,121.1730121,852m/data=!3m2!1e3!4b1!4m6!3m5!1s0x3397c14cbb752cf9:0xcda710c11b252e16!8m2!3d14.5729263!4d121.1730121!16s%2Fg%2F11f5q0g4r2!18m1!1e1" target="_blank" rel="noopener" aria-label="Open Fernwood Gardens in Google Maps">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"/></svg>
+                            Google Maps
+                        </a>
+                        <a class="map-modal-btn" href="https://waze.com/ul?ll=14.5729263,121.1730121&amp;navigate=yes" target="_blank" rel="noopener" aria-label="Open Fernwood Gardens in Waze">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 3L3 10.5l7.2 2.3L12.5 20z"/></svg>
+                            Waze
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -823,6 +849,6 @@
         <span class="music-toggle-label">Tap to turn on music</span>
     </button>
 
-    <script src="main.js?v=20261016b"></script>
+    <script src="main.js?v=20261021b"></script>
 </body>
 </html>

@@ -210,24 +210,58 @@
         }
     }
 
+    // If the envelope is tapped while the gate's text is still typing/fading
+    // in, fast-forward the rest of it (all together, so it keeps its order)
+    // and open the envelope once every line is showing.
+    const GATE_TEXT = '.gate-logo, .gate-eyebrow, .gate-from, .gate-names, .gate-cta';
+    const FAST_FORWARD_MS = 600;
+
+    function finishGateText() {
+        const running = [];
+        gate.querySelectorAll(GATE_TEXT).forEach(function(el) {
+            if (!el.getAnimations) return;
+            el.getAnimations().forEach(function(anim) {
+                if (anim.playState !== 'finished') running.push(anim);
+            });
+        });
+        if (!running.length) return Promise.resolve();
+
+        // They all started together, so the latest end is how much is left
+        const left = Math.max.apply(null, running.map(function(anim) {
+            return anim.effect.getComputedTiming().endTime - anim.currentTime;
+        }));
+        const rate = Math.max(2, left / FAST_FORWARD_MS);
+        running.forEach(function(anim) { anim.playbackRate = rate; });
+
+        const allDone = Promise.all(running.map(function(anim) {
+            return anim.finished.catch(function() {});
+        }));
+        // Never hold the envelope closed for long, whatever the browser does
+        const fallback = new Promise(function(resolve) { setTimeout(resolve, FAST_FORWARD_MS + 900); });
+        return Promise.race([allDone, fallback]);
+    }
+
     function openInvitation() {
         if (opened) return;
         opened = true;
-        envelope.classList.add('opening');
 
-        setTimeout(function() {
-            gate.classList.add('gate-hidden');
-            playSaveTheDate();
-        }, 450);
+        finishGateText().then(function() {
+            envelope.classList.add('opening');
 
-        setTimeout(function() {
-            gate.style.display = 'none';
-            // With no transition video, unlock and reveal the hero as the gate fades away.
-            if (!PLAY_TRANSITION_VIDEO || !saveTheDate) {
-                unlockScroll();
-                revealHero();
-            }
-        }, 1150);
+            setTimeout(function() {
+                gate.classList.add('gate-hidden');
+                playSaveTheDate();
+            }, 450);
+
+            setTimeout(function() {
+                gate.style.display = 'none';
+                // With no transition video, unlock and reveal the hero as the gate fades away.
+                if (!PLAY_TRANSITION_VIDEO || !saveTheDate) {
+                    unlockScroll();
+                    revealHero();
+                }
+            }, 1150);
+        });
     }
 
     envelope.addEventListener('click', openInvitation);
@@ -272,20 +306,26 @@ if (window.matchMedia('(max-width: 900px)').matches) {
                 sub.className = 'attire-sub-box';
                 if (images && images[i]) {
                     sub.style.backgroundImage = "url('images/" + images[i] + "')";
+                    // e.g. attire-sub-women5 - the CSS sizes each photo by this class
+                    sub.classList.add('attire-sub-' + images[i].replace('.png', ''));
                 }
                 el.appendChild(sub);
             }
         }
 
-        // Divide the 3rd child (women-3) into 6 equal sub-boxes with women1-3 and men1-3
+        // Women follow the colour swatches above them: Butter Yellow, Yellow
+        // Orange, Pumpkin Orange on the first row; Petal Pink, Coral Pink,
+        // Matcha Green on the second. Men stay men1-3 then men4-6.
+
+        // Divide the 3rd child (women-3) into 6 equal sub-boxes
         divideIntoSixBoxes(document.querySelector('.attire-grid > .attire-photo-women-3'), [
-            'women1.png', 'women2.png', 'women3.png',
+            'women5.png', 'women6.png', 'women2.png',
             'men1.png', 'men2.png', 'men3.png'
         ]);
 
-        // Divide the 4th child (extra box) into 6 equal sub-boxes with women4-6 and men4-6
+        // Divide the 4th child (extra box) into 6 equal sub-boxes
         divideIntoSixBoxes(document.querySelector('.attire-grid > .attire-extra-box-1'), [
-            'women4.png', 'women5.png', 'women6.png',
+            'women3.png', 'women4.png', 'women1.png',
             'men4.png', 'men5.png', 'men6.png'
         ]);
 
@@ -457,32 +497,40 @@ window.addEventListener('scroll', () => {
 
 // ============================================
 // Gift Reservations - connected to a Google Sheet
-// via a Google Apps Script Web App. The sheet has
-// columns: Item | Reserved | ReservedBy | Email.
-// See gift-reservations-setup.md for the Apps
-// Script code and deployment steps.
+// via a Google Apps Script Web App. Each name below
+// must match the sheet's "Product Category" column;
+// the script reads/writes its "Taken?" and "Name"
+// columns. See gift-reservations-setup.md for the
+// Apps Script code and deployment steps.
 // ============================================
 (() => {
-    const GIFT_SCRIPT_URL = 'PASTE_YOUR_DEPLOYED_APPS_SCRIPT_URL_HERE';
+    const GIFT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx0cNlaSnMh9qUbTv_6Lq19bXEXDJeKeJoyQIDULkrWJf7pwfcpX2eBvkcZOd7DWHKK/exec';
+    const GIFT_PLACEHOLDER_IMG = 'images/gift-placeholder.svg';
     const grid = document.getElementById('giftGrid');
     if (!grid) return;
 
     const GIFT_ITEMS = [
         { name: 'Portable Power Station', img: 'images/portable.png', url: 'https://ph.ecoflow.com/products/delta-3-portable-power-station?variant=52064529219894#&gid=1&pid=1' },
-        { name: 'Coffee Machine', img: 'compressedimages/coffeemaker.png', url: '#' },
+        { name: 'Coffee Machine', img: 'compressedimages/coffeemaker.png', url: 'https://shopee.ph/HiBREW-H1B-Capsules-Coffee-Machine-6-in-1-Hot-Cold-Brew-Espresso-Dolce-Gusto-Nespresso-Powder-i.1368443613.29612631881' },
         { name: 'Oven Toaster / Airfryer', img: 'images/oventoaster.png', url: 'https://shopee.ph/Eureka-20L-Air-Fryer-Oven-High-Capacity-Electric-Toaster-Bake-Grill-EEAO-20L-i.1461663903.28334659912' },
+        { name: 'Dishwashing Machine', img: GIFT_PLACEHOLDER_IMG, url: 'https://ph.shp.ee/ZTxEqMuE' },
         { name: 'Rice Cooker', img: 'images/ricecooker.png', url: '#' },
         { name: 'Microwave', img: 'images/microwave.png', url: 'https://shopee.ph/Midea-20L-Inverter-Quattro-Series-Mechanical-Microwave-Oven-(Black)-i.129365759.25314855728' },
         { name: 'Blender', img: 'compressedimages/blender.png', url: 'https://shopee.ph/PHILIPS-Blender-HR2041-10-4-Star-Blade-1-Speed-Setting-and-Pulse-Smoothie-Juicer-1L-450W-i.296368531.10092029415' },
         { name: 'Vacuum Cleaner', img: 'images/vacuum.png', url: 'https://shopee.ph/Deerma-VC20-Plus-Vacuum-Cleaner-Handheld-Cordless-Stick-Aspirator-Lightweight-Vacuum-5500Pa-i.330250330.5062121543' },
         { name: 'Robot Vacuum', img: 'images/robotvacuum.png', url: 'https://shopee.ph/-BESTSELLER-eufy-by-Anker-Omni-C20-Robot-Vacuum-Mop-All-in-One-Station-7000Pa-Suction-i.251064806.41060236254' },
         { name: 'Air Purifier', img: 'compressedimages/airpurifier.png', url: 'https://shopee.ph/Levoit-Core-P350-Pet-Care-Air-Purifier-Effective-33-m%C2%B2-H13-True-HEPA-Filter-i.512761824.14987528183' },
+        { name: 'Water Purifier', img: GIFT_PLACEHOLDER_IMG, url: 'https://ph.shp.ee/qWzDv8xw' },
         { name: 'Humidifier', img: 'images/humidifier.png', url: 'https://shopee.ph/Deerma-PX310W-Humidifier-Essential-Oil-Diffuser-Aromatherapy-Diffuser-3-Speed-Timing-300ML-i.330250330.25934694381' },
         { name: 'Charging Station', img: 'compressedimages/chargingstation.png', url: 'https://shopee.ph/UGREEN-200W-GaN-Charger-8-in-1-Desktop-Laptop-Fast-Charging-Stand-For-iPhone-16-15-Pro-Max-Macbook-Air-Xiaomi-Samsung-Tablets-i.98350209.44450804183' },
+        { name: 'Washing Machine', img: GIFT_PLACEHOLDER_IMG, url: '#' },
+        { name: 'Dryer', img: GIFT_PLACEHOLDER_IMG, url: '#' },
+        { name: 'Smart Fan', img: GIFT_PLACEHOLDER_IMG, url: '#' },
         { name: 'Indoor Camera', img: 'images/indoorcamera.png', url: 'https://shopee.ph/IMOU-Ranger-Dual-Pro-Dual-Lens-CCTV-Wireless-Security-Indoor-Camera-Connect-Cellphone-WiFi-Audio-i.1357126550.43150148436' },
         { name: 'Cat Automatic Dry Food Machine', img: 'images/dryfoodmachine.png', url: 'https://shopee.ph/Rojeco-2L-Automatic-Cat-Feeder-Button-WIFI-Version-Dog-Food-Dispenser-Smart-Control-Timed-Feeder-i.549150104.17998285051' },
         { name: 'Cat Automatic Wet Food Machine', img: 'compressedimages/catautomoatic.png', url: 'https://shopee.ph/ROJECO-Automatic-Wet-Food-Feeder-for-Pets-With-Ice-box-6-Meal-Feeder-with-Programmable-Timer-For-Cats-and-Dogs-i.549150104.29663558229' },
         { name: 'Cat Water Fountain', img: 'compressedimages/catwater fountain.png', url: 'https://shopee.ph/product/549150104/28456000237' },
+        { name: 'Tool Set (Hammer, Screwdriver, Etc)', img: GIFT_PLACEHOLDER_IMG, url: '#' },
         { name: 'Extension Cord', img: 'images/extensioncord.png', url: 'https://shopee.ph/Deli-Universal-Hole-Vertical-Socket-4-8-12-Group-1A2C-1.6-3M-Extension-Cord-ET764-i.332268558.26237053153' },
         { name: 'Rechargeable Battery', img: 'images/rechargablebatt.png', url: 'https://shopee.ph/imuto-Rechargeable-AA-AAA-Battery-Li-ion-with-Charger-8-Pcs-1.5V-3000-1300mwh-Camera-Batteries-i.1407241126.28631254458' },
         { name: 'Philips Oneturn Iron Steamer', img: 'images/ironsteamer.png', url: '#' }
@@ -504,8 +552,9 @@ window.addEventListener('scroll', () => {
                 '<p class="gift-card-name">' + item.name + '</p>' +
                 '<span class="gift-card-badge" hidden>&check; Reserved</span>' +
                 '<div class="gift-card-actions">' +
-                    '<a href="' + item.url + '" class="gift-card-view-btn" target="_blank" rel="noopener">' + VIEW_ICON + '<span class="gift-card-btn-label"> View Gift</span></a>' +
-                    '<button type="button" class="gift-card-reserve-btn">' + RESERVE_ICON + '<span class="gift-card-btn-label"> Reserve Gift</span></button>' +
+                    // " Gift" is hidden on phones, where the buttons read just "View" / "Reserve"
+                    '<a href="' + item.url + '" class="gift-card-view-btn" target="_blank" rel="noopener">' + VIEW_ICON + '<span class="gift-card-btn-label"> View<span class="gift-card-btn-extra"> Gift</span></span></a>' +
+                    '<button type="button" class="gift-card-reserve-btn">' + RESERVE_ICON + '<span class="gift-card-btn-label"> Reserve<span class="gift-card-btn-extra"> Gift</span></span></button>' +
                 '</div>' +
             '</div>';
         grid.appendChild(card);
@@ -527,27 +576,59 @@ window.addEventListener('scroll', () => {
         card.classList.add('is-reserved');
     }
 
+    function giftKey(name) {
+        return String(name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+    }
+
+    // The Apps Script takes ~2s to answer, so the status is fetched as soon as
+    // the page loads (not when the gift list opens), and the last answer is
+    // kept in localStorage so returning guests see it instantly.
+    const GIFT_STATUS_CACHE_KEY = 'giftStatusCache';
+    let giftStatusLoading = false;
+
+    function applyGiftStatus(data) {
+        // data is expected as: { "Product Category": { reserved: true, reservedBy: "Name" }, ... }
+        // Keys are compared loosely (case/spacing/punctuation) to match the sheet.
+        const byKey = {};
+        Object.keys(data).forEach(function(k) { byKey[giftKey(k)] = data[k]; });
+        cards.forEach(function(card) {
+            const info = byKey[giftKey(card.dataset.gift)];
+            // Toggle (not just add) so a gift un-ticked in the sheet becomes available again.
+            card.classList.toggle('is-reserved', !!(info && info.reserved));
+        });
+        grid.classList.remove('is-loading-status');
+    }
+
     function loadGiftStatus() {
         if (!GIFT_SCRIPT_URL || GIFT_SCRIPT_URL.indexOf('PASTE_YOUR') === 0) {
             console.warn('Gift list is not connected to a spreadsheet yet - set GIFT_SCRIPT_URL in main.js.');
             return;
         }
+        if (giftStatusLoading) return;
+        giftStatusLoading = true;
         fetch(GIFT_SCRIPT_URL + '?action=list')
             .then(function(res) { return res.json(); })
             .then(function(data) {
-                // data is expected as: { "Item Name": { reserved: true, reservedBy: "Name" }, ... }
-                cards.forEach(function(card) {
-                    const giftName = card.dataset.gift;
-                    const info = data[giftName];
-                    if (info && info.reserved) {
-                        renderReserved(card, info.reservedBy);
-                    }
-                });
+                applyGiftStatus(data);
+                try { localStorage.setItem(GIFT_STATUS_CACHE_KEY, JSON.stringify(data)); } catch (e) {}
             })
             .catch(function(err) {
                 console.error('Could not load gift reservation status:', err);
-            });
+                grid.classList.remove('is-loading-status');
+            })
+            .then(function() { giftStatusLoading = false; });
     }
+
+    // Show the last known status right away; until the first answer arrives on
+    // a first visit, Reserve buttons are disabled so nobody picks a taken gift.
+    let cachedStatus = null;
+    try { cachedStatus = JSON.parse(localStorage.getItem(GIFT_STATUS_CACHE_KEY)); } catch (e) {}
+    if (cachedStatus) {
+        applyGiftStatus(cachedStatus);
+    } else {
+        grid.classList.add('is-loading-status');
+    }
+    loadGiftStatus();
 
     function openReserveModal(card) {
         pendingCard = card;
@@ -566,9 +647,35 @@ window.addEventListener('scroll', () => {
         if (reserveOverlay) reserveOverlay.classList.remove('active');
     }
 
+    const thankYouOverlay = document.getElementById('thankYouModalOverlay');
+    const thankYouGuestName = document.getElementById('thankYouGuestName');
+    const thankYouGiftName = document.getElementById('thankYouGiftName');
+
+    function openThankYouModal(guestName, giftName) {
+        if (!thankYouOverlay) return;
+        // textContent (not innerHTML) since the name is typed by the guest.
+        if (thankYouGuestName) thankYouGuestName.textContent = guestName;
+        if (thankYouGiftName) thankYouGiftName.textContent = giftName;
+        thankYouOverlay.classList.add('active');
+    }
+
+    function closeThankYouModal() {
+        if (thankYouOverlay) thankYouOverlay.classList.remove('active');
+    }
+
+    ['thankYouModalClose', 'thankYouModalDone'].forEach(function(id) {
+        const btn = document.getElementById(id);
+        if (btn) btn.addEventListener('click', closeThankYouModal);
+    });
+    if (thankYouOverlay) {
+        thankYouOverlay.addEventListener('click', function(e) {
+            if (e.target === thankYouOverlay) closeThankYouModal();
+        });
+    }
+
     grid.addEventListener('click', function(e) {
         const reserveBtn = e.target.closest('.gift-card-reserve-btn');
-        if (reserveBtn) {
+        if (reserveBtn && !grid.classList.contains('is-loading-status')) {
             openReserveModal(reserveBtn.closest('.gift-card'));
         }
     });
@@ -581,9 +688,9 @@ window.addEventListener('scroll', () => {
         });
     }
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && reserveOverlay && reserveOverlay.classList.contains('active')) {
-            closeReserveModal();
-        }
+        if (e.key !== 'Escape') return;
+        if (reserveOverlay && reserveOverlay.classList.contains('active')) closeReserveModal();
+        closeThankYouModal();
     });
 
     if (reserveConfirm) {
@@ -603,6 +710,7 @@ window.addEventListener('scroll', () => {
                 // reserved look locally (not saved, resets on page refresh).
                 renderReserved(pendingCard, name);
                 closeReserveModal();
+                openThankYouModal(name, giftName);
                 return;
             }
 
@@ -623,6 +731,14 @@ window.addEventListener('scroll', () => {
                     if (result.success) {
                         renderReserved(card, name);
                         closeReserveModal();
+                        openThankYouModal(name, giftName);
+                    } else if (/already reserved/i.test(result.message || '')) {
+                        // Another guest got this gift first (the sheet's lock let
+                        // only one through) - show it as taken and refresh the rest.
+                        renderReserved(card);
+                        closeReserveModal();
+                        loadGiftStatus();
+                        alert('Sorry, another guest has just reserved this gift. Please choose another one from the list. Thank you!');
                     } else {
                         alert(result.message || 'That gift may have just been reserved by someone else - please refresh and check.');
                         reserveConfirm.disabled = false;
@@ -649,6 +765,17 @@ window.addEventListener('scroll', () => {
             loadGiftStatus();
         });
     });
+
+    // While the gift list is open, re-check every 15s so gifts other guests
+    // reserve meanwhile turn gray without a refresh. Skipped while the tab is
+    // hidden so idle tabs don't eat into the Apps Script quota.
+    const GIFT_POLL_MS = 15000;
+    const giftOverlay = document.getElementById('giftModalOverlay');
+    setInterval(function() {
+        if (document.hidden) return;
+        if (!giftOverlay || !giftOverlay.classList.contains('active')) return;
+        loadGiftStatus();
+    }, GIFT_POLL_MS);
 })();
 
 // Add animation on scroll for elements

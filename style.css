@@ -915,7 +915,7 @@ section {
 .map-card-cta {
     position: absolute;
     bottom: 28%;
-    left: 46%;
+    left: 48%;   /* same centre line as the map drawing and the front card */
     transform: translateX(-50%);
     margin: 0;
     font-family: 'Quicksand', sans-serif;
@@ -1990,15 +1990,6 @@ section {
     margin-bottom: 0.8rem;
 }
 
-.gift-modal-subtitle {
-    text-align: center;
-    font-family: 'Quicksand', sans-serif;
-    font-size: 0.85rem;
-    line-height: 1.6;
-    color: #7a5c1e;
-    margin-bottom: 1.8rem;
-}
-
 .gift-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -2165,28 +2156,25 @@ section {
     background: #46613f;
 }
 
-.gift-card-reserve-btn:disabled {
+.gift-card-reserve-btn:disabled,
+.gift-grid.is-loading-status .gift-card-reserve-btn {
     opacity: 0.5;
-    cursor: not-allowed;
+    cursor: wait;
 }
 
-/* Mobile: Reserve Gift becomes an icon-only circle,
-   View Gift expands to take the remaining width */
+/* Mobile: short text-only buttons, "View" and "Reserve" (no icons, no "Gift").
+   They size to their words so "Reserve" fits on the narrowest phones. */
 @media (max-width: 900px) {
+    .gift-card-view-btn,
     .gift-card-reserve-btn {
-        flex: 0 0 auto;
-        width: 34px;
-        height: 34px;
-        padding: 0;
-        border-radius: 50%;
+        flex: 1 1 auto;
+        padding: 0.55rem 0.4rem;
     }
 
-    .gift-card-reserve-btn .gift-card-btn-label {
+    .gift-card-view-btn svg,
+    .gift-card-reserve-btn svg,
+    .gift-card-btn-extra {
         display: none;
-    }
-
-    .gift-card-view-btn {
-        flex: 1;
     }
 }
 
@@ -2435,6 +2423,27 @@ section {
     transform: translateY(-1px);
 }
 
+/* Google Maps + Waze buttons side by side under each venue (they wrap onto
+   two lines only if a phone is too narrow for both). Kept compact and drawn
+   above the corner flowers, which sit beside them on desktop. */
+.map-modal-actions {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.7rem;
+    margin-top: auto;
+}
+
+.map-modal-actions .map-modal-btn {
+    margin-top: 0;
+    gap: 0.5rem;
+    font-size: 0.76rem;
+    letter-spacing: 2px;
+    padding: 0.75rem 1.2rem;
+}
+
 .map-modal-separator {
     display: flex;
     flex-direction: column;
@@ -2530,6 +2539,17 @@ section {
         font-size: 0.72rem;
         letter-spacing: 2px;
         padding: 0.75rem 1.5rem;
+    }
+
+    .map-modal-actions {
+        gap: 0.5rem;
+    }
+
+    .map-modal-actions .map-modal-btn {
+        gap: 0.45rem;
+        font-size: 0.68rem;
+        letter-spacing: 1.5px;
+        padding: 0.7rem 1.05rem;
     }
 
     .map-modal-flower {
@@ -2672,6 +2692,29 @@ section {
 .reserve-modal-confirm:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+}
+
+.thankyou-modal {
+    text-align: center;
+}
+
+.thankyou-modal-text {
+    font-size: 0.85rem;
+    color: #4a4a42;
+    line-height: 1.6;
+    margin-bottom: 0.8rem;
+}
+
+.thankyou-modal-text strong {
+    color: #2c2c2c;
+}
+
+.thankyou-modal-signoff {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    color: #5a7a52;
+    line-height: 1.6;
+    margin: 1.2rem 0 0.8rem;
 }
 
 .gift-modal-footer {
@@ -6194,7 +6237,7 @@ footer {
         background-repeat: no-repeat;
     }
 
-    .attire-photo-women-3 .attire-sub-box:nth-child(1) {
+    .attire-grid .attire-sub-box.attire-sub-women1 {
         background-size: 113%;
     }
 
@@ -6216,12 +6259,12 @@ footer {
         border-right: none;
     }
 
-    .attire-extra-box-1 .attire-sub-box:nth-child(1) {
+    .attire-grid .attire-sub-box.attire-sub-women4 {
         background-size: 165%;
         background-position: 70% center;
     }
 
-    .attire-extra-box-1 .attire-sub-box:nth-child(3) {
+    .attire-grid .attire-sub-box.attire-sub-women6 {
         background-size: 95%;
     }
 
@@ -6854,7 +6897,7 @@ footer {
         background-size: 71%;
     }
 
-    .attire-photo-women-3 .attire-sub-box:nth-child(1) {
+    .attire-grid .attire-sub-box.attire-sub-women1 {
         background-size: 71%;
     }
 
@@ -6871,11 +6914,11 @@ footer {
         background-size: 71%;
     }
 
-    .attire-extra-box-1 .attire-sub-box:nth-child(1) {
+    .attire-grid .attire-sub-box.attire-sub-women4 {
         background-size: 105%;
     }
 
-    .attire-extra-box-1 .attire-sub-box:nth-child(3) {
+    .attire-grid .attire-sub-box.attire-sub-women6 {
         background-size: 60%;
     }
 
@@ -8459,7 +8502,7 @@ footer {
         background-repeat: no-repeat;
     }
 
-    .attire-photo-women-3 .attire-sub-box:nth-child(1) {
+    .attire-grid .attire-sub-box.attire-sub-women1 {
         background-size: 113%;
     }
 
@@ -8481,12 +8524,12 @@ footer {
         border-right: none;
     }
 
-    .attire-extra-box-1 .attire-sub-box:nth-child(1) {
+    .attire-grid .attire-sub-box.attire-sub-women4 {
         background-size: 165%;
         background-position: 70% center;
     }
 
-    .attire-extra-box-1 .attire-sub-box:nth-child(3) {
+    .attire-grid .attire-sub-box.attire-sub-women6 {
         background-size: 95%;
     }
 
@@ -10341,10 +10384,10 @@ html.modal-open body {
     }
 }
 
-/* Gift list: how-to-reserve note under the subtitle */
+/* Gift list: how-to-reserve note under the title */
 .gift-modal-note {
     max-width: 560px;
-    margin: -0.4rem auto 1.8rem;
+    margin: 0.5rem auto 1.8rem;
     padding: 0.8rem 1.1rem;
     text-align: center;
     font-family: 'Quicksand', sans-serif;
@@ -10356,17 +10399,8 @@ html.modal-open body {
     border-radius: 10px;
 }
 
-.gift-note-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background: #5a7a52;
-    color: #fff;
-    vertical-align: middle;
-    margin: 0 0.15rem;
+.gift-modal-note strong {
+    font-weight: 700;
 }
 
 @media (max-width: 599px) {
@@ -10660,29 +10694,29 @@ html:not(.code-ok) #invitation-gate * {
      phones, and off-centre photos are shifted back to the middle of their box.
    ============================================ */
 @media (max-width: 440px) {
-    .attire-photo-women-3 .attire-sub-box:nth-child(1) {   /* women1 */
+    .attire-grid .attire-sub-box.attire-sub-women1 {
         background-size: min(125%, 80px);
         background-position: 40% center;
     }
 
-    .attire-photo-women-3 .attire-sub-box:nth-child(2) {   /* women2 */
+    .attire-grid .attire-sub-box.attire-sub-women2 {
         background-size: min(120%, 77px);
         background-position: 38% center;
     }
 
-    .attire-photo-women-3 .attire-sub-box:nth-child(3) {   /* women3 */
+    .attire-grid .attire-sub-box.attire-sub-women3 {
         background-size: min(120%, 77px);
     }
 
-    .attire-extra-box-1 .attire-sub-box:nth-child(1) {     /* women4 */
+    .attire-grid .attire-sub-box.attire-sub-women4 {
         background-size: min(175%, 113px);
     }
 
-    .attire-extra-box-1 .attire-sub-box:nth-child(2) {     /* women5 */
+    .attire-grid .attire-sub-box.attire-sub-women5 {
         background-size: min(116%, 75px);
     }
 
-    .attire-extra-box-1 .attire-sub-box:nth-child(3) {     /* women6 */
+    .attire-grid .attire-sub-box.attire-sub-women6 {
         background-size: min(99%, 63px);
     }
 
@@ -10717,7 +10751,7 @@ html:not(.code-ok) #invitation-gate * {
 /* iPhone 15 / 15 Pro (393px wide; also 14 Pro and 16): men 4-6 a touch bigger,
    women 6 a touch smaller */
 @media (min-width: 391px) and (max-width: 395px) {
-    .attire-extra-box-1 .attire-sub-box:nth-child(3) {     /* women6 */
+    .attire-grid .attire-sub-box.attire-sub-women6 {
         background-size: 99%;
     }
 
@@ -11086,5 +11120,72 @@ html:not(.code-ok) #invitation-gate * {
 @media (min-width: 1800px) {
     @supports (font-size: 1cqw) {
         #attire .attire-subtitle { font-size: min(1.8rem, calc((100cqw - 50px) / 16.4)); }
+    }
+}
+
+
+/* ============================================
+   Hero photo on phones: sit the couple just under the names, so their upper
+   bodies show above the date text instead of behind it.
+   The photo follows the hero text, which starts at 25vh (minus 0.6 x the
+   browser bars, like the hero padding rule) with the names ending about
+   99px + 20vw below that; the groom's head goes 25px under the names.
+   15vh undoes the photo layer's -15% top, and 184.72vw (less the 20vw above)
+   is how far down herobg.jpg his head is: 55.98% of a photo drawn 220% wide,
+   i.e. 3.2997 x the screen width tall. Re-tune these if herobg.jpg changes.
+   The first line is for browsers without lvh/svh units.
+   ============================================ */
+@media (max-width: 480px) {
+    .hero::before {
+        background-position: 0% 50%, 35% calc(40vh + 124px - 164.72vw) !important;
+        background-position: 0% 50%, 35% calc(40vh - 0.6 * (100lvh - 100svh) + 124px - 164.72vw) !important;
+    }
+}
+
+/* Entourage: a little more space above "Bridesmaids" and "Bridesman", so each
+   group reads apart from the names above it */
+.entourage-role.entourage-role-subgroup {
+    margin-top: 1.5rem;
+}
+
+@media (max-width: 900px) {
+    .entourage-role.entourage-role-subgroup {
+        margin-top: 0.9rem !important;
+    }
+}
+
+@media (min-width: 600px) and (max-width: 900px) {
+    .entourage-role.entourage-role-subgroup {
+        margin-top: 1.3rem !important;
+    }
+}
+
+@media (max-width: 360px) {
+    .entourage-role.entourage-role-subgroup {
+        margin-top: 0.8rem !important;
+    }
+}
+
+/* RSVP on phones: bigger instructions, name box and example line
+   (600-769px tablets already have their own larger sizes) */
+@media (max-width: 599px), (min-width: 770px) and (max-width: 900px) {
+    .rsvp-instruction {
+        font-size: 0.95rem !important;
+    }
+
+    .rsvp-input {
+        padding: 0.85rem 1.1rem !important;
+        font-size: 18px !important;
+    }
+
+    .rsvp-example {
+        font-size: 0.8rem !important;
+    }
+}
+
+/* Our Story on phones: same text size as the Registry description (0.85rem) */
+@media (max-width: 480px) {
+    .story-columns-mobile .story-col p {
+        font-size: 0.85rem !important;
     }
 }
