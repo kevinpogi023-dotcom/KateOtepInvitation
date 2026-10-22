@@ -11316,3 +11316,26 @@ html:not(.code-ok) #invitation-gate * {
         padding: 0.4rem 0.75rem !important;
     }
 }
+
+/* Entourage: "Bridesmaids" sits one name-line lower than the other subgroups */
+.entourage-role.entourage-role-bridesmaids {
+    margin-top: calc(1.5rem + 33px);
+}
+
+@media (max-width: 900px) {
+    .entourage-role.entourage-role-bridesmaids {
+        margin-top: calc(0.9rem + 17px) !important;
+    }
+}
+
+@media (min-width: 600px) and (max-width: 900px) {
+    .entourage-role.entourage-role-bridesmaids {
+        margin-top: calc(1.3rem + 25px) !important;
+    }
+}
+
+@media (max-width: 360px) {
+    .entourage-role.entourage-role-bridesmaids {
+        margin-top: calc(0.8rem + 15px) !important;
+    }
+}
