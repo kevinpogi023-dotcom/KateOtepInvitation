@@ -10870,13 +10870,13 @@ html:not(.code-ok) #invitation-gate * {
    ============================================ */
 @media (max-width: 599px) {
     .faq-title .faq-initial:first-child {
-        font-size: 6.9vw !important;
+        font-size: 11vw !important;
     }
 
     .faq-word,
     .faq-title .faq-initial:not(:first-child) {
         font-family: 'Cinzel', serif !important;
-        font-size: 4.3vw !important;
+        font-size: 7vw !important;
         letter-spacing: 1px !important;
         text-transform: uppercase;
     }
@@ -11183,10 +11183,10 @@ html:not(.code-ok) #invitation-gate * {
     }
 }
 
-/* Our Story on phones: same text size as the Registry description (0.85rem) */
+/* Our Story on phones: a bit bigger text for easier reading */
 @media (max-width: 480px) {
     .story-columns-mobile .story-col p {
-        font-size: 0.85rem !important;
+        font-size: 0.95rem !important;
     }
 }
 
@@ -11353,5 +11353,38 @@ html:not(.code-ok) #invitation-gate * {
     .attire-grid .attire-sub-box.attire-sub-women1 {
         background-size: 120%;
         background-position: 50% calc(50% + 4.8px);
+    }
+}
+
+/* FAQ: coordinators' phone numbers (tap to call) */
+.faq-answer .faq-phone {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    white-space: nowrap;
+}
+
+/* FAQ: keep the long last question on one line on narrower phones */
+@media (max-width: 429px) {
+    .faq-question h4.faq-q-long {
+        white-space: nowrap;
+        font-size: 10.2px !important;
+        letter-spacing: 0.6px !important;
+    }
+}
+
+/* FAQs title: one line on tablets and desktops; on phones "Questions" drops
+   to a second line so the title can be bigger */
+.faq-title-break {
+    display: none;
+}
+
+@media (max-width: 599px) {
+    .faq-title-break {
+        display: inline;
+    }
+
+    .faq-title {
+        line-height: 1.15 !important;
     }
 }
