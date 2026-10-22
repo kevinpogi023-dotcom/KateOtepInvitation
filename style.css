@@ -11339,3 +11339,19 @@ html:not(.code-ok) #invitation-gate * {
         margin-top: calc(0.8rem + 15px) !important;
     }
 }
+
+/* Phones: the green gown (women1.png, 6th woman on screen) its head lined up
+   with the pink gown's and its hem with the coral gown's beside it */
+@media (max-width: 440px) {
+    .attire-grid .attire-sub-box.attire-sub-women1 {
+        background-size: min(134.5%, 86px);
+        background-position: 40% calc(50% + 6.6px);
+    }
+}
+
+@media (min-width: 441px) and (max-width: 480px) {
+    .attire-grid .attire-sub-box.attire-sub-women1 {
+        background-size: 120%;
+        background-position: 50% calc(50% + 4.8px);
+    }
+}
