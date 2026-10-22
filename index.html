@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;500;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Dancing+Script:wght@400;500;600;700&family=EB+Garamond:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=20261021b">
+    <link rel="stylesheet" href="style.css?v=20261022b">
     <link rel="icon" type="image/png" href="images/gatelogo.png">
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -829,6 +829,18 @@
         </div>
     </footer>
 
+    <!-- Phone navbar: text links across the top with the logo in the middle. On phones
+         (480px and below) it replaces the header with the hamburger, logo and RSVP button. -->
+    <nav class="tab-bar is-hidden" id="tabBar" aria-label="Sections">
+        <a href="#story" class="tab-bar-item" data-section="story"><span>Story</span></a>
+        <a href="#event" class="tab-bar-item" data-section="event"><span>Schedule</span></a>
+        <a href="#hero" class="tab-bar-logo" aria-label="Back to the top">
+            <img src="compressedimages/jklogo%20(1).png" alt="Joseph &amp; Kate">
+        </a>
+        <a href="#registry" class="tab-bar-item" data-section="registry"><span>Registry</span></a>
+        <a href="#rsvp" class="tab-bar-item" data-section="rsvp"><span>RSVP</span></a>
+    </nav>
+
     <!-- Background music -->
     <audio id="bgMusic" loop preload="none">
         <source src="musicbg/music.mp3" type="audio/mpeg">
@@ -849,6 +861,6 @@
         <span class="music-toggle-label">Tap to turn on music</span>
     </button>
 
-    <script src="main.js?v=20261021b"></script>
+    <script src="main.js?v=20261021n"></script>
 </body>
 </html>

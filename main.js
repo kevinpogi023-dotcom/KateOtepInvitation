@@ -1484,3 +1484,79 @@ document.addEventListener('animationend', function(e) {
     audio.addEventListener('play', function() { setPlaying(true); });
     audio.addEventListener('pause', function() { setPlaying(false); });
 })();
+
+// ============================================
+// Phone navbar (text links across the top) - slides in when the invitation
+// opens and stays. It underlines the tab of the section you're in (none on the hero; the logo
+// takes you back there) - between tabs, e.g. the entourage and dress code
+// after the schedule, the last tab passed stays marked - and its text turns
+// light (.on-dark) when a dark section or photo is behind it.
+// ============================================
+(function() {
+    const bar = document.getElementById('tabBar');
+    if (!bar) return;
+    const phone = window.matchMedia('(max-width: 480px)');
+    const items = Array.from(bar.querySelectorAll('.tab-bar-item'));
+    const sections = items.map(function(item) { return document.getElementById(item.dataset.section); });
+    let revealed = false;
+    let ticking = false;
+
+    // What's behind the bar, measured from screenshots of each section on phones:
+    // the hero photo turns dark about a third of the way down (under the pale
+    // sky), the Registry photo starts about halfway down, the footer is dark,
+    // and the Our Story photo strip is mid-dark. Everything else - the cream
+    // sections, the Schedule green and map, the other photos - suits dark text.
+    function darkBehindBar() {
+        // middle of the bar where it rests when shown
+        const y = parseFloat(getComputedStyle(bar).top) + bar.offsetHeight / 2;
+        const under = document.elementsFromPoint(window.innerWidth / 2, y).find(function(el) {
+            return !bar.contains(el);
+        });
+        if (!under) return false;
+        if (under.closest('.story-carousel-outer')) return true;
+        const section = under.closest('section, footer');
+        if (!section) return false;
+        const down = (y - section.getBoundingClientRect().top) / section.offsetHeight;
+        if (section.id === 'hero') return down > 0.35;
+        if (section.id === 'registry') return down > 0.5;
+        return section.id === 'faqs';
+    }
+
+    function update() {
+        ticking = false;
+        if (!phone.matches) return;
+
+        // The section you're in is the last one starting above 45% of the screen
+        const line = window.innerHeight * 0.45;
+        let current = -1;
+        sections.forEach(function(section, i) {
+            if (section && section.getBoundingClientRect().top <= line) current = i;
+        });
+        items.forEach(function(item, i) {
+            item.classList.toggle('is-active', i === current);
+            if (i === current) item.setAttribute('aria-current', 'location');
+            else item.removeAttribute('aria-current');
+        });
+
+        bar.classList.toggle('on-dark', darkBehindBar());
+        bar.classList.toggle('is-hidden', !revealed);
+    }
+
+    function requestUpdate() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(update);
+    }
+
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate);
+
+    function onRevealed() {
+        revealed = true;
+        requestUpdate();
+    }
+    if (document.documentElement.classList.contains('invitation-revealed')) onRevealed();
+    else document.addEventListener('invitation:revealed', onRevealed, { once: true });
+
+    requestUpdate();
+})();

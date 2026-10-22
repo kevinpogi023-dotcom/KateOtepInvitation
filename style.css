@@ -11189,3 +11189,130 @@ html:not(.code-ok) #invitation-gate * {
         font-size: 0.85rem !important;
     }
 }
+
+/* ============================================
+   Phone navbar (480px and below): text links across the top with the JK logo
+   in the middle - no background, no icons - replacing the header (hamburger,
+   logo, RSVP); it stays on screen once the invitation opens. The words carry
+   a soft halo in the page's own tone so they stay readable over text behind
+   them, and turn light (.on-dark) over dark sections/photos (main.js); the
+   current tab is underlined.
+   ============================================ */
+.tab-bar {
+    display: none;
+}
+
+@media (max-width: 480px) {
+    .hero-navbar,
+    .mobile-menu {
+        display: none !important;
+    }
+
+    .tab-bar {
+        position: fixed;
+        top: calc(6px + env(safe-area-inset-top, 0px));
+        left: 50%;
+        z-index: 990;   /* under the gift list (1000) and other popups */
+        display: flex;
+        align-items: center;
+        width: calc(100% - 16px);
+        max-width: 440px;
+        transform: translateX(-50%);
+        transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease;
+    }
+
+    /* Hidden until the invitation opens, then slides down into place */
+    .tab-bar.is-hidden {
+        transform: translate(-50%, calc(-100% - 16px));
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .tab-bar-item {
+        flex: 1 1 0;
+        min-width: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 0;
+        color: #4f4219;
+        font-family: 'EB Garamond', 'Garamond', serif;
+        font-size: 0.88rem;
+        font-weight: 600;
+        letter-spacing: 0.6px;
+        line-height: 1;
+        text-decoration: none;
+        text-shadow: 0 0 2px #f4efe2, 0 0 5px #f4efe2, 0 0 9px #f4efe2, 0 0 14px rgba(244, 239, 226, 0.9);
+        -webkit-tap-highlight-color: transparent;
+        transition: color 0.4s ease, text-shadow 0.4s ease;
+    }
+
+    .tab-bar-item span {
+        position: relative;
+        padding-bottom: 5px;
+    }
+
+    /* The current section's tab: a thin gold underline */
+    .tab-bar-item span::after {
+        content: '';
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        bottom: 0;
+        height: 1.5px;
+        border-radius: 1px;
+        background: #c9a44c;
+        transform: scaleX(0);
+        transition: transform 0.3s ease, background 0.4s ease;
+    }
+
+    .tab-bar-item.is-active span::after {
+        transform: scaleX(1);
+    }
+
+    .tab-bar.on-dark .tab-bar-item {
+        color: #fbf3dc;
+        text-shadow: 0 0 2px rgba(20, 16, 8, 0.8), 0 0 6px rgba(20, 16, 8, 0.7), 0 0 12px rgba(20, 16, 8, 0.55);
+    }
+
+    .tab-bar.on-dark .tab-bar-item span::after {
+        background: #f0d589;
+    }
+
+    .tab-bar-logo {
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 4px;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .tab-bar-logo img {
+        display: block;
+        width: 46px;
+        height: 46px;
+        object-fit: cover;
+        filter: drop-shadow(0 0 4px #f4efe2) drop-shadow(0 0 8px rgba(244, 239, 226, 0.9));
+        transition: filter 0.4s ease;
+    }
+
+    /* a light glow keeps the green monogram visible over dark photos too */
+    .tab-bar.on-dark .tab-bar-logo img {
+        filter: drop-shadow(0 0 5px rgba(255, 248, 230, 0.75));
+    }
+}
+
+/* Registry card on phones: QR a little bigger and the View Gift List button
+   slimmer, so the two line up at about the same width */
+@media (max-width: 599px) {
+    .registry-cardno-bpi {
+        transform: translate(-50%, calc(-50% + 5px)) scale(1.15);
+    }
+
+    .registry-btn.registry-btn-mobile {
+        font-size: 0.55rem !important;
+        letter-spacing: 1px;
+        padding: 0.4rem 0.75rem !important;
+    }
+}
