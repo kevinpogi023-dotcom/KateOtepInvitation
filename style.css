@@ -10870,13 +10870,13 @@ html:not(.code-ok) #invitation-gate * {
    ============================================ */
 @media (max-width: 599px) {
     .faq-title .faq-initial:first-child {
-        font-size: 11vw !important;
+        font-size: 8.55vw !important;
     }
 
     .faq-word,
     .faq-title .faq-initial:not(:first-child) {
         font-family: 'Cinzel', serif !important;
-        font-size: 7vw !important;
+        font-size: 5.35vw !important;
         letter-spacing: 1px !important;
         text-transform: uppercase;
     }
@@ -11373,18 +11373,15 @@ html:not(.code-ok) #invitation-gate * {
     }
 }
 
-/* FAQs title: one line on tablets and desktops; on phones "Questions" drops
-   to a second line so the title can be bigger */
-.faq-title-break {
-    display: none;
-}
-
+/* FAQs title on phones: one line, as big as fits - tighter letter spacing,
+   and the line starts at the screen's 16px side margin */
 @media (max-width: 599px) {
-    .faq-title-break {
-        display: inline;
+    .faq-title {
+        margin-left: -13px !important;
     }
 
-    .faq-title {
-        line-height: 1.15 !important;
+    .faq-title .faq-word,
+    .faq-title .faq-initial:not(:first-child) {
+        letter-spacing: 0.4px !important;
     }
 }
