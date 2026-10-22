@@ -10870,13 +10870,13 @@ html:not(.code-ok) #invitation-gate * {
    ============================================ */
 @media (max-width: 599px) {
     .faq-title .faq-initial:first-child {
-        font-size: 8.55vw !important;
+        font-size: 8.35vw !important;
     }
 
     .faq-word,
     .faq-title .faq-initial:not(:first-child) {
         font-family: 'Cinzel', serif !important;
-        font-size: 5.35vw !important;
+        font-size: 5.2vw !important;
         letter-spacing: 1px !important;
         text-transform: uppercase;
     }
