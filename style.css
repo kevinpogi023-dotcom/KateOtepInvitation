@@ -11385,3 +11385,29 @@ html:not(.code-ok) #invitation-gate * {
         letter-spacing: 0.4px !important;
     }
 }
+
+/* Phone navbar links: land each section right at the top of the screen (the
+   see-through navbar sits over the section's own top space), so no strip of
+   the previous section shows above it */
+@media (max-width: 480px) {
+    section,
+    .section-dark {
+        scroll-margin-top: 0 !important;
+    }
+}
+
+/* ...and a little more space above the Our Story, Schedule and Registry
+   titles on phones, so they sit clear of the navbar after a tap */
+@media (max-width: 480px) {
+    #story {
+        padding-top: 28px !important;
+    }
+
+    #event {
+        padding-top: 40px !important;
+    }
+
+    #registry {
+        padding-top: 32px !important;
+    }
+}
