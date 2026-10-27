@@ -5,6 +5,28 @@
     font-style: normal;
 }
 
+/* Screen-size units used throughout this file. They mean the normal
+   1vw / 1vh. On screens wider than 1920px the page is scaled up from the
+   1920 layout, and the wide-screen script in Index.html sets these to the
+   1920 sizes so everything stays in proportion.
+   When adding new rules, write calc(50 * var(--vw)) instead of 50vw (and
+   var(--vh) instead of vh), otherwise wide screens get the size wrong. */
+:root {
+    --vw: 1vw;
+    --vh: 1vh;
+    --svh: 1vh;
+    --lvh: 1vh;
+    --dvh: 1vh;
+}
+@supports (height: 1svh) {
+    :root {
+        --svh: 1svh;
+        --lvh: 1lvh;
+        --dvh: 1dvh;
+    }
+}
+
+
 @font-face {
     font-family: 'Parfumerie Script Pro';
     src: url('fonts/ParfumerieScriptPro.woff2') format('woff2'),
@@ -261,7 +283,7 @@ body::-webkit-scrollbar {
     top: 0;
     left: -100%;
     width: 100%;
-    height: 100vh;
+    height: calc(100 * var(--vh));
     background: #f0ecdc;
     display: flex;
     flex-direction: column;
@@ -321,7 +343,7 @@ body::-webkit-scrollbar {
 /* Hero Section */
 .hero {
     position: relative;
-    height: 100vh;
+    height: calc(100 * var(--vh));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1421,7 +1443,7 @@ section {
     background-color: #efeadf;
     padding: 20px 0;
     margin: 0;
-    min-height: 100vh;
+    min-height: calc(100 * var(--vh));
     border-top: 1px solid rgba(0, 0, 0, 0.08);
     box-shadow: 0 -6px 12px rgba(0, 0, 0, 0.06);
 }
@@ -1430,7 +1452,7 @@ section {
     display: grid;
     grid-template-columns: repeat(3, 1fr) 3fr repeat(3, 1fr);
     grid-template-rows: 1fr 1fr;
-    min-height: 100vh;
+    min-height: calc(100 * var(--vh));
 }
 
 .attire-cell {
@@ -1914,14 +1936,14 @@ section {
     border-radius: 16px;
     max-width: 850px;
     width: 100%;
-    max-height: 85vh;
+    max-height: calc(85 * var(--vh));
     position: relative;
     overflow: hidden;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
 }
 
 .gift-modal-scroll {
-    max-height: 85vh;
+    max-height: calc(85 * var(--vh));
     overflow-y: auto;
     overscroll-behavior: contain;
     scrollbar-width: thin;
@@ -2206,7 +2228,7 @@ section {
     border-radius: 22px;
     max-width: 960px;
     width: 100%;
-    max-height: 92vh;
+    max-height: calc(92 * var(--vh));
     overflow-y: auto;
     overflow-x: hidden;
     padding: 2.6rem 2.5rem 1.2rem;
@@ -2748,7 +2770,7 @@ section {
     .gift-modal {
         max-width: 100%;
         width: 100%;
-        max-height: 92vh;
+        max-height: calc(92 * var(--vh));
         border-radius: 20px 20px 0 0;
         border-bottom: none;
         transform: translateY(100%);
@@ -2760,7 +2782,7 @@ section {
     }
 
     .gift-modal-scroll {
-        max-height: 92vh;
+        max-height: calc(92 * var(--vh));
         padding: 2rem 1.2rem 2.5rem;
     }
 
@@ -2844,7 +2866,7 @@ section {
 /* RSVP Section - New Design */
 .rsvp-section {
     background: #efeadf !important;
-    min-height: 100vh;
+    min-height: calc(100 * var(--vh));
     padding: 5rem 2rem;
     display: flex;
     flex-direction: column;
@@ -3445,7 +3467,7 @@ footer {
     background-color: #0d0f0b;
     color: var(--text-light);
     padding: 1rem 2rem 0.5rem;
-    min-height: 120vh;
+    min-height: calc(120 * var(--vh));
     text-align: right;
     scroll-margin-top: var(--navbar-height);  /* ADD THIS LINE */
 }
@@ -3454,7 +3476,7 @@ footer {
     max-width: 800px;
     margin: 0;
     margin-left: 4rem;
-    height: 100vh;
+    height: calc(100 * var(--vh));
 }
 
 .faq-container {
@@ -3574,7 +3596,7 @@ footer {
 
 
     /* 4K and above */
-@media (max-width: 2561px) {
+@media all { /* was (max-width: 2561px): 1920 rules, also used on wider screens */
         .registry-qr {
             width: 1000px;
             height: 1000px;
@@ -3713,7 +3735,9 @@ footer {
         }
 }
 
- @media (max-width: 1921px) {
+ /* 1920 layout rules - also used on wider screens, which show the
+    1920 layout scaled up (see the wide-screen script in Index.html) */
+ @media all {
         .sched-card {
             width: 750px;
         }
@@ -3946,7 +3970,7 @@ footer {
     }
 
 /* Hero title - 1920px screens only */
-@media (min-width: 1800px) and (max-width: 1921px) {
+@media (min-width: 1800px) {
     .welcome-text {
         font-size: 2.2rem;
         transform: translateY(-6.5rem);
@@ -5198,7 +5222,7 @@ footer {
     
     /* Hero Section */
     .hero {
-        height: 100vh;
+        height: calc(100 * var(--vh));
     }
 
     .hero::before {
@@ -5605,7 +5629,7 @@ footer {
     /* Hero Section */
     .hero {
         align-items: flex-start;
-        padding-top: 25vh;
+        padding-top: calc(25 * var(--vh));
     }
 
     .hero::before {
@@ -6084,7 +6108,7 @@ footer {
         align-items: center !important;
         justify-content: center !important;
         position: relative !important;
-        background-image: linear-gradient(to right, rgba(182,171,123,0.5) 15%, transparent 15%, transparent 85%, rgba(182,171,123,0.5) 85%) !important;
+        background-image: linear-gradient(to right, #8e9f4f 15%, transparent 15%, transparent 85%, #8e9f4f 85%) !important;
         background-size: 100% 1px !important;
         background-position: bottom !important;
         background-repeat: no-repeat !important;
@@ -6169,7 +6193,7 @@ footer {
     }
 
     .attire-cell {
-        border: 0.05px solid #b6ab7b !important;
+        border: 0.05px solid #8e9f4f !important;
         border-bottom: none !important;
     }
 
@@ -6219,7 +6243,7 @@ footer {
     }
 
     .attire-grid > .attire-extra-box-1 {
-        border-bottom: 1px solid #b6ab7b !important;
+        border-bottom: 1px solid #8e9f4f !important;
     }
 
     .attire-grid > .attire-photo-women-3,
@@ -6231,7 +6255,7 @@ footer {
     .attire-extra-box-1 .attire-sub-box {
         flex: 1 1 0;
         height: 100%;
-        border-right: 1px solid #b6ab7b;
+        border-right: 1px solid #8e9f4f;
         background-size: 110%;
         background-position: center;
         background-repeat: no-repeat;
@@ -6726,11 +6750,11 @@ footer {
     }
 
     .entourage-initial {
-        font-size: min(6.3rem, 13vw) !important;
+        font-size: min(6.3rem, calc(13 * var(--vw))) !important;
     }
 
     .entourage-rest {
-        font-size: min(3.8rem, 7.8vw) !important;
+        font-size: min(3.8rem, calc(7.8 * var(--vw))) !important;
         letter-spacing: 3px !important;
     }
 
@@ -6738,14 +6762,14 @@ footer {
     .entourage-role-parents,
     .entourage-role-sponsors-title,
     .entourage-role-secondary {
-        font-size: min(1.5rem, 3.1vw) !important;
+        font-size: min(1.5rem, calc(3.1 * var(--vw))) !important;
         letter-spacing: 3px !important;
         margin-top: 0.8rem !important;
         margin-bottom: 0.4rem !important;
     }
 
     .entourage-name {
-        font-size: min(1.1rem, 2.2vw) !important;
+        font-size: min(1.1rem, calc(2.2 * var(--vw))) !important;
         letter-spacing: 1px !important;
         line-height: 1.6 !important;
     }
@@ -6780,13 +6804,13 @@ footer {
 
     .entourage-bearers .entourage-role {
         white-space: nowrap !important;
-        font-size: min(1.1rem, 2.2vw) !important;
+        font-size: min(1.1rem, calc(2.2 * var(--vw))) !important;
         letter-spacing: 1.5px !important;
     }
 
     .entourage-bearers .entourage-name {
         white-space: nowrap !important;
-        font-size: min(0.95rem, 1.75vw) !important;
+        font-size: min(0.95rem, calc(1.75 * var(--vw))) !important;
         letter-spacing: 0.5px !important;
     }
 
@@ -6927,7 +6951,7 @@ footer {
     }
 
     .attire-women2-caption {
-        font-size: min(1.4rem, 2.7vw);
+        font-size: min(1.4rem, calc(2.7 * var(--vw)));
     }
 
     /* Registry - stacked like 480px, a little bigger */
@@ -6964,7 +6988,7 @@ footer {
     }
 
     .registry-cardno {
-        width: min(520px, 85vw) !important;
+        width: min(520px, calc(85 * var(--vw))) !important;
     }
 
     .registry-cardno-bpi {
@@ -7007,7 +7031,7 @@ footer {
 
     /* Hero Section */
     .hero {
-        height: 100vh;
+        height: calc(100 * var(--vh));
     }
 
     .couple-names {
@@ -7903,7 +7927,7 @@ footer {
     /* Hero Section */
     .hero {
         align-items: flex-start;
-        padding-top: 25vh;
+        padding-top: calc(25 * var(--vh));
     }
 
     .hero::before {
@@ -8339,7 +8363,7 @@ footer {
         align-items: center !important;
         justify-content: center !important;
         position: relative !important;
-        background-image: linear-gradient(to right, rgba(182,171,123,0.5) 15%, transparent 15%, transparent 85%, rgba(182,171,123,0.5) 85%) !important;
+        background-image: linear-gradient(to right, #8e9f4f 15%, transparent 15%, transparent 85%, #8e9f4f 85%) !important;
         background-size: 100% 1px !important;
         background-position: bottom !important;
         background-repeat: no-repeat !important;
@@ -8464,7 +8488,7 @@ footer {
     }
 
     .attire-cell {
-        border: 0.05px solid #b6ab7b !important;
+        border: 0.05px solid #8e9f4f !important;
         border-bottom: none !important;
     }
 
@@ -8484,7 +8508,7 @@ footer {
     }
 
     .attire-grid > .attire-extra-box-1 {
-        border-bottom: 1px solid #b6ab7b !important;
+        border-bottom: 1px solid #8e9f4f !important;
     }
 
     .attire-grid > .attire-photo-women-3,
@@ -8496,7 +8520,7 @@ footer {
     .attire-extra-box-1 .attire-sub-box {
         flex: 1 1 0;
         height: 100%;
-        border-right: 1px solid #b6ab7b;
+        border-right: 1px solid #8e9f4f;
         background-size: 110%;
         background-position: center;
         background-repeat: no-repeat;
@@ -9086,7 +9110,7 @@ footer {
 
 .std-savedate-big {
     font-family: 'Parfumerie Script Pro', cursive;
-    font-size: clamp(6rem, 20vw, 11rem);
+    font-size: clamp(6rem, calc(20 * var(--vw)), 11rem);
     color: #7c8c4a;
     line-height: 1.1;
 }
@@ -9101,14 +9125,14 @@ footer {
 
 .std-savedate-line {
     display: inline-block;
-    width: clamp(40px, 8vw, 80px);
+    width: clamp(40px, calc(8 * var(--vw)), 80px);
     height: 1px;
     background: #7c8c4a;
 }
 
 .std-savedate-the {
     font-family: 'Parfumerie Script Pro', cursive;
-    font-size: clamp(2.6rem, 9vw, 4.4rem);
+    font-size: clamp(2.6rem, calc(9 * var(--vw)), 4.4rem);
     color: #7c8c4a;
 }
 
@@ -9118,14 +9142,14 @@ footer {
     text-transform: uppercase;
     letter-spacing: 5px;
     color: #7c8c4a;
-    font-size: clamp(2rem, 7vw, 4rem);
+    font-size: clamp(2rem, calc(7 * var(--vw)), 4rem);
     line-height: 1.3;
 }
 
 .std-and {
     font-family: 'Parfumerie Script Pro', cursive;
     color: #7c8c4a;
-    font-size: clamp(3rem, 9vw, 5rem);
+    font-size: clamp(3rem, calc(9 * var(--vw)), 5rem);
     margin: 0.2rem 0;
 }
 
@@ -9135,7 +9159,7 @@ footer {
     text-transform: uppercase;
     letter-spacing: 4px;
     color: #7c8c4a;
-    font-size: clamp(0.8rem, 2vw, 1.1rem);
+    font-size: clamp(0.8rem, calc(2 * var(--vw)), 1.1rem);
     margin-top: 1rem;
 }
 
@@ -9177,7 +9201,7 @@ footer {
     align-items: center;
     text-align: center;
     padding: 2rem;
-    max-width: 90vw;
+    max-width: calc(90 * var(--vw));
     min-width: 0;
     transition: opacity 0.5s ease, transform 0.5s ease;
     /* shrinks the whole gate on short windows (set by main.js) */
@@ -9211,7 +9235,7 @@ footer {
     8% { opacity: 0.8; }
     92% { opacity: 0.8; }
     100% {
-        transform: translateY(115vh) translateX(60px) rotate(320deg);
+        transform: translateY(calc(115 * var(--vh))) translateX(60px) rotate(320deg);
         opacity: 0;
     }
 }
@@ -9249,7 +9273,7 @@ footer {
 }
 
 .gate-logo {
-    width: clamp(75px, 22vw, 115px);
+    width: clamp(75px, calc(22 * var(--vw)), 115px);
     height: auto;
     margin-bottom: 1.2rem;
     opacity: 0;
@@ -9272,7 +9296,7 @@ footer {
 
 .gate-from {
     font-family: 'Parfumerie Script Pro', cursive;
-    font-size: clamp(2.8rem, 10.5vw, 4.4rem);
+    font-size: clamp(2.8rem, calc(10.5 * var(--vw)), 4.4rem);
     font-weight: 400;
     color: #7c8c4a;
     margin-bottom: 0.4rem;
@@ -9285,8 +9309,8 @@ footer {
 .gate-names {
     font-family: 'Cinzel', serif;
     font-weight: 500;
-    font-size: clamp(1.3rem, 7.5vw, 3.5rem);
-    letter-spacing: clamp(0.5px, 0.7vw, 5px);
+    font-size: clamp(1.3rem, calc(7.5 * var(--vw)), 3.5rem);
+    letter-spacing: clamp(0.5px, calc(0.7 * var(--vw)), 5px);
     text-transform: uppercase;
     color: #7c8c4a;
     margin-bottom: 0.7rem;
@@ -9326,7 +9350,7 @@ footer {
 .gate-envelope {
     position: relative;
     width: 480px;
-    max-width: 86vw;
+    max-width: calc(86 * var(--vw));
     background: none;
     border: none;
     padding: 0;
@@ -9433,7 +9457,7 @@ footer {
     background: #b7a06a;
 }
 
-@media (max-width: 2561px) {
+@media all { /* was (max-width: 2561px): 1920 rules, also used on wider screens */
     .gate-eyebrow {
         font-size: 1.15rem;
         letter-spacing: 6px;
@@ -9445,7 +9469,7 @@ footer {
 
     .gate-envelope {
         width: 800px;
-        max-width: 86vw;
+        max-width: calc(86 * var(--vw));
     }
 
     .gate-cta {
@@ -9458,7 +9482,7 @@ footer {
     }
 }
 
-@media (max-width: 2000px) {
+@media all { /* was (max-width: 2000px): 1920 rules, also used on wider screens */
     .gate-eyebrow {
         font-size: 1rem;
         letter-spacing: 5px;
@@ -9470,7 +9494,7 @@ footer {
 
     .gate-envelope {
         width: 700px;
-        max-width: 86vw;
+        max-width: calc(86 * var(--vw));
     }
 
     .gate-cta {
@@ -9505,7 +9529,7 @@ footer {
 
     .gate-envelope {
         width: 650px;
-        max-width: 86vw;
+        max-width: calc(86 * var(--vw));
     }
 
     .gate-cta {
@@ -9538,7 +9562,7 @@ footer {
 
     .gate-envelope {
         width: 555px;
-        max-width: 86vw;
+        max-width: calc(86 * var(--vw));
     }
 
     .gate-cta {
@@ -9554,7 +9578,7 @@ footer {
 
     .gate-envelope {
         width: 500px;
-        max-width: 86vw;
+        max-width: calc(86 * var(--vw));
     }
 
     .gate-cta {
@@ -9579,7 +9603,7 @@ footer {
 
     .gate-envelope {
         width: 440px;
-        max-width: 80vw;
+        max-width: calc(80 * var(--vw));
     }
 
     .gate-cta {
@@ -9766,8 +9790,8 @@ footer {
    ============================================ */
 @media (min-width: 901px) {
     :root {
-        --hero-lift: max(0px, calc(352px - 50vh));
-        --hero-drop: max(0px, calc(min(9rem, 50vh - 240px) - 2 * var(--hero-lift)));
+        --hero-lift: max(0px, calc(352px - calc(50 * var(--vh))));
+        --hero-drop: max(0px, calc(min(9rem, calc(50 * var(--vh)) - 240px) - 2 * var(--hero-lift)));
         --cal-gap: 2rem;
     }
 
@@ -9787,38 +9811,38 @@ footer {
 
 @media (min-width: 1201px) and (max-width: 1367px) {
     :root {
-        --hero-lift: max(0px, calc(345px - 50vh));
+        --hero-lift: max(0px, calc(345px - calc(50 * var(--vh))));
         --cal-gap: 1rem;
     }
 }
 
 @media (min-width: 1368px) and (max-width: 1441px) {
     :root {
-        --hero-lift: max(0px, calc(341px - 50vh));
-        --hero-drop: max(0px, calc(min(10rem, 50vh - 290px) - 2 * var(--hero-lift)));
+        --hero-lift: max(0px, calc(341px - calc(50 * var(--vh))));
+        --hero-drop: max(0px, calc(min(10rem, calc(50 * var(--vh)) - 290px) - 2 * var(--hero-lift)));
     }
 
-    .attire-grid { min-height: max(100vh, 900px); }
+    .attire-grid { min-height: max(calc(100 * var(--vh)), 900px); }
 }
 
 @media (min-width: 1442px) and (max-width: 1799px) {
     :root {
-        --hero-lift: max(0px, calc(330px - 50vh));
-        --hero-drop: max(0px, calc(min(15rem, 50vh - 251px) - 2 * var(--hero-lift)));
+        --hero-lift: max(0px, calc(330px - calc(50 * var(--vh))));
+        --hero-drop: max(0px, calc(min(15rem, calc(50 * var(--vh)) - 251px) - 2 * var(--hero-lift)));
         --cal-gap: 0.5rem;
     }
 
-    .attire-grid { min-height: max(100vh, 982px); }
+    .attire-grid { min-height: max(calc(100 * var(--vh)), 982px); }
 }
 
-@media (min-width: 1800px) and (max-width: 1921px) {
+@media (min-width: 1800px) {
     :root {
-        --hero-lift: max(0px, calc(390px - 50vh));
-        --hero-drop: max(0px, calc(min(15rem, 50vh - 300px) - 2 * var(--hero-lift)));
+        --hero-lift: max(0px, calc(390px - calc(50 * var(--vh))));
+        --hero-drop: max(0px, calc(min(15rem, calc(50 * var(--vh)) - 300px) - 2 * var(--hero-lift)));
         --cal-gap: 2.5rem;
     }
 
-    .attire-grid { min-height: max(100vh, 1080px); }
+    .attire-grid { min-height: max(calc(100 * var(--vh)), 1080px); }
 }
 
 /* ============================================
@@ -9948,7 +9972,7 @@ footer {
 @media (min-width: 600px) and (max-width: 769px) {
     /* RSVP */
     #rsvp {
-        min-height: max(100vh, 1200px) !important;
+        min-height: max(calc(100 * var(--vh)), 1200px) !important;
         padding: 5rem 2.5rem 11rem !important;
         justify-content: center !important;
     }
@@ -9979,7 +10003,7 @@ footer {
     }
 
     .rsvp-main-title {
-        font-size: min(1.75rem, 3.5vw) !important;
+        font-size: min(1.75rem, calc(3.5 * var(--vw))) !important;
         letter-spacing: 2.5px !important;
         max-width: none !important;
         margin: 0 0 1.4rem !important;
@@ -10021,7 +10045,7 @@ footer {
 
     .rsvp-downflower,
     .rsvp-upflower {
-        width: min(300px, 36vw) !important;
+        width: min(300px, calc(36 * var(--vw))) !important;
     }
 
     /* FAQ */
@@ -10086,7 +10110,7 @@ html.scroll-locked body {
 /* Entourage bearers: names scale with their column so they never overlap */
 @media (min-width: 901px) and (max-width: 1799px) {
     .entourage-bearers .entourage-name {
-        font-size: calc(1.75vw - 2px) !important;
+        font-size: calc(calc(1.75 * var(--vw)) - 2px) !important;
         letter-spacing: 1px !important;
     }
 }
@@ -10094,7 +10118,7 @@ html.scroll-locked body {
 /* Entourage Candle/Veil: longest names fit their half of the row on small phones */
 @media (max-width: 399px) {
     .entourage-row-candle-veil .entourage-name {
-        font-size: 2.75vw !important;
+        font-size: calc(2.75 * var(--vw)) !important;
         letter-spacing: 0 !important;
     }
 }
@@ -10106,10 +10130,10 @@ html.scroll-locked body {
 
 /* Phones & tablets: the hero photo stays full height (it runs behind Safari's
    floating toolbar), and the date block moves up by the toolbar height
-   (100lvh - 100svh, which is 0 in browsers without one) so Add to Calendar stays visible. */
+   (calc(100 * var(--lvh)) - calc(100 * var(--svh)), which is 0 in browsers without one) so Add to Calendar stays visible. */
 @media (max-width: 900px) {
     .wedding-date {
-        margin-top: calc(20.5rem + 0.15 * (100lvh - 100svh)) !important;
+        margin-top: calc(20.5rem + 0.15 * (calc(100 * var(--lvh)) - calc(100 * var(--svh)))) !important;
     }
 }
 
@@ -10117,13 +10141,13 @@ html.scroll-locked body {
    move the date block up by the missing height so Add to Calendar keeps the same gap */
 @media (max-width: 480px) {
     .wedding-date {
-        margin-top: calc(23rem - max(0px, 932px - 100svh) + 1.15 * (100lvh - 100svh)) !important;
+        margin-top: calc(23rem - max(0px, 932px - calc(100 * var(--svh))) + 1.15 * (calc(100 * var(--lvh)) - calc(100 * var(--svh)))) !important;
     }
 }
 
 @media (max-width: 395px) {
     .wedding-date {
-        margin-top: calc(19.5rem + 0.15 * (100lvh - 100svh)) !important;
+        margin-top: calc(19.5rem + 0.15 * (calc(100 * var(--lvh)) - calc(100 * var(--svh)))) !important;
     }
 }
 
@@ -10237,20 +10261,20 @@ html.scroll-locked body {
    ============================================ */
 .gift-modal,
 .gift-modal-scroll {
-    max-height: 85vh;
-    max-height: 85dvh;
+    max-height: calc(85 * var(--vh));
+    max-height: calc(85 * var(--dvh));
 }
 
 .map-modal {
-    max-height: 92vh;
-    max-height: 92dvh;
+    max-height: calc(92 * var(--vh));
+    max-height: calc(92 * var(--dvh));
 }
 
 @media (max-width: 900px) {
     .gift-modal,
     .gift-modal-scroll {
-        max-height: 92vh;
-        max-height: 92dvh;
+        max-height: calc(92 * var(--vh));
+        max-height: calc(92 * var(--dvh));
     }
 }
 
@@ -10271,24 +10295,24 @@ html.modal-open body {
     }
 
     .big-day-title .ols-initial {
-        font-size: min(3.1rem, 12.4vw) !important;
+        font-size: min(3.1rem, calc(12.4 * var(--vw))) !important;
         letter-spacing: 0.02em !important;
     }
 
     .big-day-title .ols-rest {
-        font-size: min(1.8rem, 7.3vw) !important;
+        font-size: min(1.8rem, calc(7.3 * var(--vw))) !important;
         letter-spacing: 1px !important;
     }
 }
 
 @media (max-width: 441px) {
-    .big-day-title .ols-initial { font-size: min(3.5rem, 12.4vw) !important; }
-    .big-day-title .ols-rest { font-size: min(2.05rem, 7.3vw) !important; }
+    .big-day-title .ols-initial { font-size: min(3.5rem, calc(12.4 * var(--vw))) !important; }
+    .big-day-title .ols-rest { font-size: min(2.05rem, calc(7.3 * var(--vw))) !important; }
 }
 
 @media (max-width: 395px) {
-    .big-day-title .ols-initial { font-size: min(3.1rem, 12.4vw) !important; }
-    .big-day-title .ols-rest { font-size: min(1.8rem, 7.3vw) !important; }
+    .big-day-title .ols-initial { font-size: min(3.1rem, calc(12.4 * var(--vw))) !important; }
+    .big-day-title .ols-rest { font-size: min(1.8rem, calc(7.3 * var(--vw))) !important; }
 }
 
 @media (max-width: 360px) {
@@ -10301,10 +10325,10 @@ html.modal-open body {
    on iPhone), move the title up too. The whole hero content rises by 60% of
    the bars' height; the date rules above add that back so the date block
    still rises by the full bar height and Add to Calendar stays visible.
-   (100lvh - 100svh is 0 where there are no bars, so nothing changes there.) */
+   (calc(100 * var(--lvh)) - calc(100 * var(--svh)) is 0 where there are no bars, so nothing changes there.) */
 @media (max-width: 900px) {
     .hero {
-        padding-top: calc(25vh - 0.6 * (100lvh - 100svh));
+        padding-top: calc(calc(25 * var(--vh)) - 0.6 * (calc(100 * var(--lvh)) - calc(100 * var(--svh))));
     }
 }
 
@@ -10326,8 +10350,8 @@ html.modal-open body {
 }
 
 @media (min-width: 600px) and (max-width: 900px) {
-    .rsvp-initial { font-size: min(6.3rem, 13vw) !important; }
-    .rsvp-word { font-size: min(3.8rem, 7.8vw) !important; }
+    .rsvp-initial { font-size: min(6.3rem, calc(13 * var(--vw))) !important; }
+    .rsvp-word { font-size: min(3.8rem, calc(7.8 * var(--vw))) !important; }
 }
 
 @media (max-width: 441px) {
@@ -10420,7 +10444,7 @@ html.modal-open body {
 @media (min-width: 396px) and (max-width: 410px) {
     /* Date, location and Add to Calendar a bit lower */
     .wedding-date {
-        margin-top: calc(25.5rem - max(0px, 932px - 100svh) + 1.15 * (100lvh - 100svh)) !important;
+        margin-top: calc(25.5rem - max(0px, 932px - calc(100 * var(--svh))) + 1.15 * (calc(100 * var(--lvh)) - calc(100 * var(--svh)))) !important;
     }
 }
 
@@ -10447,7 +10471,7 @@ html.modal-open body {
         margin-left: -1rem;    /* reach the box's side borders */
         margin-right: -1rem;
         white-space: nowrap;
-        font-size: min(0.8rem, calc(4.26vw - 4.31px)) !important;
+        font-size: min(0.8rem, calc(calc(4.26 * var(--vw)) - 4.31px)) !important;
     }
 
     /* 8px from the text via margins rather than flex `gap` (older iOS Safari lacks it) */
@@ -10456,7 +10480,7 @@ html.modal-open body {
         content: '';
         flex: 1 1 0;
         height: 1px;
-        background: rgba(182, 171, 123, 0.5);
+        background: #8e9f4f;
     }
 
     .attire-subtitle::before {
@@ -10473,7 +10497,7 @@ html.modal-open body {
     }
 
     .attire-women2-caption {
-        font-size: min(0.78rem, calc(3.84vw - 2.46px)) !important;
+        font-size: min(0.78rem, calc(calc(3.84 * var(--vw)) - 2.46px)) !important;
         white-space: nowrap;
     }
 }
@@ -10843,7 +10867,7 @@ html:not(.code-ok) #invitation-gate * {
 @media (max-width: 480px) {
     .story-carousel-track,
     .party-carousel-track {
-        --photo-height: min(240px, calc((100vw - 30px) / 1.5));
+        --photo-height: min(240px, calc((calc(100 * var(--vw)) - 30px) / 1.5));
         gap: 2px;
     }
 
@@ -10870,13 +10894,13 @@ html:not(.code-ok) #invitation-gate * {
    ============================================ */
 @media (max-width: 599px) {
     .faq-title .faq-initial:first-child {
-        font-size: 8.35vw !important;
+        font-size: calc(8.35 * var(--vw)) !important;
     }
 
     .faq-word,
     .faq-title .faq-initial:not(:first-child) {
         font-family: 'Cinzel', serif !important;
-        font-size: 5.2vw !important;
+        font-size: calc(5.2 * var(--vw)) !important;
         letter-spacing: 1px !important;
         text-transform: uppercase;
     }
@@ -10993,29 +11017,29 @@ html:not(.code-ok) #invitation-gate * {
    share text sizes made for the bigger 430-440px phones, so on the iPhone 16
    Pro some text came out up to 17% bigger for its screen than on the iPhone
    15. Each of those is capped at the iPhone 15's proportions (its size there
-   / 393px x 100vw), so every phone shows the same design. Nothing gets
+   / 393px x calc(100 * var(--vw))), so every phone shows the same design. Nothing gets
    bigger than it was.
    ============================================ */
 @media (min-width: 396px) and (max-width: 441px) {
-    .welcome-text { font-size: min(0.95rem, 3.583vw) !important; }        /* 14.1px on the iPhone 15 */
-    .name-initial { font-size: min(2.6rem, 9.567vw) !important; }         /* 37.6px */
-    .name-rest { font-size: min(1.9rem, 6.921vw) !important; }            /* 27.2px */
+    .welcome-text { font-size: min(0.95rem, calc(3.583 * var(--vw))) !important; }        /* 14.1px on the iPhone 15 */
+    .name-initial { font-size: min(2.6rem, calc(9.567 * var(--vw))) !important; }         /* 37.6px */
+    .name-rest { font-size: min(1.9rem, calc(6.921 * var(--vw))) !important; }            /* 27.2px */
     .wedding-date,
-    .wedding-location { font-size: min(1.08rem, 4.071vw) !important; }    /* 16px */
+    .wedding-location { font-size: min(1.08rem, calc(4.071 * var(--vw))) !important; }    /* 16px */
 
     .our-love-story-title .ols-initial:not(:first-child),
-    .our-love-story-title .ols-rest { font-size: min(1.65rem, 5.903vw) !important; }   /* 23.2px */
-    .story-col p { font-size: min(0.9rem, 3.053vw) !important; }          /* 12px */
+    .our-love-story-title .ols-rest { font-size: min(1.65rem, calc(5.903 * var(--vw))) !important; }   /* 23.2px */
+    .story-col p { font-size: min(0.9rem, calc(3.053 * var(--vw))) !important; }          /* 12px */
 
-    .sched-time { font-size: min(0.95rem, 3.257vw) !important; }          /* 12.8px */
-    .sched-name { font-size: min(1rem, 3.461vw) !important; }             /* 13.6px */
-    .sched-location { font-size: min(0.85rem, 3.053vw) !important; }      /* 12px */
+    .sched-time { font-size: min(0.95rem, calc(3.257 * var(--vw))) !important; }          /* 12.8px */
+    .sched-name { font-size: min(1rem, calc(3.461 * var(--vw))) !important; }             /* 13.6px */
+    .sched-location { font-size: min(0.85rem, calc(3.053 * var(--vw))) !important; }      /* 12px */
 
-    .entourage-initial { font-size: min(3.5rem, 12.621vw) !important; }   /* 49.6px */
-    .entourage-rest { font-size: min(2.05rem, 7.328vw) !important; }      /* 28.8px */
+    .entourage-initial { font-size: min(3.5rem, calc(12.621 * var(--vw))) !important; }   /* 49.6px */
+    .entourage-rest { font-size: min(2.05rem, calc(7.328 * var(--vw))) !important; }      /* 28.8px */
 
-    .rsvp-initial { font-size: min(5.25rem, 18.931vw) !important; }       /* 74.4px */
-    .rsvp-word { font-size: min(3.075rem, 10.992vw) !important; }         /* 43.2px */
+    .rsvp-initial { font-size: min(5.25rem, calc(18.931 * var(--vw))) !important; }       /* 74.4px */
+    .rsvp-word { font-size: min(3.075rem, calc(10.992 * var(--vw))) !important; }         /* 43.2px */
 }
 
 /* ============================================
@@ -11127,18 +11151,18 @@ html:not(.code-ok) #invitation-gate * {
 /* ============================================
    Hero photo on phones: sit the couple just under the names, so their upper
    bodies show above the date text instead of behind it.
-   The photo follows the hero text, which starts at 25vh (minus 0.6 x the
+   The photo follows the hero text, which starts at calc(25 * var(--vh)) (minus 0.6 x the
    browser bars, like the hero padding rule) with the names ending about
-   99px + 20vw below that; the groom's head goes 25px under the names.
-   15vh undoes the photo layer's -15% top, and 184.72vw (less the 20vw above)
+   99px + calc(20 * var(--vw)) below that; the groom's head goes 25px under the names.
+   calc(15 * var(--vh)) undoes the photo layer's -15% top, and calc(184.72 * var(--vw)) (less the calc(20 * var(--vw)) above)
    is how far down herobg.jpg his head is: 55.98% of a photo drawn 220% wide,
    i.e. 3.2997 x the screen width tall. Re-tune these if herobg.jpg changes.
    The first line is for browsers without lvh/svh units.
    ============================================ */
 @media (max-width: 480px) {
     .hero::before {
-        background-position: 0% 50%, 35% calc(40vh + 124px - 164.72vw) !important;
-        background-position: 0% 50%, 35% calc(40vh - 0.6 * (100lvh - 100svh) + 124px - 164.72vw) !important;
+        background-position: 0% 50%, 35% calc(calc(40 * var(--vh)) + 124px - calc(164.72 * var(--vw))) !important;
+        background-position: 0% 50%, 35% calc(calc(40 * var(--vh)) - 0.6 * (calc(100 * var(--lvh)) - calc(100 * var(--svh))) + 124px - calc(164.72 * var(--vw))) !important;
     }
 }
 
@@ -11458,10 +11482,10 @@ html:not(.code-ok) #invitation-gate * {
    ============================================ */
 @media (min-width: 901px) {
     :root {
-        --desk-title-initial: clamp(4.5rem, 5.6vw, 6rem);
-        --desk-title-word: clamp(3rem, 3.9vw, 4rem);
-        --desk-sub: clamp(1.35rem, 1.75vw, 1.9rem);
-        --desk-body: clamp(1.2rem, calc(0.8rem + 0.55vw), 1.5rem);
+        --desk-title-initial: clamp(4.5rem, calc(5.6 * var(--vw)), 6rem);
+        --desk-title-word: clamp(3rem, calc(3.9 * var(--vw)), 4rem);
+        --desk-sub: clamp(1.35rem, calc(1.75 * var(--vw)), 1.9rem);
+        --desk-body: clamp(1.2rem, calc(0.8rem + calc(0.55 * var(--vw))), 1.5rem);
     }
 
     /* Section titles */
@@ -11524,7 +11548,7 @@ html:not(.code-ok) #invitation-gate * {
 @media (min-width: 901px) {
     .footer-content {
         height: auto !important;
-        min-height: 100vh;
+        min-height: calc(100 * var(--vh));
     }
 }
 
@@ -11553,7 +11577,7 @@ html:not(.code-ok) #invitation-gate * {
     .story-started-title {
         padding-right: calc(50% + 24px) !important;
         white-space: nowrap !important;
-        font-size: min(calc(var(--desk-sub) * 1.04), calc((100vw - 380px) / 48)) !important;
+        font-size: min(calc(var(--desk-sub) * 1.04), calc((calc(100 * var(--vw)) - 380px) / 48)) !important;
         letter-spacing: 2.6px !important;
     }
 }
@@ -11608,21 +11632,216 @@ html:not(.code-ok) #invitation-gate * {
     }
 }
 
-/* Desktop Entourage: Groom and Bride mirror each other around the page
-   center (two equal columns), so the pair looks balanced */
+/* Desktop Entourage: every two-column row (Groom/Bride, Parents, Sponsors,
+   Candle/Veil, Best Man/Maid of Honor, Groomsmen/Bridesmaids) uses the same
+   two equal columns centered on the page, so left and right sides line up
+   from row to row. Single headings (Secondary Sponsors, Cord) are centered. */
 @media (min-width: 901px) {
-    .entourage-row-groom-bride {
+    .party-entourage .entourage-row {
         display: grid !important;
         grid-template-columns: 1fr 1fr;
-        width: max-content;
+        column-gap: 0 !important;
+        gap: 0 !important;
+        width: 78% !important;
+        max-width: none !important;
         margin-left: auto !important;
         margin-right: auto !important;
         transform: none !important;
+        left: auto !important;
     }
-    .entourage-row-groom-bride .entourage-col,
-    .entourage-row-groom-bride .entourage-role,
-    .entourage-row-groom-bride .entourage-name {
+    .party-entourage .entourage-row > .entourage-col,
+    .party-entourage .entourage-row .entourage-role,
+    .party-entourage .entourage-row .entourage-name {
         transform: none !important;
         text-align: center !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        left: auto !important;
+    }
+    .party-entourage .entourage-row > .entourage-col {
+        width: auto !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        align-items: center !important;
+    }
+    .party-entourage .entourage-role-secondary,
+    .party-entourage .entourage-single,
+    .party-entourage .entourage-single .entourage-role,
+    .party-entourage .entourage-single .entourage-name {
+        transform: none !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        text-align: center !important;
+        left: auto !important;
+    }
+}
+
+/* Desktop: Our Love Story and FAQs titles use the same letter spacing as
+   the other section titles */
+@media (min-width: 901px) {
+    .our-love-story-title .ols-rest,
+    .faq-title .faq-word {
+        letter-spacing: 3px !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+    .our-love-story-title .ols-initial {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+}
+
+/* Phones and tablets: photo carousel lines match the dress code grid
+   lines (thin, olive green #8e9f4f) */
+@media (max-width: 900px) {
+    .story-carousel-wrapper,
+    .party-carousel-wrapper {
+        background-color: #8e9f4f !important;
+        border-top: 1px solid #8e9f4f !important;
+        border-bottom: 1px solid #8e9f4f !important;
+    }
+    .story-carousel-track,
+    .party-carousel-track {
+        gap: 1px !important;
+    }
+}
+
+/* Phones: FAQ answers a bit bigger (same as the Registry text) */
+@media (max-width: 599px) {
+    .faq-answer p {
+        font-size: 0.85rem !important;
+        line-height: 1.6 !important;
+    }
+}
+
+/* Desktop Registry: fills the whole screen on taller screens (e.g. newer
+   MacBook Airs), like the other full-screen sections. The payment card
+   keeps its size and stays near the bottom. */
+@media (min-width: 901px) {
+    #registry {
+        height: max(900px, calc(100 * var(--vh))) !important;
+        min-height: max(900px, calc(100 * var(--vh))) !important;
+    }
+    .registry-card-wrapper {
+        top: auto !important;
+        height: 393px !important;
+    }
+}
+
+/* Desktop Wedding Schedule: the four columns are centered on the page with
+   the same space on the left and right (7% each side) and equal gaps
+   between them, at every desktop width. Replaces the old hand-set nudges. */
+@media (min-width: 901px) {
+    #event .sched-grid {
+        grid-template-columns: repeat(4, max-content) !important;
+        justify-content: space-between !important;
+        column-gap: 24px !important;
+        width: max-content !important;
+        min-width: calc(86 * var(--vw)) !important;
+        position: relative !important;
+        left: 50% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding: 0 !important;
+        transform: translate(-50%, -5rem) !important;
+    }
+    #event .sched-item {
+        transform: none !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+}
+
+/* Desktop Dress Code: the closing line ("Guests are respectfully requested
+   to / follow our wedding colors.") always breaks the same way - it shrinks
+   a little only when the middle column is too narrow for it */
+@media (min-width: 901px) {
+    #attire .attire-footer-text {
+        font-size: min(22.4px, 5.8cqw) !important;
+    }
+}
+
+/* Desktop RSVP: the card's width follows its text size, so the sentences
+   break in the same places at every desktop width */
+@media (min-width: 901px) {
+    #rsvp .rsvp-card {
+        width: calc(var(--desk-body) * 33) !important;
+        max-width: calc(94 * var(--vw)) !important;
+    }
+}
+
+/* Desktop Registry: the photo shows the same part of the picture at every
+   desktop width (the band a 1920 screen shows), instead of showing more
+   sky on narrower screens */
+@media (min-width: 901px) {
+    #registry {
+        background-size: max(100%, calc(max(900px, calc(100 * var(--vh))) * 1.7778)) auto !important;
+        background-position: center 60% !important;
+    }
+}
+
+/* Desktop Registry: the title and text always end the same distance above
+   the groom's head. The photo shows the same part of the picture at every
+   width, so his head is always at the same height; the spacing inside the
+   text block is a little tighter so the title stays clear of the menu bar. */
+@media (min-width: 901px) {
+    #registry .registry-inner {
+        position: absolute !important;
+        left: 0 !important;
+        right: 0 !important;
+        top: auto !important;
+        bottom: calc(47.5% + 0.1138 * max(calc(100 * var(--vw)), calc(max(900px, calc(100 * var(--vh))) * 1.7778))) !important;
+        width: 100% !important;
+        padding: 0 2rem !important;
+        margin: 0 !important;
+        transform: none !important;
+    }
+    #registry .registry-title,
+    #registry .registry-title .attire-initial,
+    #registry .registry-title .attire-word {
+        line-height: 1 !important;
+    }
+    #registry .registry-title {
+        margin-top: 0 !important;
+        margin-bottom: 0.6rem !important;
+    }
+    #registry .registry-desc {
+        line-height: 1.6 !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
+}
+
+/* Desktop Registry: the BPI / QR card a little smaller, shrinking toward its
+   bottom-right corner so it stays attached to the right edge */
+@media (min-width: 901px) {
+    #registry .registry-card-wrapper {
+        scale: 0.75;
+        transform-origin: right bottom;
+    }
+}
+
+/* Wide screens (over 1920px) show the 1920 layout scaled up. Safari measures
+   column-based sizes (cqw) on the enlarged column while Chrome uses the
+   original one, so the Dress Code's column-based sizes are fixed here to
+   their exact 1920 values - both browsers then match. */
+@media (min-width: 1921px) {
+    #attire .attire-subtitle {
+        font-size: 26.22px !important;
+    }
+    #attire .attire-swatches {
+        column-gap: 12px !important;
+    }
+    #attire .attire-swatches .swatch-item span {
+        font-size: 0.95rem !important;
+    }
+    #attire .attire-title:not(.registry-title) .attire-initial {
+        font-size: var(--desk-title-initial) !important;
+    }
+    #attire .attire-title:not(.registry-title) .attire-word {
+        font-size: var(--desk-title-word) !important;
+    }
+    #attire .attire-footer-text {
+        font-size: 22.4px !important;
     }
 }

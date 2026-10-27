@@ -78,7 +78,9 @@
     const gateContent = gate.querySelector('.gate-content');
     function fitGate() {
         if (!gateContent) return;
-        const room = window.innerHeight - 24;
+        // Wide screens are scaled up (see Index.html), so measure in page units
+        const zoom = parseFloat(getComputedStyle(document.documentElement).zoom) || 1;
+        const room = window.innerHeight / zoom - 24;
         const scale = Math.min(1, room / gateContent.offsetHeight);
         gate.style.setProperty('--gate-scale', scale.toFixed(3));
     }
@@ -371,7 +373,10 @@ function toggleMenu() {
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const href = this.getAttribute('href');
+        // A bare "#" (e.g. the map card) has its own click handler
+        if (!href || href === '#') return;
+        const target = document.querySelector(href);
         
         if (target) {
             const mobileMenu = document.querySelector('.mobile-menu');
@@ -423,7 +428,9 @@ window.addEventListener('scroll', () => {
     parallaxTicking = true;
 
     requestAnimationFrame(() => {
-        const scrolled = window.pageYOffset;
+        // Wide screens are scaled up (see Index.html), so measure in page units
+        const zoom = parseFloat(getComputedStyle(document.documentElement).zoom) || 1;
+        const scrolled = window.pageYOffset / zoom;
         if (scrolled <= heroEl.offsetHeight) {
             heroEl.style.setProperty('--parallax-y', `${scrolled * 0.3}px`);
         }

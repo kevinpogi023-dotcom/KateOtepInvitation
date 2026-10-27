@@ -7,9 +7,33 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;500;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Dancing+Script:wght@400;500;600;700&family=EB+Garamond:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=20261027w">
-    <link rel="icon" type="image/png" href="images/favicon-jk.png?v=2">
-    <link rel="apple-touch-icon" href="images/apple-touch-icon-jk.png?v=2">
+    <link rel="stylesheet" href="style.css?v=20261028l">
+    <script>
+        /* Screens wider than 1920px show the 1920 layout scaled up to fill
+           the screen, so every section looks the same as on a 1920 screen. */
+        (function () {
+            var root = document.documentElement;
+            var units = ['--vh', '--svh', '--lvh', '--dvh'];
+            function fitWideScreen() {
+                var zoom = window.innerWidth > 1920 ? window.innerWidth / 1920 : 1;
+                if (zoom === 1) {
+                    root.style.zoom = '';
+                    root.style.removeProperty('--vw');
+                    units.forEach(function (u) { root.style.removeProperty(u); });
+                    return;
+                }
+                var vh = (window.innerHeight / zoom / 100).toFixed(4) + 'px';
+                root.style.zoom = zoom;
+                root.style.setProperty('--vw', '19.2px');
+                units.forEach(function (u) { root.style.setProperty(u, vh); });
+            }
+            fitWideScreen();
+            window.addEventListener('resize', fitWideScreen);
+        })();
+    </script>
+    <link rel="icon" href="favicon.ico?v=3" sizes="16x16 32x32 48x48 64x64">
+    <link rel="icon" type="image/png" sizes="64x64" href="images/favicon-jk.png?v=3">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon-jk.png?v=3">
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <script src="firebase-init.js"></script>
@@ -799,6 +823,6 @@
         <span class="music-toggle-label">Tap to turn on music</span>
     </button>
 
-    <script src="main.js?v=20261022a"></script>
+    <script src="main.js?v=20261028b"></script>
 </body>
 </html>
