@@ -11303,17 +11303,17 @@ html:not(.code-ok) #invitation-gate * {
     }
 }
 
-/* Registry card on phones: QR a little bigger and the View Gift List button
-   slimmer, so the two line up at about the same width */
+/* Registry card on phones: the BPI name, number and QR are centred on the
+   front card. The point (48.4%, 50.5%) is the front card's centre in
+   cardno.png, and (49.7%, 33.75%) is the centre of the QR block in
+   righbpi.png, so the two line up at every phone width. */
 @media (max-width: 599px) {
     .registry-cardno-bpi {
-        transform: translate(-50%, calc(-50% + 5px)) scale(1.15);
-    }
-
-    .registry-btn.registry-btn-mobile {
-        font-size: 0.55rem !important;
-        letter-spacing: 1px;
-        padding: 0.4rem 0.75rem !important;
+        width: 90% !important;
+        top: 50.5% !important;
+        left: 48.4% !important;
+        transform: translate(-49.7%, calc(-33.75% - 9.5px)) scale(1.15) !important;
+        transform-origin: 49.7% 33.75%;
     }
 }
 
@@ -11409,5 +11409,220 @@ html:not(.code-ok) #invitation-gate * {
 
     #registry {
         padding-top: 32px !important;
+    }
+}
+
+/* Desktop header: the JK monogram in the upper left (instead of the
+   "Joseph & Kate" lettering), with a soft light glow so the green stays
+   visible over the photos */
+.nav-logo.nav-logo-img-link {
+    display: block;
+    line-height: 0;
+}
+
+.nav-logo-img {
+    display: block;
+    width: auto;
+    height: 110px;
+    filter: drop-shadow(0 0 2px rgba(255, 250, 238, 0.95)) drop-shadow(0 0 9px rgba(255, 248, 230, 0.7));
+}
+
+/* ============================================
+   Desktop (901px and up) touch-ups
+   ============================================ */
+@media (min-width: 901px) {
+    /* Registry photo shifted up so the couple's joined hands show */
+    #registry {
+        background-position: center 60% !important;
+    }
+
+    /* Photo carousels: thin olive lines, like the dress code grid */
+    .story-carousel-wrapper,
+    .party-carousel-wrapper {
+        background-color: #8e9f4f !important;
+        border-top: 1px solid #8e9f4f !important;
+        border-bottom: 1px solid #8e9f4f !important;
+    }
+
+    .story-carousel-track,
+    .party-carousel-track {
+        gap: 1px !important;
+    }
+
+}
+
+/* ============================================
+   Desktop type scale (901px and up): every section uses the same three
+   sizes - section titles, subheadings and body text - growing gently with
+   the screen and capped on very wide screens
+   ============================================ */
+@media (min-width: 901px) {
+    :root {
+        --desk-title-initial: clamp(4.5rem, 5.6vw, 6rem);
+        --desk-title-word: clamp(3rem, 3.9vw, 4rem);
+        --desk-sub: clamp(1.35rem, 1.75vw, 1.9rem);
+        --desk-body: clamp(1.2rem, calc(0.8rem + 0.55vw), 1.5rem);
+    }
+
+    /* Section titles */
+    .our-love-story-title .ols-initial,
+    .big-day-title .ols-initial,
+    .registry-title .attire-initial,
+    .rsvp-heading .rsvp-initial,
+    .faq-title .faq-initial {
+        font-size: var(--desk-title-initial) !important;
+    }
+
+    .our-love-story-title .ols-rest,
+    .big-day-title .ols-rest,
+    .registry-title .attire-word,
+    .rsvp-heading .rsvp-word,
+    .faq-title .faq-word {
+        font-size: var(--desk-title-word) !important;
+    }
+
+    /* Subheadings */
+    .story-started-title,
+    .sched-name,
+    .rsvp-main-title {
+        font-size: var(--desk-sub) !important;
+    }
+
+    .sched-time {
+        font-size: calc(var(--desk-sub) * 0.85) !important;
+    }
+
+    /* Body text */
+    .story-col p,
+    .registry-desc,
+    .rsvp-instruction,
+    .faq-answer p {
+        font-size: var(--desk-body) !important;
+    }
+
+    .rsvp-instruction,
+    .faq-answer p {
+        line-height: 1.6 !important;
+    }
+
+    .sched-location {
+        font-size: calc(var(--desk-body) * 0.9) !important;
+    }
+
+    .rsvp-input,
+    .rsvp-continue-btn {
+        font-size: calc(var(--desk-body) * 0.9) !important;
+    }
+
+    .rsvp-example {
+        font-size: calc(var(--desk-body) * 0.8) !important;
+    }
+}
+
+/* Desktop FAQs: the questions box grows with the open answers instead of
+   staying one screen tall, so nothing spills past the dark footer */
+@media (min-width: 901px) {
+    .footer-content {
+        height: auto !important;
+        min-height: 100vh;
+    }
+}
+
+/* Desktop Registry: the paragraph's width follows its text size, so it
+   stays on two lines at every desktop width */
+@media (min-width: 901px) {
+    #registry .registry-desc {
+        max-width: 38em !important;
+    }
+}
+
+/* Desktop: the Entourage title uses the same title size as the other
+   sections (only the title - the names list keeps its size) */
+@media (min-width: 901px) {
+    .entourage-title .entourage-initial {
+        font-size: var(--desk-title-initial) !important;
+    }
+    .entourage-title .entourage-rest {
+        font-size: var(--desk-title-word) !important;
+    }
+}
+
+/* Desktop Our Story: the heading never runs past the left column. It
+   shrinks with the column and always stays on one line. */
+@media (min-width: 901px) {
+    .story-started-title {
+        padding-right: calc(50% + 24px) !important;
+        white-space: nowrap !important;
+        font-size: min(calc(var(--desk-sub) * 1.04), calc((100vw - 380px) / 48)) !important;
+        letter-spacing: 2.6px !important;
+    }
+}
+
+/* Desktop: every section title uses the Wedding Schedule lettering -
+   script initial + small Cinzel letters (not all capitals) */
+@media (min-width: 901px) {
+    .entourage-title,
+    .entourage-title .entourage-initial {
+        letter-spacing: normal !important;
+    }
+    .entourage-title .entourage-rest,
+    #attire .attire-title .attire-word,
+    .registry-title .attire-word {
+        text-transform: none !important;
+        letter-spacing: 3px !important;
+    }
+    .entourage-title .entourage-initial,
+    .entourage-title .entourage-rest {
+        line-height: 1 !important;
+    }
+    #attire .attire-title:not(.registry-title) .attire-initial {
+        font-size: var(--desk-title-initial) !important;
+    }
+    #attire .attire-title:not(.registry-title) .attire-word {
+        font-size: var(--desk-title-word) !important;
+    }
+}
+
+/* Desktop Dress Code title: stays on one line - shrinks a little only
+   when its column is too narrow (small laptops) */
+@media (min-width: 901px) {
+    #attire .attire-title:not(.registry-title) {
+        white-space: nowrap !important;
+    }
+    #attire .attire-center {
+        container-type: inline-size;
+    }
+    #attire .attire-title:not(.registry-title) .attire-initial {
+        font-size: min(var(--desk-title-initial), 19.2cqw) !important;
+    }
+    #attire .attire-title:not(.registry-title) .attire-word {
+        font-size: min(var(--desk-title-word), 13.4cqw) !important;
+    }
+}
+
+/* Desktop Entourage: names and role headings a little smaller. The whole
+   list below the title shrinks evenly, so the layout stays the same. */
+@media (min-width: 901px) {
+    .party-entourage > :not(.entourage-title) {
+        zoom: 0.88;
+    }
+}
+
+/* Desktop Entourage: Groom and Bride mirror each other around the page
+   center (two equal columns), so the pair looks balanced */
+@media (min-width: 901px) {
+    .entourage-row-groom-bride {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        width: max-content;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        transform: none !important;
+    }
+    .entourage-row-groom-bride .entourage-col,
+    .entourage-row-groom-bride .entourage-role,
+    .entourage-row-groom-bride .entourage-name {
+        transform: none !important;
+        text-align: center !important;
     }
 }

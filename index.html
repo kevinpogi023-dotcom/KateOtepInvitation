@@ -7,8 +7,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;500;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Dancing+Script:wght@400;500;600;700&family=EB+Garamond:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=20261022m">
-    <link rel="icon" type="image/png" href="images/gatelogo.png">
+    <link rel="stylesheet" href="style.css?v=20261027w">
+    <link rel="icon" type="image/png" href="images/favicon-jk.png?v=2">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon-jk.png?v=2">
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <script src="firebase-init.js"></script>
@@ -65,10 +66,8 @@
    <section id="hero" class="hero">
     <nav class="hero-navbar">
         <div class="nav-left">
-            <a href="#hero" class="nav-logo">
-                <span class="logo-joseph"><span class="logo-j">J</span><span class="logo-oseph">oseph</span></span>
-                <span class="logo-amp">&amp;</span>
-                <span class="logo-kate"><span class="logo-k">K</span><span class="logo-ate">ate</span></span>
+            <a href="#hero" class="nav-logo nav-logo-img-link" aria-label="Joseph &amp; Kate - back to the top">
+                <img src="images/logojk.png" alt="Joseph &amp; Kate" class="nav-logo-img">
             </a>
         </div>
         <a href="#hero" class="mobile-logo">
@@ -211,19 +210,19 @@
                     <img src="compressedimages/cup.png" alt="Cocktail icon" class="sched-icon">
                     <p class="sched-time">6:00 PM</p>
                     <p class="sched-name">COCKTAIL HOUR</p>
-                    <p class="sched-location">Fernwood Gardens<br>Antipolo</p>
+                    <p class="sched-location">Fernwood Gardens<br>Merano, Antipolo</p>
                 </div>
                 <div class="sched-item">
                     <img src="images/plate.png" alt="Dinner icon" class="sched-icon">
                     <p class="sched-time">7:00 PM</p>
                     <p class="sched-name">DINNER RECEPTION</p>
-                    <p class="sched-location">Fernwood Gardens<br>Antipolo</p>
+                    <p class="sched-location">Fernwood Gardens<br>Merano, Antipolo</p>
                 </div>
                 <div class="sched-item">
                     <img src="compressedimages/disco.png" alt="Party icon" class="sched-icon">
                     <p class="sched-time">9:00 PM</p>
                     <p class="sched-name">AFTER PARTY</p>
-                    <p class="sched-location">Fernwood Gardens<br>Antipolo</p>
+                    <p class="sched-location">Fernwood Gardens<br>Merano, Antipolo</p>
                 </div>
             </div>
 
@@ -501,8 +500,7 @@
             <h2 class="attire-title registry-title">
                 <span class="attire-initial">R</span><span class="attire-word">egistry</span>
             </h2>
-            <p class="registry-desc">Your <strong>presence at our wedding is the greatest gift</strong>, and if you wish to give, we would truly appreciate cash gifts as we begin our new life together. If you'd prefer to give something else, please select from our gift list below.</p>
-            <a href="#" class="registry-btn registry-btn-desktop" id="giftListBtnDesktop">View Gift List</a>
+            <p class="registry-desc">Your <strong>presence at our wedding is the greatest gift</strong>, and if you wish to give, we would truly appreciate cash gifts as we begin our new life together.</p>
         </div>
         <div class="registry-card-wrapper">
             <div class="registry-card-circle"></div>
@@ -517,69 +515,9 @@
                 <img src="images/standyellow.png" alt="" class="registry-cardno-flower">
                 <img src="images/cardno.png" alt="Card" class="registry-cardno">
                 <img src="images/righbpi.png" alt="BPI" class="registry-cardno-bpi">
-                <a href="#" class="registry-btn registry-btn-mobile" id="giftListBtnMobile">View Gift List</a>
             </div>
         </div>
     </section>
-
-    <!-- Gift List Modal -->
-    <div class="gift-modal-overlay" id="giftModalOverlay">
-        <div class="gift-modal">
-            <button type="button" class="gift-modal-close" id="giftModalClose" aria-label="Close">&times;</button>
-            <div class="gift-modal-scrollbar-track">
-                <div class="gift-modal-scrollbar-thumb" id="giftModalScrollThumb"></div>
-            </div>
-            <div class="gift-modal-scroll" id="giftModal">
-            <h3 class="gift-modal-title">View Gift List</h3>
-            <div class="gift-modal-sprig">
-                <svg width="30" height="14" viewBox="0 0 30 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 7C6 1 10 1 15 7C20 13 24 13 29 7" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
-                    <path d="M15 7C15 4.5 14 2.5 12 1.3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
-                    <path d="M15 7C15 4.5 16 2.5 18 1.3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
-                </svg>
-            </div>
-            <p class="gift-modal-note">If you'd like to give one of these gifts, kindly tap the green <strong>Reserve</strong> button and enter your name. This reserves the gift for you, so no one else will choose the same one.</p>
-            <div class="gift-grid" id="giftGrid"></div>
-            <div class="gift-modal-footer">
-                <span class="gift-footer-line"></span>
-                <span class="gift-footer-text">Grateful for you</span>
-                <span class="gift-footer-line"></span>
-            </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Reserve Gift Modal -->
-    <div class="reserve-modal-overlay" id="reserveModalOverlay">
-        <div class="reserve-modal">
-            <button type="button" class="reserve-modal-close" id="reserveModalClose" aria-label="Close">&times;</button>
-            <h4 class="reserve-modal-title">Reserve this gift?</h4>
-            <p class="reserve-modal-subtitle">This lets other guests know you're planning to purchase it.</p>
-            <label class="reserve-modal-label" for="reserveNameInput">Your Name <span class="required">*</span></label>
-            <input type="text" id="reserveNameInput" class="reserve-modal-input" placeholder="e.g. Maria Santos">
-            <label class="reserve-modal-label" for="reserveEmailInput">Email (optional)</label>
-            <input type="email" id="reserveEmailInput" class="reserve-modal-input" placeholder="e.g. maria@email.com">
-            <div class="reserve-modal-actions">
-                <button type="button" class="reserve-modal-cancel" id="reserveModalCancel">Cancel</button>
-                <button type="button" class="reserve-modal-confirm" id="reserveModalConfirm">Reserve Gift</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Gift Thank You Modal -->
-    <div class="reserve-modal-overlay" id="thankYouModalOverlay">
-        <div class="reserve-modal thankyou-modal" role="dialog" aria-modal="true" aria-labelledby="thankYouModalTitle">
-            <button type="button" class="reserve-modal-close" id="thankYouModalClose" aria-label="Close">&times;</button>
-            <h4 class="reserve-modal-title" id="thankYouModalTitle">Thank You!</h4>
-            <p class="thankyou-modal-text">Dear <strong id="thankYouGuestName"></strong>,</p>
-            <p class="thankyou-modal-text">Thank you so much for your thoughtful gift of <strong id="thankYouGiftName"></strong>. We have noted your reservation, and we truly appreciate your kindness and generosity as we begin our new life together.</p>
-            <p class="thankyou-modal-text">We can't wait to celebrate with you!</p>
-            <p class="thankyou-modal-signoff">With love,<br>Joseph &amp; Kate</p>
-            <div class="reserve-modal-actions">
-                <button type="button" class="reserve-modal-confirm" id="thankYouModalDone">Close</button>
-            </div>
-        </div>
-    </div>
 
     <!-- Venue Map Modal -->
     <div class="map-modal-overlay" id="mapModalOverlay">
@@ -633,7 +571,7 @@
                     <p class="map-modal-name">Fernwood Gardens</p>
                     <p class="map-modal-address">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"/></svg>
-                        Antipolo, Rizal
+                        Merano, Antipolo, Rizal
                     </p>
                     <p class="map-modal-time">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 6c-.2-.6-.8-1-1.4-1H6.5c-.7 0-1.2.4-1.4 1L3 12v8c0 .6.4 1 1 1h1c.6 0 1-.4 1-1v-1h12v1c0 .6.4 1 1 1h1c.6 0 1-.4 1-1v-8l-2.1-6zM6.5 16c-.8 0-1.5-.7-1.5-1.5S5.7 13 6.5 13s1.5.7 1.5 1.5S7.3 16 6.5 16zm11 0c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
