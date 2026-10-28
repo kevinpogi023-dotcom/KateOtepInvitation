@@ -11218,7 +11218,7 @@ html:not(.code-ok) #invitation-gate * {
    Phone navbar (480px and below): text links across the top with the JK logo
    in the middle - no background, no icons - replacing the header (hamburger,
    logo, RSVP); it stays on screen once the invitation opens. The words are
-   white with a soft pale-yellow glow (the colour of the hero names) so they stay readable over any section; the
+   white with a soft green glow so they stay readable over any section; the
    current tab is underlined.
    ============================================ */
 .tab-bar {
@@ -11265,7 +11265,7 @@ html:not(.code-ok) #invitation-gate * {
         letter-spacing: 0.6px;
         line-height: 1;
         text-decoration: none;
-        text-shadow: 0 0 1px rgba(253, 190, 75, 0.9), 0 0 4px #ffeda8, 0 0 8px #ffeda8, 0 0 14px rgba(255, 237, 168, 0.8);
+        text-shadow: 0 0 2px rgba(53, 82, 15, 0.85), 0 0 6px rgba(66, 100, 20, 0.6), 0 0 12px rgba(66, 100, 20, 0.4);
         -webkit-tap-highlight-color: transparent;
         transition: color 0.4s ease, text-shadow 0.4s ease;
     }
@@ -11285,7 +11285,7 @@ html:not(.code-ok) #invitation-gate * {
         height: 1.5px;
         border-radius: 1px;
         background: #f0d589;
-        box-shadow: 0 0 4px #ffeda8;
+        box-shadow: 0 0 4px rgba(53, 82, 15, 0.7);
         transform: scaleX(0);
         transition: transform 0.3s ease;
     }
@@ -11846,33 +11846,6 @@ html:not(.code-ok) #invitation-gate * {
     }
 }
 
-/* ============================================
-   "Our Love Story" title on phones and tablets: same letter sizes as the
-   "Wedding Schedule" title at every width (script first letter like the W,
-   the rest like "edding Schedule"). Desktop already matches.
-   ============================================ */
-@media (max-width: 900px) {
-    #story .our-love-story-title .ols-initial { font-size: 3rem !important; }
-    #story .our-love-story-title .ols-rest { font-size: 2.2rem !important; }
-}
-
-@media (max-width: 599px) {
-    #story .our-love-story-title .ols-initial:first-child { font-size: min(3.1rem, calc(12.4 * var(--vw))) !important; }
-    #story .our-love-story-title .ols-initial:not(:first-child),
-    #story .our-love-story-title .ols-rest { font-size: min(1.8rem, calc(7.3 * var(--vw))) !important; }
-}
-
-@media (min-width: 396px) and (max-width: 441px) {
-    #story .our-love-story-title .ols-initial:first-child { font-size: min(3.5rem, calc(12.4 * var(--vw))) !important; }
-    #story .our-love-story-title .ols-initial:not(:first-child),
-    #story .our-love-story-title .ols-rest { font-size: min(2.05rem, calc(7.3 * var(--vw))) !important; }
-}
-
-@media (max-width: 360px) {
-    #story .our-love-story-title .ols-initial:first-child { font-size: 2.2rem !important; }
-    #story .our-love-story-title .ols-initial:not(:first-child),
-    #story .our-love-story-title .ols-rest { font-size: 1.25rem !important; }
-}
 
 /* ============================================
    Entourage photo strip: the frames are see-through so the section's own
@@ -11893,12 +11866,6 @@ html:not(.code-ok) #invitation-gate * {
     border-left: 1px solid #8e9f4f;
 }
 
-/* "Our Love Story": the T in "tory" has a full-width flat top, so at the same
-   height as O, R and Y it looked bigger than them. Slightly smaller so the
-   four letters look even. */
-.our-love-story-title .ols-t {
-    font-size: 0.96em;
-}
 
 /* ============================================
    Hero: the date and "Antipolo City" are the same size as the
@@ -11934,4 +11901,102 @@ html:not(.code-ok) #invitation-gate * {
 @media (min-width: 1800px) {
     #hero .hero-content p.wedding-date,
     #hero .hero-content p.wedding-location { font-size: 2.2rem !important; }
+}
+
+/* ============================================
+   "Our Love Story" title on phones and tablets: same letter sizes as the
+   "Wedding Schedule" title at every width (script first letter like the W,
+   the rest like "edding Schedule"). Desktop already matches.
+   ============================================ */
+@media (max-width: 900px) {
+    #story .our-love-story-title .ols-initial { font-size: 3rem !important; }
+    #story .our-love-story-title .ols-rest { font-size: 2.2rem !important; }
+}
+
+/* Phones: the top of "Our Love Story" (title, orange subtitle, red flower)
+   is the iPhone 15 (393px) design scaled to the screen width, so every
+   phone shows the same picture, just bigger or smaller. --ip15 is one
+   iPhone 15 pixel: each number below is the size in px on the iPhone 15.
+   Scaling stops at 480px wide so the 481-599px range does not grow past
+   the 480 design. This block overrides the older per-width rules above. */
+@media (max-width: 599px) {
+    #story {
+        --ip15: calc(min(480px, 100 * var(--vw)) / 393);
+        padding-top: calc(28 * var(--ip15)) !important;
+    }
+    #story .container {
+        padding-left: calc(36.8 * var(--ip15)) !important;
+        padding-right: calc(36.8 * var(--ip15)) !important;
+    }
+
+    /* Title: script O, the rest in Cinzel, words close together */
+    #story .our-love-story-title {
+        font-size: calc(12.8 * var(--ip15)) !important;      /* sets the gap between words */
+        letter-spacing: calc(0.5 * var(--ip15)) !important;
+        word-spacing: calc(1.28 * var(--ip15)) !important;
+        line-height: 1 !important;
+        margin: calc(48 * var(--ip15)) 0 calc(3.2 * var(--ip15)) !important;
+        padding: 0 calc(8 * var(--ip15)) !important;
+        text-align: left !important;
+        white-space: nowrap !important;
+    }
+    /* The O used to touch the "u" at -0.2em; -0.1em leaves a slight gap.
+       No left padding and a small pull left so the O's curve lines up with
+       the start of the orange subtitle below it. */
+    #story .our-love-story-title .ols-initial:first-child {
+        font-size: calc(48.732 * var(--ip15)) !important;
+        margin-left: calc(-0.4 * var(--ip15)) !important;
+        margin-right: -0.1em !important;
+        padding-left: 0 !important;
+        padding-right: calc(6.4 * var(--ip15)) !important;
+    }
+    #story .our-love-story-title .ols-initial:not(:first-child) {
+        font-size: calc(28.689 * var(--ip15)) !important;
+        margin-left: -0.3em !important;
+        margin-right: -0.2em !important;
+        padding-left: calc(1.6 * var(--ip15)) !important;
+        padding-right: calc(3.2 * var(--ip15)) !important;
+    }
+    #story .our-love-story-title .ols-rest {
+        font-size: calc(28.689 * var(--ip15)) !important;
+        letter-spacing: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* "It all started when we / both met online" */
+    #story .story-started-title {
+        font-size: calc(12.8 * var(--ip15)) !important;
+        letter-spacing: calc(3 * var(--ip15)) !important;
+        line-height: 1.3 !important;
+        margin: calc(8 * var(--ip15)) 0 calc(16 * var(--ip15)) !important;
+        padding: 0 calc(8 * var(--ip15)) !important;
+        text-align: left !important;
+        white-space: nowrap !important;
+    }
+
+    /* Red flower at the top right */
+    #story .story-sunflower-mobile {
+        width: calc(80 * var(--ip15)) !important;
+        top: calc(51.2 * var(--ip15)) !important;
+        right: calc(32 * var(--ip15)) !important;
+    }
+}
+
+/* ============================================
+   Entourage photo strip: the frames are see-through so the section's own
+   paper background shows around each photo (a flat cream fill looked like a
+   different background). The thin olive lines between photos are drawn as
+   frame edges instead of a green fill showing through gaps.
+   ============================================ */
+.party-carousel-wrapper {
+    background: transparent !important;
+}
+
+.party-carousel-track {
+    gap: 0 !important;
+}
+
+.party-photo-frame {
+    background: transparent !important;
+    border-left: 1px solid #8e9f4f;
 }
