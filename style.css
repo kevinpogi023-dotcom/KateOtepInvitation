@@ -11217,9 +11217,8 @@ html:not(.code-ok) #invitation-gate * {
 /* ============================================
    Phone navbar (480px and below): text links across the top with the JK logo
    in the middle - no background, no icons - replacing the header (hamburger,
-   logo, RSVP); it stays on screen once the invitation opens. The words carry
-   a soft halo in the page's own tone so they stay readable over text behind
-   them, and turn light (.on-dark) over dark sections/photos (main.js); the
+   logo, RSVP); it stays on screen once the invitation opens. The words are
+   white with a soft black glow so they stay readable over any section; the
    current tab is underlined.
    ============================================ */
 .tab-bar {
@@ -11259,14 +11258,14 @@ html:not(.code-ok) #invitation-gate * {
         align-items: center;
         justify-content: center;
         padding: 12px 0;
-        color: #4f4219;
+        color: #ffffff;
         font-family: 'EB Garamond', 'Garamond', serif;
         font-size: 0.88rem;
         font-weight: 600;
         letter-spacing: 0.6px;
         line-height: 1;
         text-decoration: none;
-        text-shadow: 0 0 2px #f4efe2, 0 0 5px #f4efe2, 0 0 9px #f4efe2, 0 0 14px rgba(244, 239, 226, 0.9);
+        text-shadow: 0 0 1px rgba(0, 0, 0, 0.9), 0 0 3px rgba(0, 0, 0, 0.85), 0 0 7px rgba(0, 0, 0, 0.7), 0 0 14px rgba(0, 0, 0, 0.5);
         -webkit-tap-highlight-color: transparent;
         transition: color 0.4s ease, text-shadow 0.4s ease;
     }
@@ -11285,23 +11284,16 @@ html:not(.code-ok) #invitation-gate * {
         bottom: 0;
         height: 1.5px;
         border-radius: 1px;
-        background: #c9a44c;
+        background: #f0d589;
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.6);
         transform: scaleX(0);
-        transition: transform 0.3s ease, background 0.4s ease;
+        transition: transform 0.3s ease;
     }
 
     .tab-bar-item.is-active span::after {
         transform: scaleX(1);
     }
 
-    .tab-bar.on-dark .tab-bar-item {
-        color: #fbf3dc;
-        text-shadow: 0 0 2px rgba(20, 16, 8, 0.8), 0 0 6px rgba(20, 16, 8, 0.7), 0 0 12px rgba(20, 16, 8, 0.55);
-    }
-
-    .tab-bar.on-dark .tab-bar-item span::after {
-        background: #f0d589;
-    }
 
     .tab-bar-logo {
         flex: 0 0 auto;
@@ -11699,6 +11691,14 @@ html:not(.code-ok) #invitation-gate * {
         background-color: #8e9f4f !important;
         border-top: 1px solid #8e9f4f !important;
         border-bottom: 1px solid #8e9f4f !important;
+    }
+    /* Our Story strip sits right on top of the green Schedule section, which
+       overlapped and hid its bottom line: draw the strip above it, with a
+       deeper olive bottom line that shows against that green. */
+    .story-carousel-wrapper {
+        position: relative;
+        z-index: 2;
+        border-bottom: 2px solid #6b7c34 !important;
     }
     .story-carousel-track,
     .party-carousel-track {
