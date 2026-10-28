@@ -11218,7 +11218,7 @@ html:not(.code-ok) #invitation-gate * {
    Phone navbar (480px and below): text links across the top with the JK logo
    in the middle - no background, no icons - replacing the header (hamburger,
    logo, RSVP); it stays on screen once the invitation opens. The words are
-   white with a soft black glow so they stay readable over any section; the
+   white with a soft green glow so they stay readable over any section; the
    current tab is underlined.
    ============================================ */
 .tab-bar {
@@ -11265,7 +11265,7 @@ html:not(.code-ok) #invitation-gate * {
         letter-spacing: 0.6px;
         line-height: 1;
         text-decoration: none;
-        text-shadow: 0 0 1px rgba(0, 0, 0, 0.9), 0 0 3px rgba(0, 0, 0, 0.85), 0 0 7px rgba(0, 0, 0, 0.7), 0 0 14px rgba(0, 0, 0, 0.5);
+        text-shadow: 0 0 2px rgba(53, 82, 15, 0.85), 0 0 6px rgba(66, 100, 20, 0.6), 0 0 12px rgba(66, 100, 20, 0.4);
         -webkit-tap-highlight-color: transparent;
         transition: color 0.4s ease, text-shadow 0.4s ease;
     }
@@ -11285,7 +11285,7 @@ html:not(.code-ok) #invitation-gate * {
         height: 1.5px;
         border-radius: 1px;
         background: #f0d589;
-        box-shadow: 0 0 4px rgba(0, 0, 0, 0.6);
+        box-shadow: 0 0 4px rgba(53, 82, 15, 0.7);
         transform: scaleX(0);
         transition: transform 0.3s ease;
     }
