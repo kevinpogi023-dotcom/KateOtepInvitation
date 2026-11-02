@@ -12024,3 +12024,18 @@ html:not(.code-ok) #invitation-gate * {
     background: rgba(107, 125, 82, 0.6);
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.35);   /* visible on dark sections too */
 }
+
+/* Navbars slide away while scrolling down (main.js adds .nav-away) */
+.hero-navbar.nav-away {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+@media (max-width: 480px) {
+    .tab-bar.nav-away {
+        transform: translate(-50%, calc(-100% - 16px - env(safe-area-inset-top, 0px)));
+        opacity: 0;
+        pointer-events: none;
+    }
+}

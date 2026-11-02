@@ -1604,3 +1604,47 @@ document.addEventListener('animationend', function(e) {
         requestAnimationFrame(update);
     }, { passive: true });
 })();
+
+// ============================================
+// Navbars (desktop top bar and phone tab bar): slide away while scrolling
+// down, come back while scrolling up or near the top. They stay put while
+// the phone menu is open.
+// ============================================
+(function() {
+    const navs = [document.querySelector('.hero-navbar'), document.getElementById('tabBar')].filter(Boolean);
+    if (!navs.length) return;
+
+    const TOP_ZONE = 80;   // always shown this close to the top (px)
+    const STEP = 6;        // ignore tiny wobbles, e.g. iPhone bounce
+    let lastY = window.pageYOffset;
+    let ticking = false;
+
+    function setAway(away) {
+        navs.forEach(function(nav) { nav.classList.toggle('nav-away', away); });
+    }
+
+    function update() {
+        ticking = false;
+        const y = Math.max(0, window.pageYOffset);
+        const menuOpen = !!document.querySelector('.mobile-menu.active');
+
+        if (y < TOP_ZONE || menuOpen) {
+            setAway(false);
+            lastY = y;
+            return;
+        }
+        if (y > lastY + STEP) {
+            setAway(true);
+            lastY = y;
+        } else if (y < lastY - STEP) {
+            setAway(false);
+            lastY = y;
+        }
+    }
+
+    window.addEventListener('scroll', function() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(update);
+    }, { passive: true });
+})();
