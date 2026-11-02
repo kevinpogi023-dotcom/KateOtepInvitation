@@ -11380,14 +11380,6 @@ html:not(.code-ok) #invitation-gate * {
     white-space: nowrap;
 }
 
-/* FAQ: keep the long last question on one line on narrower phones */
-@media (max-width: 429px) {
-    .faq-question h4.faq-q-long {
-        white-space: nowrap;
-        font-size: 10.2px !important;
-        letter-spacing: 0.6px !important;
-    }
-}
 
 /* FAQs title on phones: one line, as big as fits - tighter letter spacing,
    and the line starts at the screen's 16px side margin */
@@ -11999,4 +11991,36 @@ html:not(.code-ok) #invitation-gate * {
 .party-photo-frame {
     background: transparent !important;
     border-left: 1px solid #8e9f4f;
+}
+
+/* ============================================
+   Page scrollbar: the browser's own scrollbar stays hidden (see html/body
+   above). This thin bar on the right fades in while scrolling up and hides
+   while scrolling down. It floats over the page, so nothing shifts.
+   ============================================ */
+.page-scrollbar {
+    position: fixed;
+    top: 6px;
+    bottom: 6px;
+    right: 3px;
+    width: 5px;
+    z-index: 9000;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.page-scrollbar.is-visible {
+    opacity: 1;
+}
+
+.page-scrollbar-thumb {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    min-height: 32px;
+    border-radius: 3px;
+    background: rgba(107, 125, 82, 0.6);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.35);   /* visible on dark sections too */
 }

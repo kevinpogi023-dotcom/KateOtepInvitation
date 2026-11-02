@@ -1567,3 +1567,40 @@ document.addEventListener('animationend', function(e) {
 
     requestUpdate();
 })();
+
+// ============================================
+// Page scrollbar: visible while scrolling up, hidden while scrolling down
+// and at the very top. Sizes use % of the bar, so the wide-screen zoom
+// (see Index.html) does not matter.
+// ============================================
+(function() {
+    const bar = document.querySelector('.page-scrollbar');
+    const thumb = bar && bar.querySelector('.page-scrollbar-thumb');
+    if (!bar || !thumb) return;
+
+    let lastY = window.pageYOffset;
+    let ticking = false;
+
+    function update() {
+        ticking = false;
+        const y = window.pageYOffset;
+        const doc = document.documentElement;
+        const max = Math.max(1, doc.scrollHeight - window.innerHeight);
+        const view = Math.min(1, window.innerHeight / doc.scrollHeight);
+        const pos = Math.min(1, Math.max(0, y / max));
+
+        thumb.style.height = (view * 100) + '%';
+        thumb.style.top = (pos * (1 - view) * 100) + '%';
+
+        if (y <= 0 || view >= 1) bar.classList.remove('is-visible');
+        else if (y < lastY - 2) bar.classList.add('is-visible');
+        else if (y > lastY + 2) bar.classList.remove('is-visible');
+        lastY = y;
+    }
+
+    window.addEventListener('scroll', function() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(update);
+    }, { passive: true });
+})();
