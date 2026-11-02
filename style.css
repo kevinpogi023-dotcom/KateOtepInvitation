@@ -12039,3 +12039,12 @@ html:not(.code-ok) #invitation-gate * {
         pointer-events: none;
     }
 }
+
+/* Hero date ("Feb 6 2027. Antipolo"): EB Garamond with same-height numbers.
+   Plain Garamond uses old-style numbers (the 6 stood taller than 2027), and
+   iPhones don't have Garamond, so this also makes every device match. */
+#hero .hero-content p.wedding-date {
+    font-family: 'EB Garamond', Garamond, serif !important;
+    font-variant-numeric: lining-nums;
+    font-weight: 600 !important;
+}
