@@ -1424,6 +1424,7 @@ document.addEventListener('animationend', function(e) {
             track.style.animationDuration = duration + 's';
             track._loopDistance = distance;
             track._autoSpeed = distance / duration;
+            track._duration = duration;
         });
     }
 
@@ -1435,23 +1436,23 @@ document.addEventListener('animationend', function(e) {
         timer = setTimeout(measure, 200);
     });
 
-    // Swipe / drag the strips left or right. JavaScript moves the strip
-    // instead of the CSS animation (which stays as a fallback if this script
-    // doesn't run): it slides on its own, a drag moves it by hand in either
-    // direction, and a flick keeps going for a moment before easing back into
-    // the normal slow slide. Up/down swipes still scroll the page.
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Swipe / drag the strips left or right. The CSS animation keeps doing
+    // the automatic slide (it runs off the main thread, so it stays smooth on
+    // phones). Only while a finger or mouse moves a strip - and during the
+    // short glide after a flick - does JavaScript move it; then the CSS
+    // animation picks up again from exactly where the strip stopped.
+    // Up/down swipes still scroll the page.
     tracks.forEach(function(track) {
         const strip = track.parentElement;
-        let x = 0;            // how far the strip has slid (px)
-        let velocity = null;  // px per second; null = normal speed
+        let manual = false;   // is JavaScript moving the strip right now?
+        let x = 0;            // how far the strip has slid while manual (px)
         let dragging = false;
         let decided = false;  // has this touch been judged sideways or up/down?
-        let startX = 0, startY = 0, lastX = 0, lastT = 0, dragSpeed = 0;
-        let lastFrame = 0;
-        let onScreen = true;
+        let startX = 0, startY = 0, lastX = 0;
+        let recent = [];      // [time, x] of the last moves, to measure flick speed
+        let glideFrame = 0;
+        let wheelTimer = 0;
 
-        track.style.animation = 'none';
         strip.classList.add('is-draggable');
 
         // Keep getting the finger's moves even if it leaves the strip
@@ -1459,32 +1460,57 @@ document.addEventListener('animationend', function(e) {
             try { strip.setPointerCapture(id); } catch (err) {}
         }
 
-        function autoSpeed() {
-            return reduceMotion ? 0 : (track._autoSpeed || 0);
-        }
-
-        function frame(now) {
-            const dt = lastFrame ? Math.min(0.05, (now - lastFrame) / 1000) : 0;
-            lastFrame = now;
-            if (!dragging && onScreen) {
-                const target = autoSpeed();
-                if (velocity === null) velocity = target;
-                // A flick slows down smoothly into the normal speed
-                velocity += (target - velocity) * (1 - Math.exp(-dt * 2.5));
-                x += velocity * dt;
-            }
+        function wrap(v) {
             const d = track._loopDistance;
-            if (d) x = ((x % d) + d) % d;
-            track.style.transform = 'translate3d(' + (-x) + 'px, 0, 0)';
-            requestAnimationFrame(frame);
+            return d ? ((v % d) + d) % d : v;
         }
-        requestAnimationFrame(frame);
 
-        // Rest while the strip is off screen
-        if ('IntersectionObserver' in window) {
-            new IntersectionObserver(function(entries) {
-                onScreen = entries[0].isIntersecting;
-            }).observe(strip);
+        function paint() {
+            x = wrap(x);
+            track.style.transform = 'translate3d(' + (-x) + 'px, 0, 0)';
+        }
+
+        // Freeze the CSS animation where it is and let JavaScript move it
+        function takeOver() {
+            cancelAnimationFrame(glideFrame);
+            clearTimeout(wheelTimer);
+            if (manual) return;
+            const m = new DOMMatrixReadOnly(getComputedStyle(track).transform);
+            x = -m.m41;
+            manual = true;
+            // Only switch the animation off: its duration has to stay set
+            track.style.animationName = 'none';
+            paint();
+        }
+
+        // Hand back to the CSS animation, starting from the current spot
+        function handBack() {
+            if (!manual) return;
+            manual = false;
+            const d = track._loopDistance;
+            const duration = track._duration || 0;
+            // A negative delay starts the animation part-way through,
+            // at the strip's current spot
+            track.style.animationDelay = (d && duration ? -(wrap(x) / d) * duration : 0) + 's';
+            track.style.transform = '';
+            track.style.animationName = '';
+        }
+
+        // After a flick: keep moving, slowing smoothly to the normal speed,
+        // then hand back to CSS
+        function glide(velocity) {
+            const target = track._autoSpeed || 0;
+            let last = 0;
+            function step(now) {
+                const dt = last ? Math.min(0.05, (now - last) / 1000) : 0;
+                last = now;
+                velocity += (target - velocity) * (1 - Math.exp(-dt * 3));
+                x += velocity * dt;
+                paint();
+                if (Math.abs(velocity - target) < 8) { handBack(); return; }
+                glideFrame = requestAnimationFrame(step);
+            }
+            glideFrame = requestAnimationFrame(step);
         }
 
         strip.addEventListener('pointerdown', function(e) {
@@ -1492,11 +1518,10 @@ document.addEventListener('animationend', function(e) {
             dragging = true;
             // A mouse drag is always sideways; a touch decides once it moves
             decided = e.pointerType === 'mouse';
-            if (decided) capture(e.pointerId);
+            if (decided) { capture(e.pointerId); takeOver(); }
             startX = lastX = e.clientX;
             startY = e.clientY;
-            lastT = performance.now();
-            dragSpeed = 0;
+            recent = [];
         });
 
         strip.addEventListener('pointermove', function(e) {
@@ -1507,13 +1532,14 @@ document.addEventListener('animationend', function(e) {
                 decided = true;
                 if (dy > dx) { dragging = false; return; } // up/down: let the page scroll
                 capture(e.pointerId);
+                takeOver();
             }
             const now = performance.now();
-            const moved = e.clientX - lastX;
-            x -= moved;
-            if (now > lastT) dragSpeed = dragSpeed * 0.6 + (-moved / ((now - lastT) / 1000)) * 0.4;
+            x -= e.clientX - lastX;
+            paint();
             lastX = e.clientX;
-            lastT = now;
+            recent.push([now, x]);
+            while (recent.length > 2 && now - recent[0][0] > 100) recent.shift();
             strip.classList.add('is-dragging');
         });
 
@@ -1521,9 +1547,17 @@ document.addEventListener('animationend', function(e) {
             if (!dragging) return;
             dragging = false;
             strip.classList.remove('is-dragging');
-            // Keep the flick going (capped), unless the finger stopped first
-            const fresh = performance.now() - lastT < 80;
-            velocity = fresh ? Math.max(-2500, Math.min(2500, dragSpeed)) : 0;
+            if (!manual) return; // a tap: nothing moved
+            // Keep the flick going (capped): speed over the last ~100ms of the
+            // drag, or none if the finger had stopped before lifting
+            let speed = 0;
+            const now = performance.now();
+            if (recent.length > 1 && now - recent[recent.length - 1][0] < 80) {
+                const a = recent[0], b = recent[recent.length - 1];
+                const span = Math.max(30, b[0] - a[0]);
+                speed = (b[1] - a[1]) / (span / 1000);
+            }
+            glide(Math.max(-2500, Math.min(2500, speed)));
         }
         strip.addEventListener('pointerup', release);
         strip.addEventListener('pointercancel', release);
@@ -1533,8 +1567,10 @@ document.addEventListener('animationend', function(e) {
         strip.addEventListener('wheel', function(e) {
             if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
             e.preventDefault();
+            takeOver();
             x += e.deltaX;
-            velocity = 0;
+            paint();
+            wheelTimer = setTimeout(function() { glide(0); }, 150);
         }, { passive: false });
 
         // Stop the browser dragging the photos themselves
