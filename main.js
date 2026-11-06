@@ -1504,7 +1504,7 @@ document.addEventListener('animationend', function(e) {
             function step(now) {
                 const dt = last ? Math.min(0.05, (now - last) / 1000) : 0;
                 last = now;
-                velocity += (target - velocity) * (1 - Math.exp(-dt * 3));
+                velocity += (target - velocity) * (1 - Math.exp(-dt * 2));
                 x += velocity * dt;
                 paint();
                 if (Math.abs(velocity - target) < 8) { handBack(); return; }
@@ -1513,35 +1513,34 @@ document.addEventListener('animationend', function(e) {
             glideFrame = requestAnimationFrame(step);
         }
 
-        strip.addEventListener('pointerdown', function(e) {
-            if (e.pointerType === 'mouse' && e.button !== 0) return;
+        // --- shared drag steps (used by touch and mouse) ---
+        function begin(cx, cy) {
             dragging = true;
-            // A mouse drag is always sideways; a touch decides once it moves
-            decided = e.pointerType === 'mouse';
-            if (decided) { capture(e.pointerId); takeOver(); }
-            startX = lastX = e.clientX;
-            startY = e.clientY;
+            decided = false;
+            startX = lastX = cx;
+            startY = cy;
             recent = [];
-        });
+        }
 
-        strip.addEventListener('pointermove', function(e) {
-            if (!dragging) return;
+        // Returns true while this gesture is a sideways drag of the strip
+        function moveTo(cx, cy) {
+            if (!dragging) return false;
             if (!decided) {
-                const dx = Math.abs(e.clientX - startX), dy = Math.abs(e.clientY - startY);
-                if (dx < 6 && dy < 6) return;
+                const dx = Math.abs(cx - startX), dy = Math.abs(cy - startY);
+                if (dx < 6 && dy < 6) return false;
                 decided = true;
-                if (dy > dx) { dragging = false; return; } // up/down: let the page scroll
-                capture(e.pointerId);
+                if (dy > dx) { dragging = false; return false; } // up/down: page scrolls
                 takeOver();
             }
             const now = performance.now();
-            x -= e.clientX - lastX;
+            x -= cx - lastX;
             paint();
-            lastX = e.clientX;
+            lastX = cx;
             recent.push([now, x]);
             while (recent.length > 2 && now - recent[0][0] > 100) recent.shift();
             strip.classList.add('is-dragging');
-        });
+            return true;
+        }
 
         function release() {
             if (!dragging) return;
@@ -1557,11 +1556,54 @@ document.addEventListener('animationend', function(e) {
                 const span = Math.max(30, b[0] - a[0]);
                 speed = (b[1] - a[1]) / (span / 1000);
             }
-            glide(Math.max(-2500, Math.min(2500, speed)));
+            glide(Math.max(-4000, Math.min(4000, speed)));
         }
-        strip.addEventListener('pointerup', release);
-        strip.addEventListener('pointercancel', release);
-        strip.addEventListener('lostpointercapture', release);
+
+        // --- touch (phones): touch events, so once a swipe is judged sideways
+        // the page is told not to scroll. Otherwise Safari takes over as soon
+        // as the finger drifts a little up or down, and cuts the swipe short.
+        let touchId = null;
+        strip.addEventListener('touchstart', function(e) {
+            if (e.touches.length > 1) { touchId = null; release(); return; }
+            const t = e.changedTouches[0];
+            touchId = t.identifier;
+            begin(t.clientX, t.clientY);
+        }, { passive: true });
+
+        strip.addEventListener('touchmove', function(e) {
+            if (touchId === null) return;
+            const t = Array.prototype.find.call(e.changedTouches, function(c) { return c.identifier === touchId; });
+            if (!t) return;
+            if (moveTo(t.clientX, t.clientY) && e.cancelable) e.preventDefault();
+        }, { passive: false });
+
+        function touchEnd(e) {
+            if (touchId === null) return;
+            const ended = Array.prototype.some.call(e.changedTouches, function(c) { return c.identifier === touchId; });
+            if (!ended) return;
+            touchId = null;
+            release();
+        }
+        strip.addEventListener('touchend', touchEnd);
+        strip.addEventListener('touchcancel', touchEnd);
+
+        // --- mouse (desktop): pointer events; touches are handled above
+        strip.addEventListener('pointerdown', function(e) {
+            if (e.pointerType !== 'mouse' || e.button !== 0) return;
+            begin(e.clientX, e.clientY);
+            decided = true; // a mouse drag is always sideways
+            capture(e.pointerId);
+            takeOver();
+        });
+        strip.addEventListener('pointermove', function(e) {
+            if (e.pointerType === 'mouse') moveTo(e.clientX, e.clientY);
+        });
+        strip.addEventListener('pointerup', function(e) {
+            if (e.pointerType === 'mouse') release();
+        });
+        strip.addEventListener('lostpointercapture', function(e) {
+            if (e.pointerType === 'mouse') release();
+        });
 
         // Trackpads: two-finger sideways swipes move the strip too
         strip.addEventListener('wheel', function(e) {
