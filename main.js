@@ -1522,12 +1522,16 @@ document.addEventListener('animationend', function(e) {
             recent = [];
         }
 
-        // Returns true while this gesture is a sideways drag of the strip
-        function moveTo(cx, cy) {
+        // Returns true while this gesture is a sideways drag of the strip.
+        // deadZone: how far it must move before it's judged sideways or
+        // up/down. Touch uses 0: iPhone Safari decides whether the page scrolls
+        // on the very first move, so the strip has to claim the swipe then.
+        function moveTo(cx, cy, deadZone) {
             if (!dragging) return false;
             if (!decided) {
                 const dx = Math.abs(cx - startX), dy = Math.abs(cy - startY);
-                if (dx < 6 && dy < 6) return false;
+                if (dx === 0 && dy === 0) return false;
+                if (dx < deadZone && dy < deadZone) return false;
                 decided = true;
                 if (dy > dx) { dragging = false; return false; } // up/down: page scrolls
                 takeOver();
@@ -1574,7 +1578,7 @@ document.addEventListener('animationend', function(e) {
             if (touchId === null) return;
             const t = Array.prototype.find.call(e.changedTouches, function(c) { return c.identifier === touchId; });
             if (!t) return;
-            if (moveTo(t.clientX, t.clientY) && e.cancelable) e.preventDefault();
+            if (moveTo(t.clientX, t.clientY, 0) && e.cancelable) e.preventDefault();
         }, { passive: false });
 
         function touchEnd(e) {
@@ -1596,7 +1600,7 @@ document.addEventListener('animationend', function(e) {
             takeOver();
         });
         strip.addEventListener('pointermove', function(e) {
-            if (e.pointerType === 'mouse') moveTo(e.clientX, e.clientY);
+            if (e.pointerType === 'mouse') moveTo(e.clientX, e.clientY, 6);
         });
         strip.addEventListener('pointerup', function(e) {
             if (e.pointerType === 'mouse') release();
