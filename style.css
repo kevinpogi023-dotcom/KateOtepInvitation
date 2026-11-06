@@ -12048,3 +12048,24 @@ html:not(.code-ok) #invitation-gate * {
     font-variant-numeric: lining-nums;
     font-weight: 600 !important;
 }
+
+/* Photo strips can be swiped or dragged left/right (main.js). pan-y keeps
+   up/down swipes scrolling the page. */
+.story-carousel.is-draggable,
+.party-carousel.is-draggable {
+    touch-action: pan-y;
+    cursor: grab;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.story-carousel.is-dragging,
+.party-carousel.is-dragging {
+    cursor: grabbing;
+}
+
+.story-carousel.is-draggable img,
+.party-carousel.is-draggable img {
+    -webkit-user-drag: none;
+    pointer-events: none;
+}

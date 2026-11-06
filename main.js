@@ -1422,6 +1422,8 @@ document.addEventListener('animationend', function(e) {
                 duration = distance / partySpeed;
             }
             track.style.animationDuration = duration + 's';
+            track._loopDistance = distance;
+            track._autoSpeed = distance / duration;
         });
     }
 
@@ -1431,6 +1433,112 @@ document.addEventListener('animationend', function(e) {
     window.addEventListener('resize', function() {
         clearTimeout(timer);
         timer = setTimeout(measure, 200);
+    });
+
+    // Swipe / drag the strips left or right. JavaScript moves the strip
+    // instead of the CSS animation (which stays as a fallback if this script
+    // doesn't run): it slides on its own, a drag moves it by hand in either
+    // direction, and a flick keeps going for a moment before easing back into
+    // the normal slow slide. Up/down swipes still scroll the page.
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    tracks.forEach(function(track) {
+        const strip = track.parentElement;
+        let x = 0;            // how far the strip has slid (px)
+        let velocity = null;  // px per second; null = normal speed
+        let dragging = false;
+        let decided = false;  // has this touch been judged sideways or up/down?
+        let startX = 0, startY = 0, lastX = 0, lastT = 0, dragSpeed = 0;
+        let lastFrame = 0;
+        let onScreen = true;
+
+        track.style.animation = 'none';
+        strip.classList.add('is-draggable');
+
+        // Keep getting the finger's moves even if it leaves the strip
+        function capture(id) {
+            try { strip.setPointerCapture(id); } catch (err) {}
+        }
+
+        function autoSpeed() {
+            return reduceMotion ? 0 : (track._autoSpeed || 0);
+        }
+
+        function frame(now) {
+            const dt = lastFrame ? Math.min(0.05, (now - lastFrame) / 1000) : 0;
+            lastFrame = now;
+            if (!dragging && onScreen) {
+                const target = autoSpeed();
+                if (velocity === null) velocity = target;
+                // A flick slows down smoothly into the normal speed
+                velocity += (target - velocity) * (1 - Math.exp(-dt * 2.5));
+                x += velocity * dt;
+            }
+            const d = track._loopDistance;
+            if (d) x = ((x % d) + d) % d;
+            track.style.transform = 'translate3d(' + (-x) + 'px, 0, 0)';
+            requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
+
+        // Rest while the strip is off screen
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver(function(entries) {
+                onScreen = entries[0].isIntersecting;
+            }).observe(strip);
+        }
+
+        strip.addEventListener('pointerdown', function(e) {
+            if (e.pointerType === 'mouse' && e.button !== 0) return;
+            dragging = true;
+            // A mouse drag is always sideways; a touch decides once it moves
+            decided = e.pointerType === 'mouse';
+            if (decided) capture(e.pointerId);
+            startX = lastX = e.clientX;
+            startY = e.clientY;
+            lastT = performance.now();
+            dragSpeed = 0;
+        });
+
+        strip.addEventListener('pointermove', function(e) {
+            if (!dragging) return;
+            if (!decided) {
+                const dx = Math.abs(e.clientX - startX), dy = Math.abs(e.clientY - startY);
+                if (dx < 6 && dy < 6) return;
+                decided = true;
+                if (dy > dx) { dragging = false; return; } // up/down: let the page scroll
+                capture(e.pointerId);
+            }
+            const now = performance.now();
+            const moved = e.clientX - lastX;
+            x -= moved;
+            if (now > lastT) dragSpeed = dragSpeed * 0.6 + (-moved / ((now - lastT) / 1000)) * 0.4;
+            lastX = e.clientX;
+            lastT = now;
+            strip.classList.add('is-dragging');
+        });
+
+        function release() {
+            if (!dragging) return;
+            dragging = false;
+            strip.classList.remove('is-dragging');
+            // Keep the flick going (capped), unless the finger stopped first
+            const fresh = performance.now() - lastT < 80;
+            velocity = fresh ? Math.max(-2500, Math.min(2500, dragSpeed)) : 0;
+        }
+        strip.addEventListener('pointerup', release);
+        strip.addEventListener('pointercancel', release);
+        strip.addEventListener('lostpointercapture', release);
+
+        // Trackpads: two-finger sideways swipes move the strip too
+        strip.addEventListener('wheel', function(e) {
+            if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+            e.preventDefault();
+            x += e.deltaX;
+            velocity = 0;
+        }, { passive: false });
+
+        // Stop the browser dragging the photos themselves
+        track.addEventListener('dragstart', function(e) { e.preventDefault(); });
     });
 })();
 
