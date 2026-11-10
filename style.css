@@ -11318,13 +11318,14 @@ html:not(.code-ok) #invitation-gate * {
         width: 46px;
         height: 46px;
         object-fit: cover;
-        filter: drop-shadow(0 0 4px #f4efe2) drop-shadow(0 0 8px rgba(244, 239, 226, 0.9));
+        /* a tight glow: a wide one blurs the logo's thin lines */
+        filter: drop-shadow(0 0 1.5px rgba(244, 239, 226, 0.9));
         transition: filter 0.4s ease;
     }
 
-    /* a light glow keeps the green monogram visible over dark photos too */
+    /* a light glow keeps the monogram visible over dark photos too */
     .tab-bar.on-dark .tab-bar-logo img {
-        filter: drop-shadow(0 0 5px rgba(255, 248, 230, 0.75));
+        filter: drop-shadow(0 0 2.5px rgba(255, 248, 230, 0.9));
     }
 }
 
