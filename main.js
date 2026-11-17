@@ -90,7 +90,7 @@
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitGate);
 
     // Set to true to play the save-the-date video after the envelope opens.
-    const PLAY_TRANSITION_VIDEO = true;
+    const PLAY_TRANSITION_VIDEO = false;
 
     // Keep the page locked at the top while the gate and the video are showing,
     // so the invitation always starts at the hero.

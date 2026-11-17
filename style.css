@@ -1486,44 +1486,47 @@ section {
         display: none;
     }
 
+    /* Same order as on phones: the women follow the colour swatches -
+       Butter Yellow, Yellow Orange, Pumpkin Orange on the top row;
+       Petal Pink, Coral Pink, Matcha Green on the bottom row. */
     .attire-photo-women-1 {
-        background-image: url('images/women1.png');
-        background-size: 80%;
-        background-position: center;
-        background-repeat: no-repeat;
-    }
-
-    .attire-photo-women-2 {
-        background-image: url('images/women2.png');
-        background-size: 78%;
-        background-position: center;
-        background-repeat: no-repeat;
-    }
-
-    .attire-photo-women-3 {
-        background-image: url('images/women3.png');
-        background-size: 78%;
-        background-position: center;
-        background-repeat: no-repeat;
-    }
-
-    .attire-photo-women-4 {
-        background-image: url('images/women4.png');
-        background-size: 110%;
-        background-position: center;
-        background-repeat: no-repeat;
-    }
-
-    .attire-photo-women-5 {
         background-image: url('images/women5.png');
         background-size: 75%;
         background-position: center;
         background-repeat: no-repeat;
     }
 
-    .attire-photo-women-6 {
+    .attire-photo-women-2 {
         background-image: url('images/women6.png');
         background-size: 64%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .attire-photo-women-3 {
+        background-image: url('images/women2.png');
+        background-size: 78%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .attire-photo-women-4 {
+        background-image: url('images/women3.png');
+        background-size: 78%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .attire-photo-women-5 {
+        background-image: url('images/women4.png');
+        background-size: 110%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .attire-photo-women-6 {
+        background-image: url('images/women1.png');
+        background-size: 80%;
         background-position: center;
         background-repeat: no-repeat;
     }
@@ -6790,35 +6793,28 @@ footer {
     }
 
     .entourage-bearers {
-        grid-template-columns: 1fr 1fr 1fr !important;
+        /* two columns like on phones, so the names can stay full size */
+        grid-template-columns: 1fr 1fr !important;
         grid-template-areas:
-            "ring coin bible"
-            "flower flower flower" !important;
+            "ring coin"
+            "bible flower" !important;
         width: 96% !important;
         gap: 0.6rem 0.8rem !important;
     }
 
     .eb-flower {
-        margin-top: 0.6rem !important;
+        margin-top: 0 !important;
     }
 
-    .entourage-bearers .entourage-role {
-        white-space: nowrap !important;
-        font-size: min(1.1rem, calc(2.2 * var(--vw))) !important;
-        letter-spacing: 1.5px !important;
-    }
-
+    /* Bearer roles and names use the same size as the rest of the entourage */
+    .entourage-bearers .entourage-role,
     .entourage-bearers .entourage-name {
         white-space: nowrap !important;
-        font-size: min(0.95rem, calc(1.75 * var(--vw))) !important;
-        letter-spacing: 0.5px !important;
     }
 
     .eb-flower-names {
-        flex-direction: row !important;
-        flex-wrap: nowrap;
-        justify-content: center;
-        gap: 0 1.2rem !important;
+        flex-direction: column !important;
+        gap: 0 !important;
     }
 
     .entourage-divider {
@@ -10107,11 +10103,23 @@ html.scroll-locked body {
 }
 
 
-/* Entourage bearers: names scale with their column so they never overlap */
+/* Entourage bearers on laptops: names keep the same size and spacing as every
+   other entourage name; the four flower girls go in two rows of two. */
 @media (min-width: 901px) and (max-width: 1799px) {
-    .entourage-bearers .entourage-name {
-        font-size: calc(calc(1.75 * var(--vw)) - 2px) !important;
-        letter-spacing: 1px !important;
+    /* the middle column (Coin Bearer) is as wide as its name and sits exactly
+       in the centre, in line with Flower Girls below; the side columns share
+       the rest equally, so long names never touch */
+    .entourage-bearers {
+        grid-template-columns: 1fr auto 1fr;
+        width: 96%;
+        column-gap: 1.5rem;
+    }
+
+    .eb-flower-names {
+        display: grid !important;
+        grid-template-columns: auto auto;
+        justify-content: center;
+        gap: 0 3rem !important;
     }
 }
 
@@ -12083,4 +12091,102 @@ html:not(.code-ok) #invitation-gate * {
 .party-carousel.is-draggable img {
     -webkit-user-drag: none;
     pointer-events: none;
+}
+
+/* Desktop Registry: the couple in the middle of the screen. The photo is drawn
+   12% larger (so it can move right without showing an edge) and placed so
+   the couple (44.7% across registry.jpg) sits slightly left of centre (48%
+   across the screen), while the
+   groom's head (52.2% down the photo) stays at the same height as before -
+   the title above keeps its spacing. Same at every desktop size. */
+@media (min-width: 901px) {
+    #registry {
+        --reg-h: max(900px, calc(100 * var(--vh)));
+        --reg-w: max(calc(100 * var(--vw)), calc(var(--reg-h) * 1.7778));
+        background-size: calc(1.12 * var(--reg-w)) auto !important;
+        background-position:
+            calc(calc(48 * var(--vw)) - 0.447 * 1.12 * var(--reg-w))
+            calc(0.6 * var(--reg-h) - 0.117 * var(--reg-w) - 0.783 * 1.12 * var(--reg-w)) !important;
+    }
+}
+
+/* ============================================
+   Desktop hero: "You're invited" + "Joseph & Kate" always end the same
+   distance (3% of the screen height) above the groom's head, at every
+   desktop size.
+   - The photo (herobg.jpg, 115% wide, 64% down) puts his head at
+     --head-nat: 0.682 x height - 0.13833 x width (his head is 55.98% down
+     the photo). Re-tune if herobg.jpg changes.
+   - The names block normally ends at 0.5 x height + --hero-lift +
+     --names-c (--names-c and the block's height differ per size range).
+   - Only the text moves (the photo stays put), by the difference
+     (position: relative + top, because the reveal animation owns transform
+     and translate).
+   - Very short windows: the text never goes higher than just below the
+     menu links (--nav-clear), even if that leaves it closer to his head.
+   ============================================ */
+@media (min-width: 901px) {
+    :root {
+        --names-c: -63.2px;
+        --names-block: 162.5px;
+        --nav-clear: 100px;
+        --hero-gap: calc(3 * var(--vh));
+    }
+}
+@media (min-width: 1201px) and (max-width: 1441px) {
+    :root { --names-c: 5.8px; --names-block: 200.1px; --nav-clear: 128px; }
+}
+@media (min-width: 1442px) and (max-width: 1799px) {
+    :root { --names-c: 9.8px; --names-block: 188.1px; --nav-clear: 128px; }
+}
+@media (min-width: 1800px) {
+    :root { --names-c: -29.3px; --names-block: 213.7px; --nav-clear: 128px; }
+}
+@media (min-width: 901px) {
+    #hero {
+        --head-nat: calc(0.682 * calc(100 * var(--vh)) - 0.13833 * calc(100 * var(--vw)));
+        --names-target: max(calc(var(--head-nat) - var(--hero-gap)), calc(var(--nav-clear) + var(--names-block)));
+        --names-bottom: calc(0.5 * calc(100 * var(--vh)) + var(--hero-lift) + var(--names-c));
+        --hero-text-up: calc(var(--names-target) - var(--names-bottom));
+    }
+    #hero .welcome-text,
+    #hero .couple-names {
+        position: relative;
+        top: var(--hero-text-up);
+    }
+}
+
+/* Desktop Wedding Schedule: the section ends a set distance below the map
+   cards (instead of a fixed 1250px), so there isn't a big empty band under
+   them - the same at every desktop size */
+@media (min-width: 901px) {
+    #event {
+        height: auto !important;
+        padding-bottom: 15px !important;
+    }
+}
+
+/* Desktop hero: the date a little smaller (about 12%), and the date + Add to
+   Calendar button 50px lower, at every desktop size (38px on short laptop
+   windows, 1201-1441px wide and up to 800px tall, so the button keeps 25px
+   clear of the bottom edge) */
+@media (min-width: 901px) {
+    :root { --hero-date-down: 50px; }
+    #hero .hero-content p.wedding-date { font-size: 1.4rem !important; }
+    #hero .wedding-date,
+    #hero .wedding-location {
+        transform: translateY(calc(var(--hero-drop) + var(--hero-date-down)));
+    }
+    #hero .add-to-calendar-wrap {
+        top: calc(100% + var(--hero-drop) + var(--hero-date-down) + var(--cal-gap));
+    }
+}
+@media (min-width: 1201px) {
+    #hero .hero-content p.wedding-date { font-size: 1.65rem !important; }
+}
+@media (min-width: 1800px) {
+    #hero .hero-content p.wedding-date { font-size: 1.95rem !important; }
+}
+@media (min-width: 1201px) and (max-width: 1441px) and (max-height: 800px) {
+    :root { --hero-date-down: 38px; }
 }
