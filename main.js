@@ -1759,6 +1759,54 @@ document.addEventListener('animationend', function(e) {
 })();
 
 // ============================================
+// Desktop navbar (901px and up): brown words like the phone tab bar, turning
+// light (.on-dark) when a dark photo or section is behind the links.
+// Measured on desktops: the hero photo darkens about a quarter of the way
+// down, the Registry photo about a fifth of the way down, and the FAQ footer
+// is dark. The cream sections, the Schedule green and the dress code suit
+// the brown.
+// ============================================
+(function() {
+    const nav = document.querySelector('.hero-navbar');
+    if (!nav) return;
+    const desktop = window.matchMedia('(min-width: 901px)');
+    let ticking = false;
+
+    function darkBehindLinks() {
+        const link = nav.querySelector('.nav-center a');
+        if (!link) return false;
+        const r = link.getBoundingClientRect();
+        const y = r.top + r.height / 2;
+        const under = document.elementsFromPoint(window.innerWidth / 2, y).find(function(el) {
+            return !nav.contains(el);
+        });
+        if (!under) return false;
+        const section = under.closest('section, footer');
+        if (!section) return false;
+        const down = (y - section.getBoundingClientRect().top) / section.offsetHeight;
+        if (section.id === 'hero') return down > 0.25;
+        if (section.id === 'registry') return down > 0.2;
+        return section.id === 'faqs';
+    }
+
+    function update() {
+        ticking = false;
+        nav.classList.toggle('on-dark', desktop.matches && darkBehindLinks());
+    }
+
+    function requestUpdate() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(update);
+    }
+
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate);
+    window.addEventListener('load', requestUpdate);
+    requestUpdate();
+})();
+
+// ============================================
 // Page scrollbar: visible while scrolling up, hidden while scrolling down
 // and at the very top. Sizes use % of the bar, so the wide-screen zoom
 // (see Index.html) does not matter.

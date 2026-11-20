@@ -1489,88 +1489,73 @@ section {
     /* Same order as on phones: the women follow the colour swatches -
        Butter Yellow, Yellow Orange, Pumpkin Orange on the top row;
        Petal Pink, Coral Pink, Matcha Green on the bottom row. */
-    .attire-photo-women-1 {
-        background-image: url('images/women5.png');
-        background-size: 75%;
+    /* Every figure sits on the same 330x660 canvas (images/attire-desktop/,
+       made from the phone images): 600px from head to feet, 30px from the
+       top, centred. With the same size for all, every person is the same
+       height and on the same level at every desktop size. */
+    .attire-photo-women-1,
+    .attire-photo-women-2,
+    .attire-photo-women-3,
+    .attire-photo-women-4,
+    .attire-photo-women-5,
+    .attire-photo-women-6,
+    .attire-photo-men-1,
+    .attire-photo-men-2,
+    .attire-photo-men-3,
+    .attire-photo-men-4,
+    .attire-photo-men-5,
+    .attire-photo-men-6 {
+        background-size: contain;
         background-position: center;
         background-repeat: no-repeat;
+    }
+
+    .attire-photo-women-1 {
+        background-image: url('images/attire-desktop/women5.png');
     }
 
     .attire-photo-women-2 {
-        background-image: url('images/women6.png');
-        background-size: 64%;
-        background-position: center;
-        background-repeat: no-repeat;
+        background-image: url('images/attire-desktop/women6.png');
     }
 
     .attire-photo-women-3 {
-        background-image: url('images/women2.png');
-        background-size: 78%;
-        background-position: center;
-        background-repeat: no-repeat;
+        background-image: url('images/attire-desktop/women2.png');
     }
 
     .attire-photo-women-4 {
-        background-image: url('images/women3.png');
-        background-size: 78%;
-        background-position: center;
-        background-repeat: no-repeat;
+        background-image: url('images/attire-desktop/women3.png');
     }
 
     .attire-photo-women-5 {
-        background-image: url('images/women4.png');
-        background-size: 110%;
-        background-position: center;
-        background-repeat: no-repeat;
+        background-image: url('images/attire-desktop/women4.png');
     }
 
     .attire-photo-women-6 {
-        background-image: url('images/women1.png');
-        background-size: 80%;
-        background-position: center;
-        background-repeat: no-repeat;
+        background-image: url('images/attire-desktop/women1.png');
     }
 
     .attire-photo-men-1 {
-        background-image: url('images/men1.png');
-        background-size: 78%;
-        background-position: center;
-        background-repeat: no-repeat;
+        background-image: url('images/attire-desktop/men1.png');
     }
 
     .attire-photo-men-2 {
-        background-image: url('images/men2.png');
-        background-size: 75%;
-        background-position: center;
-        background-repeat: no-repeat;
+        background-image: url('images/attire-desktop/men2.png');
     }
 
     .attire-photo-men-3 {
-        background-image: url('images/men3.png');
-        background-size: 82%;
-        background-position: center;
-        background-repeat: no-repeat;
+        background-image: url('images/attire-desktop/men3.png');
     }
 
     .attire-photo-men-4 {
-        background-image: url('images/men4.png');
-        background-size: 80%;
-        background-position: center;
-        background-repeat: no-repeat;
+        background-image: url('images/attire-desktop/men4.png');
     }
 
     .attire-photo-men-5 {
-        background-image: url('images/men5.png');
-        background-size: 78%;
-        background-position: center;
-        background-repeat: no-repeat;
+        background-image: url('images/attire-desktop/men5.png');
     }
 
     .attire-photo-men-6 {
-        background-image: url('images/men6.png');
-        background-size: 78%;
-        background-position: center;
-        background-repeat: no-repeat;
+        background-image: url('images/attire-desktop/men6.png');
     }
 }
 
@@ -12189,4 +12174,43 @@ html:not(.code-ok) #invitation-gate * {
 }
 @media (min-width: 1201px) and (max-width: 1441px) and (max-height: 800px) {
     :root { --hero-date-down: 38px; }
+}
+
+/* ============================================
+   Desktop navbar (901px and up): the same dark olive-brown words with a soft
+   cream glow as the phone tab bar, turning light (.on-dark, main.js) over
+   dark sections. RSVP is a plain link like the others (the gold button is
+   kept for tablets).
+   ============================================ */
+@media (max-width: 900px) {
+    .hero-navbar .nav-center .nav-rsvp-link {
+        display: none;
+    }
+}
+
+@media (min-width: 901px) {
+    .hero-navbar .nav-right {
+        display: none !important;
+    }
+
+    #hero .hero-navbar .nav-center a {
+        color: #4f4219;
+        text-shadow: 0 0 2px #f4efe2, 0 0 5px #f4efe2, 0 0 9px #f4efe2, 0 0 14px rgba(244, 239, 226, 0.9);
+        transition: color 0.4s ease, text-shadow 0.4s ease, border-color 0.3s ease;
+    }
+
+    #hero .hero-navbar .nav-center a:hover {
+        color: #4f4219;
+        border-bottom-color: #c9a44c;
+    }
+
+    #hero .hero-navbar.on-dark .nav-center a {
+        color: #fbf3dc;
+        text-shadow: 0 0 2px rgba(20, 16, 8, 0.8), 0 0 6px rgba(20, 16, 8, 0.7), 0 0 12px rgba(20, 16, 8, 0.55);
+    }
+
+    #hero .hero-navbar.on-dark .nav-center a:hover {
+        color: #fbf3dc;
+        border-bottom-color: #f0d589;
+    }
 }
